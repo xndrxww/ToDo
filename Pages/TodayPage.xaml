@@ -1,0 +1,27 @@
+﻿<Page x:Class="ToDo.Pages.TodayPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ToDo.Pages"
+      xmlns:uc="clr-namespace:ToDo.Controls"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="1440"
+      Title="TodayPage">
+
+    <Grid >
+        <Grid Width="1050" Height="700" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid VerticalAlignment="Top" Height="60">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" FontSize="30" Margin="10" HorizontalAlignment="Left" TextWrapping="Wrap">Сегодня</TextBlock>
+                        <TextBlock x:Name="todayDate" VerticalAlignment="Center" FontSize="30" HorizontalAlignment="Left" Opacity="0.5">00.00.0000</TextBlock>
+                    </StackPanel>
+                    <StackPanel x:Name="tasksStackPanel" Orientation="Vertical">
+                        
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>
