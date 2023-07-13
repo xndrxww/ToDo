@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ToDo.Controls;
+using ToDo.Windows;
 
 namespace ToDo.Pages
 {
@@ -21,14 +22,39 @@ namespace ToDo.Pages
     /// </summary>
     public partial class TodayPage : Page
     {
-        private UserControl taskControl; 
-
         public TodayPage()
         {
             InitializeComponent();
+            SetTodayDate();
+        }
 
-            taskControl = new TaskControl();
-            tasksStackPanel.Children.Add(taskControl);
+        private void addTaskButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddTaskWindow addTaskWindow = new AddTaskWindow();
+            addTaskWindow.ShowDialog();
+
+            LoadTasks();
+        }
+
+        private void SetTodayDate()
+        {
+            todayDateText.Text = DateTime.Now.ToShortDateString();
+        }
+
+        private void LoadTasks()
+        {
+            if (MainWindow.TasksList != null)
+            {
+                tasksStackPanel.Children.Clear();
+
+                foreach (var task in MainWindow.TasksList)
+                {
+                    var taskControl = new TaskControl();
+                    //taskControl.TaskName = task.Name;
+                    //taskControl.TaskDescription = task.Description;
+                    tasksStackPanel.Children.Add(taskControl);
+                }
+            }
         }
     }
 }
