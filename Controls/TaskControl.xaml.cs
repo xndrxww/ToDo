@@ -20,9 +20,15 @@ namespace ToDo.Controls
     /// </summary>
     public partial class TaskControl : UserControl
     {
+        //public string TaskName;
+        //public string TaskDescription;
+
         public TaskControl()
         {
             InitializeComponent();
+
+            //taskNameText.Text = TaskName;
+            //taskDesciptionText.Text = TaskDescription;
         }
     }
 }
