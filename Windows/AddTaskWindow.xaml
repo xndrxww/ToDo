@@ -1,0 +1,21 @@
+﻿<Window x:Class="ToDo.Windows.AddTaskWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ToDo.Windows"
+        mc:Ignorable="d"
+        Title="AddTaskWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Vertical">
+                <TextBox x:Name="taskNameText" Margin="40,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="30">Название задачи</TextBox>
+                <TextBox x:Name="taskDescriptionText" Margin="40,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="25">Описание</TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="40,200,0,0">
+                <Button x:Name="closeWindowButton" Height="40" Width="100" Click="closeWindowButton_Click">Отмена</Button>
+                <Button x:Name="addTaskButton" Height="40" Width="100" Margin="500,0,0,0" Click="addTaskButton_Click">Добавить</Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
