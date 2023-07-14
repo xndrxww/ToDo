@@ -26,6 +26,7 @@ namespace ToDo.Pages
         {
             InitializeComponent();
             SetTodayDate();
+            LoadTasks();
         }
 
         private void addTaskButton_Click(object sender, RoutedEventArgs e)
@@ -49,9 +50,14 @@ namespace ToDo.Pages
 
                 foreach (var task in MainWindow.TasksList)
                 {
-                    var taskControl = new TaskControl();
-                    //taskControl.TaskName = task.Name;
-                    //taskControl.TaskDescription = task.Description;
+                    Models.Task taskModel = new Models.Task
+                    {
+                        Name = task.Name,
+                        Description = task.Description,
+                        DeadLine = task.DeadLine
+                    };
+
+                    var taskControl = new TaskControl(taskModel);
                     tasksStackPanel.Children.Add(taskControl);
                 }
             }

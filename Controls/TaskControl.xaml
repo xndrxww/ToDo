@@ -13,6 +13,9 @@
                 <TextBlock x:Name="taskNameText" VerticalAlignment="Center" FontSize="20">задача</TextBlock>
                 <TextBlock x:Name="taskDesciptionText" VerticalAlignment="Center"  FontSize="16" Opacity="0.5">описание</TextBlock>
             </StackPanel>
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="600,0,0,0" HorizontalAlignment="Right">
+                <TextBlock x:Name="deadLineText" VerticalAlignment="Center" FontSize="16" Foreground="DarkSeaGreen">срок</TextBlock>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </UserControl>

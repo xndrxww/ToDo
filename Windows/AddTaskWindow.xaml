@@ -11,8 +11,9 @@
             <StackPanel Orientation="Vertical">
                 <TextBox x:Name="taskNameText" Margin="40,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="30">Название задачи</TextBox>
                 <TextBox x:Name="taskDescriptionText" Margin="40,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="25">Описание</TextBox>
+                <DatePicker Name="deadLineTime" Margin="40,40,0,0" HorizontalAlignment="Left"></DatePicker>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="40,200,0,0">
+            <StackPanel Orientation="Horizontal" Margin="40,100,0,0">
                 <Button x:Name="closeWindowButton" Height="40" Width="100" Click="closeWindowButton_Click">Отмена</Button>
                 <Button x:Name="addTaskButton" Height="40" Width="100" Margin="500,0,0,0" Click="addTaskButton_Click">Добавить</Button>
             </StackPanel>

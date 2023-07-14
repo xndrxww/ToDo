@@ -12,14 +12,17 @@
     <Grid >
         <Grid Width="1050" Height="700" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel Orientation="Vertical">
-                <StackPanel Orientation="Vertical" Background="AliceBlue">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock VerticalAlignment="Center" FontSize="30" Margin="10" HorizontalAlignment="Left" TextWrapping="Wrap">Сегодня</TextBlock>
-                        <TextBlock x:Name="todayDateText" VerticalAlignment="Center" FontSize="30" HorizontalAlignment="Left" Opacity="0.5"></TextBlock>
+                <Border BorderThickness="0 0 0 1" BorderBrush="Black">
+                    <StackPanel Orientation="Vertical" >
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock VerticalAlignment="Center" FontSize="30" Margin="10" HorizontalAlignment="Left" TextWrapping="Wrap" FontWeight="Bold">Сегодня</TextBlock>
+                            <TextBlock x:Name="todayDateText" VerticalAlignment="Center" FontSize="30" HorizontalAlignment="Left" Opacity="0.5"></TextBlock>
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
-                <StackPanel x:Name="tasksStackPanel" Orientation="Vertical">
-                </StackPanel>
+                </Border>
+                <ScrollViewer CanContentScroll="True">
+                    <StackPanel x:Name="tasksStackPanel" Orientation="Vertical" Height="600"/>
+                </ScrollViewer>
             </StackPanel>
         </Grid>
         <Button x:Name="addTaskButton" HorizontalAlignment="Right" VerticalAlignment="Top" Height="30" Width="140" Margin="0,50,15,0" Click="addTaskButton_Click">Добавить задачу</Button>

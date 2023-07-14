@@ -30,7 +30,8 @@ namespace ToDo.Windows
             var task = new Models.Task
             {
                 Name = taskNameText.Text,
-                Description = taskDescriptionText.Text
+                Description = taskDescriptionText.Text,
+                DeadLine = deadLineTime.SelectedDate
             };
 
             MainWindow.TasksList.Add(task);
