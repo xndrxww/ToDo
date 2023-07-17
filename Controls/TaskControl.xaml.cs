@@ -28,5 +28,10 @@ namespace ToDo.Controls
             taskDesciptionText.Text = taskModel.Description;
             deadLineText.Text = taskModel.DeadLine.ToString();
         }
+
+        private void completeTaskCheck_Checked(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Выполнено");
+        }
     }
 }
