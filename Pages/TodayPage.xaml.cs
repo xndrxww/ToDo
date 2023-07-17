@@ -50,17 +50,49 @@ namespace ToDo.Pages
 
                 foreach (var task in MainWindow.TasksList)
                 {
-                    Models.Task taskModel = new Models.Task
+                    if (!task.IsCompleted)
                     {
-                        Name = task.Name,
-                        Description = task.Description,
-                        DeadLine = task.DeadLine
-                    };
+                        Models.Task taskModel = new Models.Task
+                        {
+                            Name = task.Name,
+                            Description = task.Description,
+                            DeadLine = task.DeadLine
+                        };
 
-                    var taskControl = new TaskControl(taskModel);
-                    tasksStackPanel.Children.Add(taskControl);
+                        var taskControl = new TaskControl(taskModel);
+                        tasksStackPanel.Children.Add(taskControl);
+                    }
                 }
             }
+        }
+
+        private void searhText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(searhText.Text))
+            {
+                string search = searhText.Text;
+
+                tasksStackPanel.Children.Clear();
+
+                foreach (var task in MainWindow.TasksList)
+                {
+                    if (!task.IsCompleted && task.Name.ToLower().StartsWith(search.Trim().ToLower()))
+                    {
+                        Models.Task taskModel = new Models.Task
+                        {
+                            Name = task.Name,
+                            Description = task.Description,
+                            DeadLine = task.DeadLine
+                        };
+
+                        var taskControl = new TaskControl(taskModel);
+                        tasksStackPanel.Children.Add(taskControl);
+                    }
+                }
+            }
+
+            if (string.IsNullOrEmpty(searhText.Text))
+                LoadTasks();
         }
     }
 }
