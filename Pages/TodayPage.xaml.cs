@@ -88,7 +88,7 @@ namespace ToDo.Pages
 
                 foreach (var task in MainWindow.TasksList)
                 {
-                    if (!task.IsCompleted && task.Name.ToLower().StartsWith(search.Trim().ToLower()))
+                    if (!task.IsCompleted && (task.Name.ToLower().StartsWith(search.Trim().ToLower()) || task.Description.ToLower().StartsWith(search.Trim().ToLower())))
                     {
                         Models.Task taskModel = new Models.Task
                         {

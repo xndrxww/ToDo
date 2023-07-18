@@ -35,12 +35,12 @@ namespace ToDo.Windows
             };
 
             MainWindow.TasksList.Add(task);
-            this.Close();
+            Close();
         }
 
         private void closeWindowButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }
