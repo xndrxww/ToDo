@@ -40,6 +40,17 @@ namespace ToDo.Pages
         private void SetTodayDate()
         {
             todayDateText.Text = DateTime.Now.ToShortDateString();
+
+            if (MainWindow.TasksList != null)
+            {
+                foreach (var task in MainWindow.TasksList)
+                {
+                    if (task.DeadLine != null && task.DeadLine < DateTime.Now)
+                    {
+                        task.IsOverdue = true;
+                    }
+                }
+            }
         }
 
         private void LoadTasks()
@@ -56,7 +67,8 @@ namespace ToDo.Pages
                         {
                             Name = task.Name,
                             Description = task.Description,
-                            DeadLine = task.DeadLine
+                            DeadLine = task.DeadLine,
+                            IsOverdue = task.IsOverdue
                         };
 
                         var taskControl = new TaskControl(taskModel);

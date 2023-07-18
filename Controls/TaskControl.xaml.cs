@@ -23,15 +23,24 @@ namespace ToDo.Controls
         public TaskControl(Models.Task taskModel)
         {
             InitializeComponent();
-
-            taskNameText.Text = taskModel.Name;
-            taskDesciptionText.Text = taskModel.Description;
-            deadLineText.Text = taskModel.DeadLine.ToString();
+            SetData(taskModel);
         }
 
         private void completeTaskCheck_Checked(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Выполнено");
+        }
+
+        private void SetData(Models.Task taskModel)
+        {
+            taskNameText.Text = taskModel.Name;
+            taskDesciptionText.Text = taskModel.Description;
+            
+            if (taskModel.DeadLine != null)
+                deadLineText.Text = taskModel.DeadLine.Value.ToShortDateString();
+
+            if (taskModel.IsOverdue)
+                deadLineText.Foreground = new SolidColorBrush(Colors.Salmon);
         }
     }
 }
