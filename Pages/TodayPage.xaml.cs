@@ -25,8 +25,9 @@ namespace ToDo.Pages
         public TodayPage()
         {
             InitializeComponent();
+            MainWindow.TasksStackPanel = tasksStackPanel;
+            MainWindow.LoadTasks();
             SetTodayDate();
-            LoadTasks();
         }
 
         private void addTaskButton_Click(object sender, RoutedEventArgs e)
@@ -34,48 +35,12 @@ namespace ToDo.Pages
             AddTaskWindow addTaskWindow = new AddTaskWindow();
             addTaskWindow.ShowDialog();
 
-            LoadTasks();
+            MainWindow.LoadTasks();
         }
 
         private void SetTodayDate()
         {
             todayDateText.Text = DateTime.Now.ToShortDateString();
-
-            if (MainWindow.TasksList != null)
-            {
-                foreach (var task in MainWindow.TasksList)
-                {
-                    if (task.DeadLine != null && task.DeadLine < DateTime.Now)
-                    {
-                        task.IsOverdue = true;
-                    }
-                }
-            }
-        }
-
-        private void LoadTasks()
-        {
-            if (MainWindow.TasksList != null)
-            {
-                tasksStackPanel.Children.Clear();
-
-                foreach (var task in MainWindow.TasksList)
-                {
-                    if (!task.IsCompleted)
-                    {
-                        Models.Task taskModel = new Models.Task
-                        {
-                            Name = task.Name,
-                            Description = task.Description,
-                            DeadLine = task.DeadLine,
-                            IsOverdue = task.IsOverdue
-                        };
-
-                        var taskControl = new TaskControl(taskModel);
-                        tasksStackPanel.Children.Add(taskControl);
-                    }
-                }
-            }
         }
 
         private void searhText_TextChanged(object sender, TextChangedEventArgs e)
@@ -104,7 +69,7 @@ namespace ToDo.Pages
             }
 
             if (string.IsNullOrEmpty(searhText.Text))
-                LoadTasks();
+                MainWindow.LoadTasks();
         }
     }
 }
