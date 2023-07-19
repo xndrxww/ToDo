@@ -28,11 +28,19 @@ namespace ToDo.Controls
 
         private void completeTaskCheck_Checked(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Выполнено");
+            foreach (var task in MainWindow.TasksList)
+            {
+                if ("taskControl" + task.Id.ToString() == taskControl.Name)
+                    task.IsCompleted = true;
+            }
+
+            MainWindow.LoadTasks();
         }
 
         private void SetData(Models.Task taskModel)
         {
+            taskControl.Name += taskModel.Id;
+
             taskNameText.Text = taskModel.Name;
             taskDesciptionText.Text = taskModel.Description;
             

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:ToDo.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="1050">
-    <Grid Margin="0,10,0,10">
+    <Grid x:Name="taskControl" Margin="0,10,0,10">
         <DockPanel>
             <CheckBox x:Name="completeTaskCheck" VerticalAlignment="Center" Margin="20,0,0,0" HorizontalAlignment="Left" Checked="completeTaskCheck_Checked"></CheckBox>
             <StackPanel VerticalAlignment="Center" Margin="40,0,0,0">
