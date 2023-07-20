@@ -57,17 +57,18 @@ namespace ToDo
         {
             if (TasksList != null)
             {
-                TasksStackPanel.Children.Clear();
-
                 if (CompletedTasksStackPanel != null)
                 {
+                    CompletedTasksStackPanel.Children.Clear();
                     foreach (var task in TasksList.Where(task => task.IsCompleted))
                     {
                         CompletedTasksStackPanel.Children.Add(CreateTaskControl(task));
                     }
+                    CompletedTasksStackPanel = null;
                 }
                 else
                 {
+                    TasksStackPanel.Children.Clear();
                     foreach (var task in TasksList.Where(task => !task.IsCompleted))
                     {
                         TasksStackPanel.Children.Add(CreateTaskControl(task));
@@ -78,24 +79,20 @@ namespace ToDo
 
         private static TaskControl CreateTaskControl(Models.Task task)
         {
-            Models.Task taskModel = new Models.Task
-            {
-                Id = task.Id,
-                Name = task.Name,
-                Description = task.Description,
-                DeadLine = task.DeadLine,
-                IsOverdue = task.IsOverdue
-            };
+            if (task.DeadLine != null && task.DeadLine < DateTime.Now)
+                task.IsOverdue = true;
 
-            if (taskModel.DeadLine != null && taskModel.DeadLine < DateTime.Now)
-                taskModel.IsOverdue = true;
-
-            return new TaskControl(taskModel);
+            return new TaskControl(task);
         }
 
         private void completedTaskButton_Click(object sender, RoutedEventArgs e)
         {
             MainFrameInstance.Navigate(new CompletedTasksPage());
+        }
+
+        private void todayButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrameInstance.Navigate(new TodayPage());
         }
     }
 }

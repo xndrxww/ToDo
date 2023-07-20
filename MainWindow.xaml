@@ -14,6 +14,7 @@
         Title="MainWindow" Height="800" Width="1440" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Closing="Window_Closing">
     <Grid>
         <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
-        <Button x:Name="completedTaskButton" VerticalAlignment="Top" HorizontalAlignment="Left" Click="completedTaskButton_Click">Выполненные задачи</Button>
+        <Button x:Name="completedTaskButton" VerticalAlignment="Top" HorizontalAlignment="Left" Click="completedTaskButton_Click" Margin="10,80,0,0" Width="180" Background="White" Foreground="Black" BorderBrush="White">Выполненные задачи</Button>
+        <Button x:Name="todayButton" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,140,0,0" Width="180" Background="White" Foreground="Black" BorderBrush="White" Click="todayButton_Click">Сегодня</Button>
     </Grid>
 </Window>

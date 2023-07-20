@@ -10,7 +10,7 @@
       Title="TodayPage">
 
     <Grid>
-        <Grid Width="1050" Height="700" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid Width="950" Height="700" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel Orientation="Vertical">
                 <Border BorderThickness="0 0 0 1" BorderBrush="Black">
                     <StackPanel Orientation="Horizontal">

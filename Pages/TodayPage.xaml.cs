@@ -55,14 +55,10 @@ namespace ToDo.Pages
                 {
                     if (!task.IsCompleted && (task.Name.ToLower().StartsWith(search.Trim().ToLower()) || task.Description.ToLower().StartsWith(search.Trim().ToLower())))
                     {
-                        Models.Task taskModel = new Models.Task
-                        {
-                            Name = task.Name,
-                            Description = task.Description,
-                            DeadLine = task.DeadLine
-                        };
+                        if (task.DeadLine != null && task.DeadLine < DateTime.Now)
+                            task.IsOverdue = true;
 
-                        var taskControl = new TaskControl(taskModel);
+                        var taskControl = new TaskControl(task);
                         tasksStackPanel.Children.Add(taskControl);
                     }
                 }
