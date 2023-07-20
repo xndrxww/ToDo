@@ -5,8 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ToDo.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="1050">
-    <Grid x:Name="taskControl" Margin="0,10,0,10">
+             d:DesignHeight="100" d:DesignWidth="1050"
+             MouseDown="UserControl_MouseDown">
+    <Grid x:Name="taskControl" Margin="0,10,0,10" Background="Transparent">
         <DockPanel>
             <CheckBox x:Name="completeTaskCheck" VerticalAlignment="Center" Margin="20,0,0,0" HorizontalAlignment="Left" Checked="completeTaskCheck_Checked"></CheckBox>
             <StackPanel VerticalAlignment="Center" Margin="40,0,0,0">

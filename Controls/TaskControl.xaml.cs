@@ -28,7 +28,7 @@ namespace ToDo.Controls
 
         private void completeTaskCheck_Checked(object sender, RoutedEventArgs e)
         {
-            foreach (var task in MainWindow.TasksList)
+            foreach (var task in MainWindow.TasksList.Where(task => !task.IsCompleted))
             {
                 if ("taskControl" + task.Id.ToString() == taskControl.Name)
                     task.IsCompleted = true;
@@ -49,6 +49,15 @@ namespace ToDo.Controls
 
             if (taskModel.IsOverdue)
                 deadLineText.Foreground = new SolidColorBrush(Colors.Salmon);
+
+            //if (taskModel.IsCompleted)
+            //    completeTaskCheck.IsChecked = true;
+        }
+
+        private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("click");
+
         }
     }
 }
