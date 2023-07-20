@@ -5,17 +5,41 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToDo.Windows"
         mc:Ignorable="d"
-        Title="AddTaskWindow" Height="350" Width="800" WindowStartupLocation="CenterScreen">
+        Title="AddTaskWindow" Height="250" Width="600" WindowStartupLocation="CenterScreen">
     <Grid>
+        <TextBlock IsHitTestVisible="False" Text="Название задачи" Foreground="DarkGray" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="40,18,0,0" FontSize="20">
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Text, ElementName=taskNameText}" Value="">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+        <TextBlock IsHitTestVisible="False" Text="Описание" Foreground="DarkGray" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="40,72,0,0" FontSize="12">
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Text, ElementName=taskDescriptionText}" Value="">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Vertical">
-                <TextBox x:Name="taskNameText" Margin="40,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="20">Название задачи</TextBox>
-                <TextBox x:Name="taskDescriptionText" Margin="40,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="20">Описание</TextBox>
-                <DatePicker Name="deadLineTime" Margin="40,40,0,0" HorizontalAlignment="Left"></DatePicker>
+                <TextBox x:Name="taskNameText" Margin="40,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="20"></TextBox>
+                <TextBox x:Name="taskDescriptionText" Margin="40,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="12"></TextBox>
+                <DatePicker Name="deadLineTime" Margin="40,25,0,0" HorizontalAlignment="Left"></DatePicker>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="40,40,0,0">
-                <Button x:Name="closeWindowButton" Height="40" Width="100" Click="closeWindowButton_Click">Отмена</Button>
-                <Button x:Name="addTaskButton" Height="40" Width="100" Margin="500,0,0,0" Click="addTaskButton_Click">Добавить</Button>
+            <StackPanel Orientation="Horizontal" Margin="40,20,0,0">
+                <Button x:Name="closeWindowButton" Height="40" Width="100" Click="closeWindowButton_Click" Background="Gray" BorderBrush="Gray">Отмена</Button>
+                <Button x:Name="addTaskButton" Height="40" Width="100" Margin="320,0,0,0" Click="addTaskButton_Click">Добавить</Button>
             </StackPanel>
         </StackPanel>
     </Grid>
