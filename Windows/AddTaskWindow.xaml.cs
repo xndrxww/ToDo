@@ -29,7 +29,7 @@ namespace ToDo.Windows
         {
             var task = new Models.Task
             {
-                Id = MainWindow.TasksList.Count + 1,
+                Id = $"taskControl{MainWindow.TasksList.Count + 1}",
                 Name = taskNameText.Text,
                 Description = taskDescriptionText.Text,
                 DeadLine = deadLineTime.SelectedDate

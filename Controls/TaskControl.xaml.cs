@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ToDo.Windows;
 
 namespace ToDo.Controls
 {
@@ -28,9 +29,8 @@ namespace ToDo.Controls
 
         private void completeTaskCheck_Checked(object sender, RoutedEventArgs e)
         {
-            foreach (var task in MainWindow.TasksList.Where(task => !task.IsCompleted))
+            foreach (var task in MainWindow.TasksList.Where(task => !task.IsCompleted && task.Id == taskControl.Name))
             {
-                if ("taskControl" + task.Id.ToString() == taskControl.Name)
                     task.IsCompleted = true;
             }
 
@@ -39,16 +39,16 @@ namespace ToDo.Controls
 
         private void SetData(Models.Task taskModel)
         {
-            taskControl.Name += taskModel.Id;
+            taskControl.Name = taskModel.Id;
 
             taskNameText.Text = taskModel.Name;
             taskDesciptionText.Text = taskModel.Description;
             
             if (taskModel.DeadLine != null)
-                deadLineText.Text = taskModel.DeadLine.Value.ToShortDateString();
+                taskDeadLineText.Text = taskModel.DeadLine.Value.ToShortDateString();
 
             if (taskModel.IsOverdue)
-                deadLineText.Foreground = new SolidColorBrush(Colors.Salmon);
+                taskDeadLineText.Foreground = new SolidColorBrush(Colors.Salmon);
 
             //if (taskModel.IsCompleted)
             //    completeTaskCheck.IsChecked = true;
@@ -56,8 +56,16 @@ namespace ToDo.Controls
 
         private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("click");
+            var taskModel = new Models.Task
+            {
+                Id = taskControl.Name,
+                Name = taskNameText.Text,
+                Description = taskDesciptionText.Text,
+                DeadLine = !string.IsNullOrEmpty(taskDeadLineText.Text) ? DateTime.Parse(taskDeadLineText.Text) : DateTime.Now
+            };
 
+            EditTaskWindow editTaskWindow = new EditTaskWindow(taskModel);
+            editTaskWindow.ShowDialog();
         }
     }
 }

@@ -19,9 +19,27 @@ namespace ToDo.Windows
     /// </summary>
     public partial class EditTaskWindow : Window
     {
-        public EditTaskWindow()
+        Models.Task Task;
+
+        public EditTaskWindow(Models.Task taskModel)
         {
             InitializeComponent();
+            Task = taskModel;
+            taskNameText.Text = Task.Name;
+            taskDescriptionText.Text = Task.Description;
+            taskDeadLineTime.SelectedDate = Task.DeadLine;
+        }
+
+        private void saveTaskButton_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var task in MainWindow.TasksList.Where(task => !task.IsCompleted && task.Id == Task.Id))
+            {
+                task.Name = taskNameText.Text;
+                task.Description = taskDescriptionText.Text;
+                task.DeadLine = taskDeadLineTime.SelectedDate;
+            }
+            Close();
+            MainWindow.LoadTasks();
         }
     }
 }

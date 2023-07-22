@@ -32,7 +32,7 @@ namespace ToDo.Pages
 
         private void addTaskButton_Click(object sender, RoutedEventArgs e)
         {
-            AddTaskWindow addTaskWindow = new AddTaskWindow();
+            var addTaskWindow = new AddTaskWindow();
             addTaskWindow.ShowDialog();
 
             MainWindow.LoadTasks();
