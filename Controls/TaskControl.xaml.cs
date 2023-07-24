@@ -21,10 +21,13 @@ namespace ToDo.Controls
     /// </summary>
     public partial class TaskControl : UserControl
     {
+        Models.Task Task;
         public TaskControl(Models.Task taskModel)
         {
             InitializeComponent();
-            SetData(taskModel);
+            Task = taskModel ;
+            taskControl.Name = Task.Id;
+            DataContext = CheckData();
         }
 
         private void completeTaskCheck_Checked(object sender, RoutedEventArgs e)
@@ -37,24 +40,42 @@ namespace ToDo.Controls
             MainWindow.LoadTasks();
         }
 
-        private void SetData(Models.Task taskModel)
+        private Models.Task CheckData()
         {
-            taskControl.Name = taskModel.Id;
+            if (Task.DeadLine != null && Task.DeadLine < DateTime.Now)
+                Task.IsOverdue = true;
+            else
+                Task.IsOverdue = false;
 
-            taskNameText.Text = taskModel.Name;
-            taskDesciptionText.Text = taskModel.Description;
-            
-            if (taskModel.DeadLine != null)
-                taskDeadLineText.Text = taskModel.DeadLine.Value.ToShortDateString();
+            if (Task.DeadLine != null)
+                taskDeadLineText.Text = Task.DeadLine.Value.ToShortDateString();
 
-            if (taskModel.IsOverdue)
+            if (Task.IsOverdue)
                 taskDeadLineText.Foreground = new SolidColorBrush(Colors.Salmon);
 
-            //if (taskModel.IsCompleted)
-            //    completeTaskCheck.IsChecked = true;
+            return Task;
         }
 
-        private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
+        private void deleteTaskMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Delete");
+        }
+
+        private void editTaskMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var taskModel = new Models.Task
+            {
+                Id = taskControl.Name,
+                Name = taskNameText.Text,
+                Description = taskDesciptionText.Text,
+                DeadLine = !string.IsNullOrEmpty(taskDeadLineText.Text) ? DateTime.Parse(taskDeadLineText.Text) : DateTime.Now
+            };
+
+            EditTaskWindow editTaskWindow = new EditTaskWindow(taskModel);
+            editTaskWindow.ShowDialog();
+        }
+
+        private void UserControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var taskModel = new Models.Task
             {

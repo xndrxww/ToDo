@@ -62,7 +62,7 @@ namespace ToDo
                     CompletedTasksStackPanel.Children.Clear();
                     foreach (var task in TasksList.Where(task => task.IsCompleted))
                     {
-                        CompletedTasksStackPanel.Children.Add(CreateTaskControl(task));
+                        CompletedTasksStackPanel.Children.Add(new TaskControl(task));
                     }
                     CompletedTasksStackPanel = null;
                 }
@@ -71,18 +71,10 @@ namespace ToDo
                     TasksStackPanel.Children.Clear();
                     foreach (var task in TasksList.Where(task => !task.IsCompleted))
                     {
-                        TasksStackPanel.Children.Add(CreateTaskControl(task));
+                        TasksStackPanel.Children.Add(new TaskControl(task));
                     }
                 }
             }
-        }
-
-        private static TaskControl CreateTaskControl(Models.Task task)
-        {
-            if (task.DeadLine != null && task.DeadLine < DateTime.Now)
-                task.IsOverdue = true;
-
-            return new TaskControl(task);
         }
 
         private void completedTaskButton_Click(object sender, RoutedEventArgs e)
