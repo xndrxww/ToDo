@@ -31,11 +31,19 @@ namespace ToDo
         {
             if (TasksList != null)
             {
-                XmlSerializer xmlSerializer = new XmlSerializer(TasksList.GetType());
-
-                using (FileStream fs = new FileStream(FileName, FileMode.OpenOrCreate))
+                if (TasksList.Count > 0)
                 {
-                    xmlSerializer.Serialize(fs, TasksList);
+                    XmlSerializer xmlSerializer = new XmlSerializer(TasksList.GetType());
+
+                    using (FileStream fs = new FileStream(FileName, FileMode.OpenOrCreate))
+                    {
+                        xmlSerializer.Serialize(fs, TasksList);
+                    }
+                }
+                else
+                {
+                    if (File.Exists(FileName))
+                        File.Delete(FileName);
                 }
             }
         }
@@ -77,14 +85,16 @@ namespace ToDo
             }
         }
 
-        private void completedTaskButton_Click(object sender, RoutedEventArgs e)
-        {
-            MainFrameInstance.Navigate(new CompletedTasksPage());
-        }
-
-        private void todayButton_Click(object sender, RoutedEventArgs e)
+        private void todayMenuItem_Click(object sender, RoutedEventArgs e)
         {
             MainFrameInstance.Navigate(new TodayPage());
+
+        }
+
+        private void completedTaskMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrameInstance.Navigate(new CompletedTasksPage());
+
         }
     }
 }

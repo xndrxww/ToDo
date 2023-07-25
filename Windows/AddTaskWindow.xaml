@@ -5,6 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToDo.Windows"
         mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="{materialDesign:MaterialDesignFont}"
         Title="AddTaskWindow" Height="250" Width="600" WindowStartupLocation="CenterScreen">
     <Grid>
         <TextBlock IsHitTestVisible="False" Text="Название задачи" Foreground="DarkGray" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="40,18,0,0" FontSize="20">
@@ -39,7 +45,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="40,20,0,0">
                 <Button x:Name="closeWindowButton" Height="40" Width="100" Click="closeWindowButton_Click" Background="Gray" BorderBrush="Gray">Отмена</Button>
-                <Button x:Name="addTaskButton" Height="40" Width="100" Margin="320,0,0,0" Click="addTaskButton_Click">Добавить</Button>
+                <Button x:Name="addTaskButton" Height="40" Width="100" Margin="320,0,0,0" Click="addTaskButton_Click" IsEnabled="{Binding ElementName=taskNameText, Path=Text.Length, Mode=OneWay}">Добавить</Button>
             </StackPanel>
         </StackPanel>
     </Grid>

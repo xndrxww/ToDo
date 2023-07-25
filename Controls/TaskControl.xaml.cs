@@ -53,12 +53,16 @@ namespace ToDo.Controls
             if (Task.IsOverdue)
                 taskDeadLineText.Foreground = new SolidColorBrush(Colors.Salmon);
 
+             //if (Task.IsCompleted)
+             //   completeTaskCheck.IsChecked = true;
+
             return Task;
         }
 
         private void deleteTaskMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Delete");
+            MainWindow.TasksList.Remove(Task);
+            MainWindow.LoadTasks();
         }
 
         private void editTaskMenuItem_Click(object sender, RoutedEventArgs e)
