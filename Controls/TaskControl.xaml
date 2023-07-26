@@ -17,9 +17,22 @@
             </StackPanel>
             <Menu Height="40" VerticalAlignment="Center" HorizontalAlignment="Right">
                 <MenuItem Header="...">
-                    <MenuItem x:Name="editTaskMenuItem" Header="Редактировать" Click="editTaskMenuItem_Click"></MenuItem>
+                    <MenuItem x:Name="editTaskMenuItem" Header="Редактировать" Click="editTaskMenuItem_Click">
+                        <MenuItem.Icon>
+                            <Image Source="\Icons\editing.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="copyTaskMenuItem" Header="Дублировать" Click="copyTaskMenuItem_Click">
+                        <MenuItem.Icon>
+                            <Image Source="\Icons\copy.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <Separator/>
-                    <MenuItem x:Name="deleteTaskMenuItem" Header="Удалить" Click="deleteTaskMenuItem_Click"></MenuItem>
+                    <MenuItem x:Name="deleteTaskMenuItem" Header="Удалить" Click="deleteTaskMenuItem_Click">
+                        <MenuItem.Icon>
+                            <Image Source="\Icons\delete.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
             </Menu>
         </DockPanel>

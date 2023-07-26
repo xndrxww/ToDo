@@ -26,13 +26,13 @@ namespace ToDo.Controls
         {
             InitializeComponent();
             Task = taskModel ;
-            taskControl.Name = Task.Id;
+            taskControl.Name = Task.ControlName;
             DataContext = CheckData();
         }
 
         private void completeTaskCheck_Checked(object sender, RoutedEventArgs e)
         {
-            foreach (var task in MainWindow.TasksList.Where(task => !task.IsCompleted && task.Id == taskControl.Name))
+            foreach (var task in MainWindow.TasksList.Where(task => !task.IsCompleted && task.ControlName == taskControl.Name))
             {
                     task.IsCompleted = true;
             }
@@ -65,32 +65,40 @@ namespace ToDo.Controls
             MainWindow.LoadTasks();
         }
 
+        private void EditTask()
+        {
+            if (!string.IsNullOrEmpty(taskDeadLineText.Text))
+                Task.DeadLine = DateTime.Parse(taskDeadLineText.Text);
+            else
+                Task.DeadLine = DateTime.Now;
+
+            EditTaskWindow editTaskWindow = new EditTaskWindow(Task);
+            editTaskWindow.ShowDialog();
+        }
+
         private void editTaskMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var taskModel = new Models.Task
-            {
-                Id = taskControl.Name,
-                Name = taskNameText.Text,
-                Description = taskDesciptionText.Text,
-                DeadLine = !string.IsNullOrEmpty(taskDeadLineText.Text) ? DateTime.Parse(taskDeadLineText.Text) : DateTime.Now
-            };
-
-            EditTaskWindow editTaskWindow = new EditTaskWindow(taskModel);
-            editTaskWindow.ShowDialog();
+            EditTask();
         }
 
         private void UserControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var taskModel = new Models.Task
-            {
-                Id = taskControl.Name,
-                Name = taskNameText.Text,
-                Description = taskDesciptionText.Text,
-                DeadLine = !string.IsNullOrEmpty(taskDeadLineText.Text) ? DateTime.Parse(taskDeadLineText.Text) : DateTime.Now
-            };
+            EditTask();
+        }
 
-            EditTaskWindow editTaskWindow = new EditTaskWindow(taskModel);
-            editTaskWindow.ShowDialog();
+        private void copyTaskMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var copyTask = new Models.Task
+            {
+                Id = MainWindow.TasksList.Count + 1,
+                Name = Task.Name,
+                Description = Task.Description,
+                DeadLine = Task.DeadLine,
+                IsCompleted = Task.IsCompleted,
+                IsOverdue = Task.IsOverdue
+            };
+            MainWindow.TasksList.Add(copyTask);
+            MainWindow.LoadTasks();
         }
     }
 }

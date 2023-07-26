@@ -7,7 +7,8 @@ namespace ToDo.Models
         public Task()
         {}
 
-        public string Id { get; set; }
+        public int Id { get; set; }
+        public string ControlName => $"taskControl{Id}";
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime? DeadLine { get; set; }
