@@ -23,6 +23,15 @@
                 </ScrollViewer>
             </StackPanel>
             <TextBox x:Name="searhText" Margin="560,20,0,0" Width="200" FontSize="15" TextChanged="searhText_TextChanged" VerticalAlignment="Top" HorizontalAlignment="Right"></TextBox>
+            <Menu HorizontalAlignment="Center" VerticalAlignment="Top" Margin="400,10,0,0">
+                <MenuItem>
+                    <MenuItem.Icon>
+                        <Image Source="\Icons\sorting.png"/>
+                    </MenuItem.Icon>
+                    <MenuItem x:Name="sortTaskByDateMenuItem" Header="Срок выполнения" Click="sortTaskByDateMenuItem_Click">
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
             <TextBlock IsHitTestVisible="False" Text="Поиск задач" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,25,125,0" Foreground="DarkGray">
                 <TextBlock.Style>
                     <Style TargetType="{x:Type TextBlock}">

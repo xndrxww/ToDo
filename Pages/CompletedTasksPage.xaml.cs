@@ -24,7 +24,7 @@ namespace ToDo.Pages
         {
             InitializeComponent();
             MainWindow.CompletedTasksStackPanel = completedTasksStackPanel;
-            MainWindow.LoadTasks();
+            MainWindow.LoadTasks(null);
         }
     }
 }

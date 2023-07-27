@@ -26,7 +26,7 @@ namespace ToDo.Pages
         {
             InitializeComponent();
             MainWindow.TasksStackPanel = tasksStackPanel;
-            MainWindow.LoadTasks();
+            MainWindow.LoadTasks(null);
             SetTodayDate();
         }
 
@@ -35,7 +35,7 @@ namespace ToDo.Pages
             var addTaskWindow = new AddTaskWindow();
             addTaskWindow.ShowDialog();
 
-            MainWindow.LoadTasks();
+            MainWindow.LoadTasks(null);
         }
 
         private void SetTodayDate()
@@ -65,7 +65,13 @@ namespace ToDo.Pages
             }
 
             if (string.IsNullOrEmpty(searhText.Text))
-                MainWindow.LoadTasks();
+                MainWindow.LoadTasks(null);
+        }
+
+        private void sortTaskByDateMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var tasksList = MainWindow.TasksList.OrderBy(t => t.DeadLine.HasValue).ThenBy(p => p.DeadLine).ToList();
+            MainWindow.LoadTasks(tasksList);
         }
     }
 }

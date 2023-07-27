@@ -37,7 +37,7 @@ namespace ToDo.Controls
                     task.IsCompleted = true;
             }
 
-            MainWindow.LoadTasks();
+            MainWindow.LoadTasks(null);
         }
 
         private Models.Task CheckData()
@@ -62,7 +62,7 @@ namespace ToDo.Controls
         private void deleteTaskMenuItem_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.TasksList.Remove(Task);
-            MainWindow.LoadTasks();
+            MainWindow.LoadTasks(null);
         }
 
         private void EditTask()
@@ -98,7 +98,7 @@ namespace ToDo.Controls
                 IsOverdue = Task.IsOverdue
             };
             MainWindow.TasksList.Add(copyTask);
-            MainWindow.LoadTasks();
+            MainWindow.LoadTasks(null);
         }
     }
 }

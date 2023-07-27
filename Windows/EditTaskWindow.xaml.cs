@@ -39,7 +39,7 @@ namespace ToDo.Windows
                 task.DeadLine = taskDeadLineTime.SelectedDate;
             }
             Close();
-            MainWindow.LoadTasks();
+            MainWindow.LoadTasks(null);
         }
     }
 }

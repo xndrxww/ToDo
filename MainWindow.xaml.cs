@@ -61,14 +61,21 @@ namespace ToDo
             }
         }
 
-        public static void LoadTasks()
+        public static void LoadTasks(List<Models.Task> tasks)
         {
-            if (TasksList != null)
+            var tasksList = new List<Models.Task>();
+
+            if (tasks != null)
+                tasksList = tasks;
+            else
+                tasksList = TasksList;
+
+            if (tasksList != null)
             {
                 if (CompletedTasksStackPanel != null)
                 {
                     CompletedTasksStackPanel.Children.Clear();
-                    foreach (var task in TasksList.Where(task => task.IsCompleted))
+                    foreach (var task in tasksList.Where(task => task.IsCompleted))
                     {
                         CompletedTasksStackPanel.Children.Add(new TaskControl(task));
                     }
@@ -77,7 +84,7 @@ namespace ToDo
                 else
                 {
                     TasksStackPanel.Children.Clear();
-                    foreach (var task in TasksList.Where(task => !task.IsCompleted))
+                    foreach (var task in tasksList.Where(task => !task.IsCompleted))
                     {
                         TasksStackPanel.Children.Add(new TaskControl(task));
                     }
