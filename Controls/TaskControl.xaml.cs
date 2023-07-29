@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using ToDo.Windows;
 
 namespace ToDo.Controls
@@ -53,8 +47,19 @@ namespace ToDo.Controls
             if (Task.IsOverdue)
                 taskDeadLineText.Foreground = new SolidColorBrush(Colors.Salmon);
 
-             //if (Task.IsCompleted)
-             //   completeTaskCheck.IsChecked = true;
+            if (Task.IsPriority)
+            {
+                priorityTaskImage.Source = new BitmapImage(new Uri(@"\Icons\filled_star.png", UriKind.Relative));
+                priorityTaskImage.Opacity = 1;
+            }
+            else
+            {
+                priorityTaskImage.Source = new BitmapImage(new Uri(@"\Icons\star.png", UriKind.Relative));
+                priorityTaskImage.Opacity = 0.3;
+            }
+
+            //if (Task.IsCompleted)
+            //   completeTaskCheck.IsChecked = true;
 
             return Task;
         }
@@ -98,6 +103,17 @@ namespace ToDo.Controls
                 IsOverdue = Task.IsOverdue
             };
             MainWindow.TasksList.Add(copyTask);
+            MainWindow.LoadTasks(null);
+        }
+
+
+        private void priorityTaskImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (Task.IsPriority)
+                Task.IsPriority = false;
+            else
+                Task.IsPriority = true;
+
             MainWindow.LoadTasks(null);
         }
     }

@@ -11,7 +11,7 @@
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
         FontFamily="{materialDesign:MaterialDesignFont}"
-        Title="MainWindow" Height="800" Width="1440" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Closing="Window_Closing">
+        Title="MainWindow" Height="800" Width="1440" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Closing="Window_Closing" UseLayoutRounding="True">
     <Grid>
         <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
         <Grid Background="#ededed" HorizontalAlignment="Left">

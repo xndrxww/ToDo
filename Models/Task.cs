@@ -14,5 +14,6 @@ namespace ToDo.Models
         public DateTime? DeadLine { get; set; }
         public bool IsCompleted { get; set; }
         public bool IsOverdue { get; set; }
+        public bool IsPriority { get; set; }
     }
 }

@@ -166,21 +166,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\calendar.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\schedule.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\editing.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\copy.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\delete.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
@@ -193,7 +178,28 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Icons\star.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\editing.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\copy.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Icons\sorting.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\calendar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\schedule.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\filled_star.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets" Condition="Exists('packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets')" />
