@@ -58,8 +58,9 @@ namespace ToDo.Controls
                 priorityTaskImage.Opacity = 0.3;
             }
 
-            //if (Task.IsCompleted)
-            //   completeTaskCheck.IsChecked = true;
+            if (Task.IsCompleted)
+                completeTaskCheck.Visibility = Visibility.Collapsed;
+
 
             return Task;
         }

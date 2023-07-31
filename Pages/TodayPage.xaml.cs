@@ -73,5 +73,11 @@ namespace ToDo.Pages
             var tasksList = MainWindow.TasksList.OrderBy(t => t.DeadLine.HasValue).ThenBy(p => p.DeadLine).ToList();
             MainWindow.LoadTasks(tasksList);
         }
+
+        private void sortTaskByPriority_Click(object sender, RoutedEventArgs e)
+        {
+            var tasksList = MainWindow.TasksList.OrderByDescending(t => t.IsPriority).ToList();
+            MainWindow.LoadTasks(tasksList);
+        }
     }
 }

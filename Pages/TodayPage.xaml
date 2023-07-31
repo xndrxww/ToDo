@@ -28,8 +28,8 @@
                     <MenuItem.Icon>
                         <Image Source="\Icons\sorting.png"/>
                     </MenuItem.Icon>
-                    <MenuItem x:Name="sortTaskByDateMenuItem" Header="Срок выполнения" Click="sortTaskByDateMenuItem_Click">
-                    </MenuItem>
+                    <MenuItem x:Name="sortTaskByDateMenuItem" Header="Срок выполнения" Click="sortTaskByDateMenuItem_Click"/>
+                    <MenuItem x:Name="sortTaskByPrioriry" Header="Приоритет" Click="sortTaskByPriority_Click"/>
                 </MenuItem>
             </Menu>
             <TextBlock IsHitTestVisible="False" Text="Поиск задач" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,25,125,0" Foreground="DarkGray">

@@ -31,6 +31,9 @@ namespace ToDo
         {
             if (TasksList != null)
             {
+                if (File.Exists(FileName))
+                    File.Delete(FileName);
+
                 if (TasksList.Count > 0)
                 {
                     XmlSerializer xmlSerializer = new XmlSerializer(TasksList.GetType());
@@ -40,11 +43,6 @@ namespace ToDo
                         xmlSerializer.Serialize(fs, TasksList);
                     }
                 }
-                else
-                {
-                    if (File.Exists(FileName))
-                        File.Delete(FileName);
-                }
             }
         }
 
@@ -52,11 +50,18 @@ namespace ToDo
         {
             if (File.Exists(FileName))
             {
-                XmlSerializer xmlSerializer = new XmlSerializer(TasksList.GetType());
-
-                using (FileStream fs = new FileStream("tasks.xml", FileMode.OpenOrCreate))
+                try
                 {
-                    TasksList = (List<Models.Task>)xmlSerializer.Deserialize(fs);
+                    XmlSerializer xmlSerializer = new XmlSerializer(TasksList.GetType());
+
+                    using (FileStream fs = new FileStream("tasks.xml", FileMode.OpenOrCreate))
+                    {
+                        TasksList = (List<Models.Task>)xmlSerializer.Deserialize(fs);
+                    }
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("При десериализации файла произошла ошибка");
                 }
             }
         }
