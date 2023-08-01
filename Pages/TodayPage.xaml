@@ -46,5 +46,6 @@
             </TextBlock>
         </Grid>
         <Button x:Name="addTaskButton" HorizontalAlignment="Right" VerticalAlignment="Top" Height="30" Width="150" Margin="0,45,15,0" Click="addTaskButton_Click">Добавить задачу</Button>
+        <Button Click="Button_Click" Width="auto" HorizontalAlignment="Right" Margin="0,0,15,0">Тест уведомления</Button>
     </Grid>
 </Page>

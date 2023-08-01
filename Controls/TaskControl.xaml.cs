@@ -19,7 +19,7 @@ namespace ToDo.Controls
         public TaskControl(Models.Task taskModel)
         {
             InitializeComponent();
-            Task = taskModel ;
+            Task = taskModel;
             taskControl.Name = Task.ControlName;
             DataContext = CheckData();
         }
@@ -28,7 +28,7 @@ namespace ToDo.Controls
         {
             foreach (var task in MainWindow.TasksList.Where(task => !task.IsCompleted && task.ControlName == taskControl.Name))
             {
-                    task.IsCompleted = true;
+                task.IsCompleted = true;
             }
 
             MainWindow.LoadTasks(null);
