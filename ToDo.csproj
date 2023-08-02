@@ -199,5 +199,11 @@
       <Version>2.0.0</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\date.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

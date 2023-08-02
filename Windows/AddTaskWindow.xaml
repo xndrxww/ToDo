@@ -11,7 +11,7 @@
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
         FontFamily="{materialDesign:MaterialDesignFont}"
-        Title="AddTaskWindow" Height="250" Width="600" WindowStartupLocation="CenterScreen">
+        Title="AddTaskWindow" Height="500" Width="500" WindowStartupLocation="CenterScreen">
     <Grid>
         <TextBlock IsHitTestVisible="False" Text="Название задачи" Foreground="DarkGray" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="40,18,0,0" FontSize="20">
             <TextBlock.Style>
@@ -40,12 +40,29 @@
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Vertical">
                 <TextBox x:Name="taskNameText" Margin="40,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="20"></TextBox>
-                <TextBox x:Name="taskDescriptionText" Margin="40,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="12"/>
-                <DatePicker Name="deadLineTime" Margin="40,25,0,0" HorizontalAlignment="Left"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="40,20,0,0">
-                <Button x:Name="closeWindowButton" Height="40" Width="100" Click="closeWindowButton_Click" Background="Gray" BorderBrush="Gray">Отмена</Button>
-                <Button x:Name="addTaskButton" Height="40" Width="100" Margin="320,0,0,0" Click="addTaskButton_Click" IsEnabled="{Binding ElementName=taskNameText, Path=Text.Length, Mode=OneWay}">Добавить</Button>
+                <TextBox x:Name="taskDescriptionText" Margin="40,22,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="12"/>
+                <DatePicker Name="deadLineTime" Margin="40,25,0,0" HorizontalAlignment="Left" />
+                <Menu HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,25,0,0" Width="auto">
+                    <Menu.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                    </Menu.ItemsPanel>
+                    <MenuItem x:Name="deadLineMenuItem" Header="Указать дату выполнения" Click="deadLineMenuItem_Click">
+                        <MenuItem.Icon>
+                            <Image Source="\Icons\date.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="addFileMenuItem" Header="Прикрепить файл" Click="addFileMenuItem_Click">
+                        <MenuItem.Icon>
+                            <Image Source="\Icons\folder.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </Menu>
+                <ListBox x:Name="filesListBox" Width="410"/>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="addTaskButton" Height="40" Width="100" Margin="350,0,0,0" Click="addTaskButton_Click" IsEnabled="{Binding ElementName=taskNameText, Path=Text.Length, Mode=OneWay}">Добавить</Button>
+                </StackPanel>
             </StackPanel>
         </StackPanel>
     </Grid>

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Microsoft.Win32;
+using System.Windows;
 
 namespace ToDo.Windows
 {
@@ -26,9 +27,25 @@ namespace ToDo.Windows
             Close();
         }
 
-        private void closeWindowButton_Click(object sender, RoutedEventArgs e)
+        private void addFileMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            var fileDialog = new OpenFileDialog
+            {
+                Multiselect = true
+            };
+
+            if (fileDialog.ShowDialog() == true)
+            {
+                foreach (var file in fileDialog.FileNames) 
+                {
+                    filesListBox.Items.Add(file);
+                }
+            }
+        }
+
+        private void deadLineMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            deadLineTime.IsDropDownOpen = true;
         }
     }
 }
