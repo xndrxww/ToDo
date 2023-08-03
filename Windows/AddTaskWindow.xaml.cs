@@ -1,5 +1,7 @@
 ﻿using Microsoft.Win32;
+using System.IO;
 using System.Windows;
+using ToDo.Controls;
 
 namespace ToDo.Windows
 {
@@ -36,9 +38,9 @@ namespace ToDo.Windows
 
             if (fileDialog.ShowDialog() == true)
             {
-                foreach (var file in fileDialog.FileNames) 
+                foreach (var file in fileDialog.FileNames)
                 {
-                    filesListBox.Items.Add(file);
+                    filesStackPanel.Children.Add(new FilesControl(Path.GetFileName(file)));
                 }
             }
         }
@@ -47,5 +49,19 @@ namespace ToDo.Windows
         {
             deadLineTime.IsDropDownOpen = true;
         }
+
+        private void deadLineTime_SelectedDateChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            deadLineMenuItem.Header = deadLineTime.SelectedDate.Value.ToString("dd.MM.yyyy");
+        }
+
+        //public FileStream SaveFile(string filename)
+        //{
+        //    if (!Directory.Exists("files"))
+        //        Directory.CreateDirectory("files");
+
+
+        //    return File.Create($"{filename}");
+        //}
     }
 }

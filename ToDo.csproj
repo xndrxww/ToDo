@@ -77,6 +77,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\FilesControl.xaml.cs">
+      <DependentUpon>FilesControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\Task.cs" />
     <Compile Include="Pages\CompletedTasksPage.xaml.cs">
       <DependentUpon>CompletedTasksPage.xaml</DependentUpon>
@@ -87,6 +90,10 @@
     <Compile Include="Windows\EditTaskWindow.xaml.cs">
       <DependentUpon>EditTaskWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\FilesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\TaskControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
