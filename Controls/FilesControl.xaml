@@ -6,7 +6,32 @@
              xmlns:local="clr-namespace:ToDo.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="60" d:DesignWidth="410">
+    <UserControl.Style>
+        <Style TargetType="UserControl">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#ebf5fc"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Style>
+    
     <Grid x:Name="filesControl">
         <TextBlock x:Name="fileNameText" Text="test" Margin="15,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+        <Menu Height="40" VerticalAlignment="Top" HorizontalAlignment="Right">
+            <MenuItem Header="...">
+                <MenuItem x:Name="openFileMenuItem" Header="Открыть" Click="openFileMenuItem_Click">
+                    <MenuItem.Icon>
+                        <Image Source="\Icons\file.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem x:Name="deleteFileMenuItem" Header="Удалить" Click="deleteFileMenuItem_Click">
+                    <MenuItem.Icon>
+                        <Image Source="\Icons\delete.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
     </Grid>
 </UserControl>

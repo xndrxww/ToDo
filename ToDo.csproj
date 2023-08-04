@@ -80,6 +80,7 @@
     <Compile Include="Controls\FilesControl.xaml.cs">
       <DependentUpon>FilesControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\File.cs" />
     <Compile Include="Models\Task.cs" />
     <Compile Include="Pages\CompletedTasksPage.xaml.cs">
       <DependentUpon>CompletedTasksPage.xaml</DependentUpon>
@@ -211,6 +212,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\date.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\file.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

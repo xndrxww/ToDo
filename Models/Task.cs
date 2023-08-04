@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ToDo.Models
 {
@@ -15,5 +16,6 @@ namespace ToDo.Models
         public bool IsCompleted { get; set; }
         public bool IsOverdue { get; set; }
         public bool IsPriority { get; set; }
+        public List<File> Files { get; set; }
     }
 }

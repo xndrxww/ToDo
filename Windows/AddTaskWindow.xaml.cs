@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using ToDo.Controls;
@@ -10,6 +11,10 @@ namespace ToDo.Windows
     /// </summary>
     public partial class AddTaskWindow : Window
     {
+        private List<Models.File> FilesList = new List<Models.File>();
+        private const string DirectoryName = "Files";
+
+
         public AddTaskWindow()
         {
             InitializeComponent();
@@ -22,8 +27,12 @@ namespace ToDo.Windows
                 Id = MainWindow.TasksList.Count + 1,
                 Name = taskNameText.Text,
                 Description = taskDescriptionText.Text,
-                DeadLine = deadLineTime.SelectedDate
+                DeadLine = deadLineTime.SelectedDate,
+                Files = FilesList.Count > 0 ? FilesList : null
             };
+
+            if (FilesList.Count > 0)
+                SaveFile(FilesList);
 
             MainWindow.TasksList.Add(task);
             Close();
@@ -41,6 +50,7 @@ namespace ToDo.Windows
                 foreach (var file in fileDialog.FileNames)
                 {
                     filesStackPanel.Children.Add(new FilesControl(Path.GetFileName(file)));
+                    FilesList.Add(new Models.File { Name = Path.GetFileName(file), UserPath = file});
                 }
             }
         }
@@ -55,13 +65,16 @@ namespace ToDo.Windows
             deadLineMenuItem.Header = deadLineTime.SelectedDate.Value.ToString("dd.MM.yyyy");
         }
 
-        //public FileStream SaveFile(string filename)
-        //{
-        //    if (!Directory.Exists("files"))
-        //        Directory.CreateDirectory("files");
+        public void SaveFile(List<Models.File> files)
+        {
+            if (!Directory.Exists(DirectoryName))
+                Directory.CreateDirectory(DirectoryName);
 
-
-        //    return File.Create($"{filename}");
-        //}
+            foreach (var file in files)
+            {
+                if (!File.Exists($@"{DirectoryName}\{file.Name}"))
+                    File.Copy($@"{file.UserPath}", $@"{DirectoryName}\{file.Name}");
+            }
+        }
     }
 }
