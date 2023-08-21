@@ -15,7 +15,7 @@ namespace ToDo.Controls
     /// </summary>
     public partial class TaskControl : UserControl
     {
-        Models.Task Task;
+        private Models.Task Task;
         public TaskControl(Models.Task taskModel)
         {
             InitializeComponent();

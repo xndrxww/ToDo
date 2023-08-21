@@ -14,7 +14,6 @@ namespace ToDo.Windows
         private List<Models.File> FilesList = new List<Models.File>();
         private const string DirectoryName = "Files";
 
-
         public AddTaskWindow()
         {
             InitializeComponent();
@@ -22,7 +21,7 @@ namespace ToDo.Windows
 
         private void addTaskButton_Click(object sender, RoutedEventArgs e)
         {
-            var task = new Models.Task
+            var taskModel = new Models.Task
             {
                 Id = MainWindow.TasksList.Count + 1,
                 Name = taskNameText.Text,
@@ -34,7 +33,7 @@ namespace ToDo.Windows
             if (FilesList.Count > 0)
                 SaveFile(FilesList);
 
-            MainWindow.TasksList.Add(task);
+            MainWindow.TasksList.Add(taskModel);
             Close();
         }
 
@@ -49,8 +48,14 @@ namespace ToDo.Windows
             {
                 foreach (var file in fileDialog.FileNames)
                 {
-                    filesStackPanel.Children.Add(new FilesControl(Path.GetFileName(file)));
-                    FilesList.Add(new Models.File { Name = Path.GetFileName(file), UserPath = file});
+                    var fileModel = new Models.File
+                    {
+                        Name = Path.GetFileName(file),
+                        UserPath = file
+                    };
+
+                    filesStackPanel.Children.Add(new FilesControl(fileModel, FilesList, filesStackPanel));
+                    FilesList.Add(fileModel);
                 }
             }
         }
