@@ -70,15 +70,5 @@ namespace ToDo.Pages
             var tasksList = MainWindow.TasksList.OrderByDescending(t => t.IsPriority).ToList();
             MainWindow.LoadTasks(tasksList);
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            new ToastContentBuilder()
-                .AddArgument("action", "viewConversation")
-                .AddArgument("conversationId", 9813)
-                .AddText($"Уведомление из приложения ToDo")
-                .AddText("Check this out, The Enchantments in Washington!")
-                .Show();
-        }
     }
 }

@@ -211,10 +211,13 @@
     <Resource Include="Icons\folder.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\date.png" />
+    <Resource Include="Icons\file.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\file.png" />
+    <Resource Include="Icons\restore.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\date.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

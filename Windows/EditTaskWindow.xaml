@@ -11,7 +11,7 @@
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
         FontFamily="{materialDesign:MaterialDesignFont}"
-        Title="EditTaskWindow" Height="300" Width="600" WindowStartupLocation="CenterScreen">
+        Title="EditTaskWindow" Height="500" Width="500" WindowStartupLocation="CenterScreen">
     <Grid>
         <TextBlock IsHitTestVisible="False" Text="Название задачи" Foreground="DarkGray" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="40,18,0,0" FontSize="20">
             <TextBlock.Style>
@@ -37,15 +37,23 @@
                 </Style>
             </TextBlock.Style>
         </TextBlock>
+        <DatePicker Name="taskDeadLineTime" Margin="40,25,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Hidden" SelectedDateChanged="deadLineTime_SelectedDateChanged"></DatePicker>
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Vertical">
                 <TextBox x:Name="taskNameText" Margin="40,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="20"></TextBox>
                 <TextBox x:Name="taskDescriptionText" Margin="40,22,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="12"></TextBox>
-                <DatePicker Name="taskDeadLineTime" Margin="40,25,0,0" HorizontalAlignment="Left"></DatePicker>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,0,40,0" HorizontalAlignment="Right">
-                <Button x:Name="saveTaskButton" Height="40" Width="110" Click="saveTaskButton_Click" IsEnabled="{Binding ElementName=taskNameText, Path=Text.Length, Mode=OneWay}">Сохранить</Button>
-            </StackPanel>
+            <Menu HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,25,0,0" Width="auto">
+                <MenuItem x:Name="deadLineMenuItem" Header="Указать дату выполнения" Click="deadLineMenuItem_Click">
+                    <MenuItem.Icon>
+                        <Image Source="\Icons\date.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </Menu>
+            <ScrollViewer CanContentScroll="True" Margin="0,15,0,0">
+                <StackPanel x:Name="filesStackPanel" Width="360" Orientation="Vertical" Height="200"/>
+            </ScrollViewer>
         </StackPanel>
+        <Button x:Name="saveTaskButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="40" Width="110" Margin="0,0,30,50" Click="saveTaskButton_Click" IsEnabled="{Binding ElementName=taskNameText, Path=Text.Length, Mode=OneWay}">Сохранить</Button>
     </Grid>
 </Window>

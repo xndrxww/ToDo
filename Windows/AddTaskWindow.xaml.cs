@@ -54,8 +54,8 @@ namespace ToDo.Windows
                         UserPath = file
                     };
 
-                    filesStackPanel.Children.Add(new FilesControl(fileModel, FilesList, filesStackPanel));
                     FilesList.Add(fileModel);
+                    filesStackPanel.Children.Add(new FilesControl(fileModel, FilesList, filesStackPanel));
                 }
             }
         }

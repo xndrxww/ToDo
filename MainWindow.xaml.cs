@@ -84,7 +84,6 @@ namespace ToDo
                     {
                         CompletedTasksStackPanel.Children.Add(new TaskControl(task));
                     }
-                    CompletedTasksStackPanel = null;
                 }
                 else
                 {
@@ -99,14 +98,13 @@ namespace ToDo
 
         private void todayMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            CompletedTasksStackPanel = null;
             MainFrameInstance.Navigate(new TodayPage());
-
         }
 
         private void completedTaskMenuItem_Click(object sender, RoutedEventArgs e)
         {
             MainFrameInstance.Navigate(new CompletedTasksPage());
-
         }
     }
 }

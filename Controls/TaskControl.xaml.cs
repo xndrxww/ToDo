@@ -30,7 +30,6 @@ namespace ToDo.Controls
             {
                 task.IsCompleted = true;
             }
-
             MainWindow.LoadTasks(null);
         }
 
@@ -59,8 +58,10 @@ namespace ToDo.Controls
             }
 
             if (Task.IsCompleted)
+            {
                 completeTaskCheck.Visibility = Visibility.Collapsed;
-
+                restoreTaskMenuItem.Visibility = Visibility.Visible;
+            }
 
             return Task;
         }
@@ -101,7 +102,9 @@ namespace ToDo.Controls
                 Description = Task.Description,
                 DeadLine = Task.DeadLine,
                 IsCompleted = Task.IsCompleted,
-                IsOverdue = Task.IsOverdue
+                IsOverdue = Task.IsOverdue,
+                IsPriority = Task.IsPriority,
+                Files = Task.Files
             };
             MainWindow.TasksList.Add(copyTask);
             MainWindow.LoadTasks(null);
@@ -115,6 +118,12 @@ namespace ToDo.Controls
             else
                 Task.IsPriority = true;
 
+            MainWindow.LoadTasks(null);
+        }
+
+        private void restoreTaskMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Task.IsCompleted = false;
             MainWindow.LoadTasks(null);
         }
     }

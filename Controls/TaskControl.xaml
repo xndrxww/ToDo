@@ -36,6 +36,11 @@
                             <Image Source="\Icons\copy.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
+                    <MenuItem x:Name="restoreTaskMenuItem" Header="Восстановить" Click="restoreTaskMenuItem_Click" Visibility="Collapsed">
+                        <MenuItem.Icon>
+                            <Image Source="\Icons\restore.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <Separator/>
                     <MenuItem x:Name="deleteTaskMenuItem" Header="Удалить" Click="deleteTaskMenuItem_Click">
                         <MenuItem.Icon>

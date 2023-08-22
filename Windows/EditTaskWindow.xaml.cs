@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ToDo.Controls;
 
 namespace ToDo.Windows
 {
@@ -24,10 +25,13 @@ namespace ToDo.Windows
         public EditTaskWindow(Models.Task taskModel)
         {
             InitializeComponent();
+
             Task = taskModel;
             taskNameText.Text = Task.Name;
             taskDescriptionText.Text = Task.Description;
             taskDeadLineTime.SelectedDate = Task.DeadLine;
+
+            LoadFiles();
         }
 
         private void saveTaskButton_Click(object sender, RoutedEventArgs e)
@@ -40,6 +44,27 @@ namespace ToDo.Windows
             }
             Close();
             MainWindow.LoadTasks(null);
+        }
+
+        private void deadLineMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            taskDeadLineTime.IsDropDownOpen = true;
+        }
+
+        private void deadLineTime_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            deadLineMenuItem.Header = taskDeadLineTime.SelectedDate.Value.ToString("dd.MM.yyyy");
+        }
+
+        private void LoadFiles()
+        {
+            if (Task.Files != null && Task.Files.Count > 0)
+            {
+                foreach (var file in Task.Files)
+                {
+                    filesStackPanel.Children.Add(new FilesControl(file));
+                }
+            }
         }
     }
 }
