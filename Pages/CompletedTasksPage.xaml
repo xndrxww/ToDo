@@ -19,7 +19,7 @@
                     </StackPanel>
                 </Border>
                 <ScrollViewer CanContentScroll="True">
-                    <StackPanel x:Name="completedTasksStackPanel" Orientation="Vertical" Height="600"/>
+                    <StackPanel x:Name="completedTasksStackPanel" Orientation="Vertical" Height="610"/>
                 </ScrollViewer>
             </StackPanel>
         </Grid>

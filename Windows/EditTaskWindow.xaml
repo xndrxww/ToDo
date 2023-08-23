@@ -11,7 +11,7 @@
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
         FontFamily="{materialDesign:MaterialDesignFont}"
-        Title="EditTaskWindow" Height="500" Width="500" WindowStartupLocation="CenterScreen">
+        Title="EditTaskWindow" Height="300" Width="500" WindowStartupLocation="CenterScreen" UseLayoutRounding="True">
     <Grid>
         <TextBlock IsHitTestVisible="False" Text="Название задачи" Foreground="DarkGray" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="40,18,0,0" FontSize="20">
             <TextBlock.Style>
@@ -50,10 +50,13 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </Menu>
-            <ScrollViewer CanContentScroll="True" Margin="0,15,0,0">
-                <StackPanel x:Name="filesStackPanel" Width="360" Orientation="Vertical" Height="200"/>
-            </ScrollViewer>
+            <StackPanel x:Name="bottonStackPanel" Visibility="Collapsed">
+                <TextBlock x:Name="filesTxt" Text="Приложенные файлы" HorizontalAlignment="Left" Margin="41,10,0,-10"/>
+                <ScrollViewer CanContentScroll="True" Margin="0,15,0,0">
+                    <StackPanel x:Name="filesStackPanel" Width="360" Orientation="Vertical" Height="200"/>
+                </ScrollViewer>
+            </StackPanel>
         </StackPanel>
-        <Button x:Name="saveTaskButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="40" Width="110" Margin="0,0,30,50" Click="saveTaskButton_Click" IsEnabled="{Binding ElementName=taskNameText, Path=Text.Length, Mode=OneWay}">Сохранить</Button>
+        <Button x:Name="saveTaskButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="40" Width="110" Margin="0,0,30,20" Click="saveTaskButton_Click" IsEnabled="{Binding ElementName=taskNameText, Path=Text.Length, Mode=OneWay}">Сохранить</Button>
     </Grid>
 </Window>

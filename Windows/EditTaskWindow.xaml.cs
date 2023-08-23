@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using ToDo.Controls;
 
 namespace ToDo.Windows
@@ -31,7 +22,14 @@ namespace ToDo.Windows
             taskDescriptionText.Text = Task.Description;
             taskDeadLineTime.SelectedDate = Task.DeadLine;
 
-            LoadFiles();
+            //изменить
+            MainWindow.FilesStackPanel = filesStackPanel;
+            if (Task.Files != null && Task.Files.Count > 0)
+            {
+                Height = 500;
+                bottonStackPanel.Visibility = Visibility.Visible;
+                MainWindow.LoadFiles(Task);
+            }
         }
 
         private void saveTaskButton_Click(object sender, RoutedEventArgs e)
@@ -60,9 +58,11 @@ namespace ToDo.Windows
         {
             if (Task.Files != null && Task.Files.Count > 0)
             {
+                Height = 500;
+                bottonStackPanel.Visibility = Visibility.Visible;
                 foreach (var file in Task.Files)
                 {
-                    filesStackPanel.Children.Add(new FilesControl(file));
+                    filesStackPanel.Children.Add(new FilesControl(file, Task));
                 }
             }
         }

@@ -64,6 +64,6 @@
                 </ScrollViewer>
             </StackPanel>
         </StackPanel>
-        <Button x:Name="addTaskButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="40" Width="100" Margin="0,0,30,50" Click="addTaskButton_Click" IsEnabled="{Binding ElementName=taskNameText, Path=Text.Length, Mode=OneWay}">Добавить</Button>
+        <Button x:Name="addTaskButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="40" Width="100" Margin="0,0,30,20" Click="addTaskButton_Click" IsEnabled="{Binding ElementName=taskNameText, Path=Text.Length, Mode=OneWay}">Добавить</Button>
     </Grid>
 </Window>

@@ -55,7 +55,7 @@ namespace ToDo.Windows
                     };
 
                     FilesList.Add(fileModel);
-                    filesStackPanel.Children.Add(new FilesControl(fileModel, FilesList, filesStackPanel));
+                    filesStackPanel.Children.Add(new FilesControl(fileModel/*, FilesList, filesStackPanel*/));
                 }
             }
         }

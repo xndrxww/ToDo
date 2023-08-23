@@ -19,7 +19,7 @@
                     </StackPanel>
                 </Border>
                 <ScrollViewer CanContentScroll="True">
-                    <StackPanel x:Name="tasksStackPanel" Orientation="Vertical" Height="600"/>
+                    <StackPanel x:Name="tasksStackPanel" Orientation="Vertical" Height="610"/>
                 </ScrollViewer>
             </StackPanel>
             <TextBox x:Name="searhText" Margin="560,20,0,0" Width="200" FontSize="15" TextChanged="searhText_TextChanged" VerticalAlignment="Top" HorizontalAlignment="Right"></TextBox>

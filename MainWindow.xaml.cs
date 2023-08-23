@@ -17,6 +17,7 @@ namespace ToDo
         private string FileName = "tasks.xml";
         public static StackPanel TasksStackPanel;
         public static StackPanel CompletedTasksStackPanel;
+        public static StackPanel FilesStackPanel;
 
         public MainWindow()
         {
@@ -93,6 +94,15 @@ namespace ToDo
                         TasksStackPanel.Children.Add(new TaskControl(task));
                     }
                 }
+            }
+        }
+
+        public static void LoadFiles(Models.Task task)
+        {
+            FilesStackPanel.Children.Clear();
+            foreach (var file in task.Files)
+            {
+                FilesStackPanel.Children.Add(new FilesControl(file, task));
             }
         }
 
