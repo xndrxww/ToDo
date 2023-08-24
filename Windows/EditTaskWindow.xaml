@@ -43,7 +43,7 @@
                 <TextBox x:Name="taskNameText" Margin="40,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="20"></TextBox>
                 <TextBox x:Name="taskDescriptionText" Margin="40,22,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="12"></TextBox>
             </StackPanel>
-            <Menu HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,25,0,0" Width="auto">
+            <Menu HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,20,0,0" Width="auto">
                 <MenuItem x:Name="deadLineMenuItem" Header="Указать дату выполнения" Click="deadLineMenuItem_Click">
                     <MenuItem.Icon>
                         <Image Source="\Icons\date.png"/>

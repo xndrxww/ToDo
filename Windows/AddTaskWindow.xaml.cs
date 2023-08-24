@@ -57,6 +57,9 @@ namespace ToDo.Windows
                     FilesList.Add(fileModel);
                     filesStackPanel.Children.Add(new FilesControl(fileModel/*, FilesList, filesStackPanel*/));
                 }
+
+                Height = 500;
+                CenterWindowOnScreen();
             }
         }
 
@@ -80,6 +83,15 @@ namespace ToDo.Windows
                 if (!File.Exists($@"{DirectoryName}\{file.Name}"))
                     File.Copy($@"{file.UserPath}", $@"{DirectoryName}\{file.Name}");
             }
+        }
+        private void CenterWindowOnScreen()
+        {
+            double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
+            double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
+            double windowWidth = this.Width;
+            double windowHeight = this.Height;
+            this.Left = (screenWidth / 2) - (windowWidth / 2);
+            this.Top = (screenHeight / 2) - (windowHeight / 2);
         }
     }
 }

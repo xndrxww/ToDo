@@ -9,7 +9,7 @@
       Title="CompletedTasksPage" UseLayoutRounding="True">
 
     <Grid>
-        <Grid Width="950" Height="700" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid Width="1150" Height="700" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="275,0,0,0">
             <StackPanel Orientation="Vertical">
                 <Border BorderThickness="0 0 0 1" BorderBrush="Black">
                     <StackPanel Orientation="Vertical" >

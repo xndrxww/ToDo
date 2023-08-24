@@ -15,7 +15,7 @@
     <Grid>
         <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
         <Grid Background="#ededed" HorizontalAlignment="Left">
-            <Menu HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,85,0,0">
+            <Menu HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,50,0,0">
                 <Menu.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel Orientation="Vertical"/>
