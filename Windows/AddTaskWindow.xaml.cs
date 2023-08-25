@@ -11,12 +11,12 @@ namespace ToDo.Windows
     /// </summary>
     public partial class AddTaskWindow : Window
     {
-        private List<Models.File> FilesList = new List<Models.File>();
         private const string DirectoryName = "Files";
 
         public AddTaskWindow()
         {
             InitializeComponent();
+            MainWindow.FilesStackPanel = filesStackPanel;
         }
 
         private void addTaskButton_Click(object sender, RoutedEventArgs e)
@@ -27,11 +27,11 @@ namespace ToDo.Windows
                 Name = taskNameText.Text,
                 Description = taskDescriptionText.Text,
                 DeadLine = deadLineTime.SelectedDate,
-                Files = FilesList.Count > 0 ? FilesList : null
+                Files = MainWindow.FilesList.Count > 0 ? MainWindow.FilesList : null
             };
 
-            if (FilesList.Count > 0)
-                SaveFile(FilesList);
+            if (MainWindow.FilesList.Count > 0)
+                SaveFile(MainWindow.FilesList);
 
             MainWindow.TasksList.Add(taskModel);
             Close();
@@ -54,8 +54,8 @@ namespace ToDo.Windows
                         UserPath = file
                     };
 
-                    FilesList.Add(fileModel);
-                    filesStackPanel.Children.Add(new FilesControl(fileModel/*, FilesList, filesStackPanel*/));
+                    MainWindow.FilesList.Add(fileModel);
+                    MainWindow.FilesStackPanel.Children.Add(new FilesControl(fileModel));
                 }
 
                 Height = 500;
@@ -86,12 +86,12 @@ namespace ToDo.Windows
         }
         private void CenterWindowOnScreen()
         {
-            double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
-            double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
-            double windowWidth = this.Width;
-            double windowHeight = this.Height;
-            this.Left = (screenWidth / 2) - (windowWidth / 2);
-            this.Top = (screenHeight / 2) - (windowHeight / 2);
+            double screenWidth = SystemParameters.PrimaryScreenWidth;
+            double screenHeight = SystemParameters.PrimaryScreenHeight;
+            double windowWidth = Width;
+            double windowHeight = Height;
+            Left = (screenWidth / 2) - (windowWidth / 2);
+            Top = (screenHeight / 2) - (windowHeight / 2);
         }
     }
 }

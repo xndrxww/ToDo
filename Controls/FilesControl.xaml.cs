@@ -12,34 +12,24 @@ namespace ToDo.Controls
     {
         private Models.File File;
         private Models.Task Task;
-        private List<Models.File> FilesList;
-        private StackPanel FileStackPanel;
 
-        public FilesControl(Models.File fileModel, /*List<Models.File> filesList = null, StackPanel fileStackPanel = null*/ Models.Task task = null)
+        public FilesControl(Models.File fileModel, Models.Task task = null)
         {
             InitializeComponent();
 
             File = fileModel;
             Task = task;
-            //FilesList = filesList;
-            //FileStackPanel = fileStackPanel;
             fileNameText.Text = File.Name;
         }
 
         private void deleteFileMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            //FilesList.Remove(File); //изменить логику
-            //FileStackPanel.Children.Clear();
-            //if (FilesList.Count > 0)
-            //{
-            //    foreach (var file in FilesList)
-            //    {
-            //        FileStackPanel.Children.Add(new FilesControl(file));
-            //    }
-            //}
-
-            Task.Files.Remove(File);
-            MainWindow.LoadFiles(Task);
+            MainWindow.FilesList.Remove(File);
+            MainWindow.FilesStackPanel.Children.Clear();
+            foreach (var file in MainWindow.FilesList)
+            {
+                MainWindow.FilesStackPanel.Children.Add(new FilesControl(file, Task));
+            }
         }
 
         private void openFileMenuItem_Click(object sender, RoutedEventArgs e)

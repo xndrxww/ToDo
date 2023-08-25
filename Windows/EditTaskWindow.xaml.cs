@@ -16,20 +16,8 @@ namespace ToDo.Windows
         public EditTaskWindow(Models.Task taskModel)
         {
             InitializeComponent();
-
             Task = taskModel;
-            taskNameText.Text = Task.Name;
-            taskDescriptionText.Text = Task.Description;
-            taskDeadLineTime.SelectedDate = Task.DeadLine;
-
-            //изменить
-            MainWindow.FilesStackPanel = filesStackPanel;
-            if (Task.Files != null && Task.Files.Count > 0)
-            {
-                Height = 500;
-                bottonStackPanel.Visibility = Visibility.Visible;
-                MainWindow.LoadFiles(Task);
-            }
+            SetData();        
         }
 
         private void saveTaskButton_Click(object sender, RoutedEventArgs e)
@@ -39,6 +27,7 @@ namespace ToDo.Windows
                 task.Name = taskNameText.Text;
                 task.Description = taskDescriptionText.Text;
                 task.DeadLine = taskDeadLineTime.SelectedDate;
+                task.Files = MainWindow.FilesList;
             }
             Close();
             MainWindow.LoadTasks(null);
@@ -54,15 +43,25 @@ namespace ToDo.Windows
             deadLineMenuItem.Header = taskDeadLineTime.SelectedDate.Value.ToString("dd.MM.yyyy");
         }
 
-        private void LoadFiles()
+        private void SetData()
         {
-            if (Task.Files != null && Task.Files.Count > 0)
+            MainWindow.FilesStackPanel = filesStackPanel;
+            taskNameText.Text = Task.Name;
+            taskDescriptionText.Text = Task.Description;
+            taskDeadLineTime.SelectedDate = Task.DeadLine;
+            SetFiles();
+        }
+
+        private void SetFiles()
+        {
+            MainWindow.LoadFiles(Task);
+            if (MainWindow.FilesList.Count > 0)
             {
                 Height = 500;
                 bottonStackPanel.Visibility = Visibility.Visible;
-                foreach (var file in Task.Files)
+                foreach (var file in MainWindow.FilesList)
                 {
-                    filesStackPanel.Children.Add(new FilesControl(file, Task));
+                    MainWindow.FilesStackPanel.Children.Add(new FilesControl(file, Task));
                 }
             }
         }

@@ -20,8 +20,7 @@ namespace ToDo.Controls
         {
             InitializeComponent();
             Task = taskModel;
-            taskControl.Name = Task.ControlName;
-            DataContext = CheckData();
+            DataContext = SetData();
         }
 
         private void completeTaskCheck_Checked(object sender, RoutedEventArgs e)
@@ -33,8 +32,10 @@ namespace ToDo.Controls
             MainWindow.LoadTasks(null);
         }
 
-        private Models.Task CheckData()
+        private Models.Task SetData()
         {
+            taskControl.Name = Task.ControlName;
+
             if (Task.DeadLine != null && Task.DeadLine < DateTime.Now)
                 Task.IsOverdue = true;
             else

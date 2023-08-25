@@ -14,6 +14,7 @@ namespace ToDo
     {
         public static Frame MainFrameInstance;
         public static List<Models.Task> TasksList = new List<Models.Task>();
+        public static List<Models.File> FilesList = new List<Models.File>();
         private string FileName = "tasks.xml";
         public static StackPanel TasksStackPanel;
         public static StackPanel CompletedTasksStackPanel;
@@ -99,10 +100,17 @@ namespace ToDo
 
         public static void LoadFiles(Models.Task task)
         {
-            FilesStackPanel.Children.Clear();
-            foreach (var file in task.Files)
+            if (task.Files !=  null && task.Files.Count > 0)
             {
-                FilesStackPanel.Children.Add(new FilesControl(file, task));
+                FilesList = new List<Models.File>();
+                foreach (var file in task.Files)
+                {
+                    FilesList.Add(file);
+                }
+            }
+            else
+            {
+                FilesList = new List<Models.File>();
             }
         }
 
