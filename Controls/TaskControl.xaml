@@ -22,7 +22,13 @@
             <StackPanel VerticalAlignment="Top" Margin="40,0,0,0" Width="800">
                 <TextBlock x:Name="taskNameText" VerticalAlignment="Center" FontSize="20" Text="{Binding Name}" TextWrapping="Wrap"></TextBlock>
                 <TextBlock x:Name="taskDesciptionText" VerticalAlignment="Center" FontSize="15" Opacity="0.5" Text="{Binding Description}"></TextBlock>
-                <TextBlock x:Name="taskDeadLineText" VerticalAlignment="Center" FontSize="14" Foreground="DarkSeaGreen" Margin="0,8,80,0" Text="{Binding DeadLine}"></TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="taskDeadLineText" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="14" Foreground="DarkSeaGreen" Margin="0,8,0,0" Text="{Binding DeadLine}"></TextBlock>
+                    <StackPanel Orientation="Horizontal" x:Name="attachedFilesStackPanel" Visibility="Collapsed">
+                        <Image Source="\Icons\paper_clip.png" Height="11" VerticalAlignment="Bottom" Margin="15,0,0,3"/>
+                        <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="14" Margin="0,8,0,0">Вложены файлы</TextBlock>
+                    </StackPanel>
+                </StackPanel>
             </StackPanel>
             <Menu Height="40" VerticalAlignment="Top" HorizontalAlignment="Right">
                 <MenuItem Header="...">

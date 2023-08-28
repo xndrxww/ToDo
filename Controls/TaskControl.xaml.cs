@@ -64,6 +64,9 @@ namespace ToDo.Controls
                 restoreTaskMenuItem.Visibility = Visibility.Visible;
             }
 
+            if (Task.Files != null && Task.Files.Count > 0)
+                attachedFilesStackPanel.Visibility = Visibility.Visible;
+
             return Task;
         }
 

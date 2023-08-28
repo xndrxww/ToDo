@@ -12,6 +12,7 @@ namespace ToDo.Windows
     public partial class AddTaskWindow : Window
     {
         private const string DirectoryName = "Files";
+        private List<Models.File> FilesList = new List<Models.File>();
 
         public AddTaskWindow()
         {
@@ -21,17 +22,17 @@ namespace ToDo.Windows
 
         private void addTaskButton_Click(object sender, RoutedEventArgs e)
         {
+            if (MainWindow.FilesList.Count > 0)
+                SaveFile(MainWindow.FilesList);
+
             var taskModel = new Models.Task
             {
                 Id = MainWindow.TasksList.Count + 1,
                 Name = taskNameText.Text,
                 Description = taskDescriptionText.Text,
                 DeadLine = deadLineTime.SelectedDate,
-                Files = MainWindow.FilesList.Count > 0 ? MainWindow.FilesList : null
+                Files = FilesList.Count > 0 ? FilesList : null
             };
-
-            if (MainWindow.FilesList.Count > 0)
-                SaveFile(MainWindow.FilesList);
 
             MainWindow.TasksList.Add(taskModel);
             Close();
@@ -46,6 +47,7 @@ namespace ToDo.Windows
 
             if (fileDialog.ShowDialog() == true)
             {
+                MainWindow.FilesList = new List<Models.File>();
                 foreach (var file in fileDialog.FileNames)
                 {
                     var fileModel = new Models.File
@@ -82,6 +84,14 @@ namespace ToDo.Windows
             {
                 if (!File.Exists($@"{DirectoryName}\{file.Name}"))
                     File.Copy($@"{file.UserPath}", $@"{DirectoryName}\{file.Name}");
+                
+                
+                var fileModel = new Models.File
+                {
+                    Name = file.Name,
+                    UserPath = $@"{DirectoryName}\{file.Name}"
+                };
+                FilesList.Add(fileModel);
             }
         }
         private void CenterWindowOnScreen()
