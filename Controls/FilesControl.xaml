@@ -16,7 +16,7 @@
         </Style>
     </UserControl.Style>
     
-    <Grid x:Name="filesControl">
+    <Grid>
         <TextBlock x:Name="fileNameText" Text="test" Margin="15,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
         <Menu Height="40" VerticalAlignment="Top" HorizontalAlignment="Right">
             <MenuItem Header="...">

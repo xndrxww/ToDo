@@ -42,6 +42,11 @@
                             <Image Source="\Icons\copy.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
+                    <MenuItem x:Name="moveTaskMenuItem" Header="Добавить в группу...">
+                        <MenuItem.Icon>
+                            <Image Source="\Icons\arrow.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <MenuItem x:Name="restoreTaskMenuItem" Header="Восстановить" Click="restoreTaskMenuItem_Click" Visibility="Collapsed">
                         <MenuItem.Icon>
                             <Image Source="\Icons\restore.png"/>

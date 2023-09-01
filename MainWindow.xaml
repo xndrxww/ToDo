@@ -15,23 +15,44 @@
     <Grid>
         <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
         <Grid Background="#ededed" HorizontalAlignment="Left">
-            <Menu HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,50,0,0">
-                <Menu.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel Orientation="Vertical"/>
-                    </ItemsPanelTemplate>
-                </Menu.ItemsPanel>
-                <MenuItem x:Name="todayMenuItem" Header="Сегодня" Click="todayMenuItem_Click">
-                    <MenuItem.Icon>
-                        <Image Source="Icons\calendar.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem x:Name="completedTaskMenuItem" Header="Выполненные задачи" Click="completedTaskMenuItem_Click">
-                    <MenuItem.Icon>
-                        <Image Source="Icons\schedule.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-            </Menu>
+            <StackPanel>
+                <StackPanel>
+                    <Menu HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,50,0,0">
+                        <Menu.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel Orientation="Vertical"/>
+                            </ItemsPanelTemplate>
+                        </Menu.ItemsPanel>
+                        <MenuItem x:Name="todayMenuItem" Header="Сегодня" Click="todayMenuItem_Click">
+                            <MenuItem.Icon>
+                                <Image Source="Icons\calendar.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem x:Name="completedTaskMenuItem" Header="Выполненные задачи" Click="completedTaskMenuItem_Click">
+                            <MenuItem.Icon>
+                                <Image Source="Icons\schedule.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </Menu>
+                    <Separator Margin="0,20,0,0"/>
+                </StackPanel>
+                <StackPanel x:Name="groupStackPanel" Height="548">
+                </StackPanel>
+                <StackPanel VerticalAlignment="Bottom">
+                    <Menu>
+                        <Menu.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel Orientation="Vertical"/>
+                            </ItemsPanelTemplate>
+                        </Menu.ItemsPanel>
+                        <MenuItem x:Name="addGroupMenuItem" Header="Создать группу" Click="addGroupMenuItem_Click">
+                            <MenuItem.Icon>
+                                <Image Source="Icons\plus.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </Menu>
+                </StackPanel>
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>
