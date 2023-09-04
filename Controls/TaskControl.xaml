@@ -31,7 +31,7 @@
                 </StackPanel>
             </StackPanel>
             <Menu Height="40" VerticalAlignment="Top" HorizontalAlignment="Right">
-                <MenuItem Header="...">
+                <MenuItem x:Name="menu" Header="..." SubmenuOpened="menu_SubmenuOpened">
                     <MenuItem x:Name="editTaskMenuItem" Header="Редактировать" Click="editTaskMenuItem_Click">
                         <MenuItem.Icon>
                             <Image Source="\Icons\editing.png"/>

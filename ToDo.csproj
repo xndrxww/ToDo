@@ -80,7 +80,11 @@
     <Compile Include="Controls\FilesControl.xaml.cs">
       <DependentUpon>FilesControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\GroupControl.xaml.cs">
+      <DependentUpon>GroupControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\File.cs" />
+    <Compile Include="Models\Group.cs" />
     <Compile Include="Models\Task.cs" />
     <Compile Include="Pages\CompletedTasksPage.xaml.cs">
       <DependentUpon>CompletedTasksPage.xaml</DependentUpon>
@@ -92,6 +96,10 @@
       <DependentUpon>EditTaskWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\FilesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\GroupControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -224,6 +232,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\paper_clip.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\group.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\arrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\close.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

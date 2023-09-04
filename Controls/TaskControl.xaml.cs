@@ -66,7 +66,7 @@ namespace ToDo.Controls
 
             if (Task.Files != null && Task.Files.Count > 0)
                 attachedFilesStackPanel.Visibility = Visibility.Visible;
-
+            
             return Task;
         }
 
@@ -114,7 +114,6 @@ namespace ToDo.Controls
             MainWindow.LoadTasks(null);
         }
 
-
         private void priorityTaskImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (Task.IsPriority)
@@ -129,6 +128,25 @@ namespace ToDo.Controls
         {
             Task.IsCompleted = false;
             MainWindow.LoadTasks(null);
+        }
+
+        private void LoadGroups()
+        {
+            moveTaskMenuItem.Items.Clear();
+            if (MainWindow.GroupsList.Any())
+            {
+                foreach (var group in MainWindow.GroupsList)
+                {
+                    var menuItem = new MenuItem();
+                    menuItem.Header = /*group.Name ??*/ "Группа без названия";
+                    moveTaskMenuItem.Items.Add(menuItem);
+                }
+            }
+        }
+
+        private void menu_SubmenuOpened(object sender, RoutedEventArgs e)
+        {
+            LoadGroups();
         }
     }
 }
