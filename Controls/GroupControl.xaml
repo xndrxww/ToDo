@@ -11,12 +11,28 @@
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#ebf5fc"/>
+                    <Setter Property="Background" Value="#ebf5fc"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
     </UserControl.Style>
-    <Grid Height="55">
+    <Grid Height="55" Background="Transparent" UseLayoutRounding="True" MouseRightButtonUp="Grid_MouseRightButtonUp">
         <Image Source="..\Icons\group.png" HorizontalAlignment="Left" VerticalAlignment="Center" Width="14" Margin="10,0,0,0"/>
-        <TextBox Text="Группа без названия" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30,0,0,5" ></TextBox>
+        <TextBox x:Name="groupNameTxt" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,5"></TextBox>
+        <Menu HorizontalAlignment="Right" VerticalAlignment="Center" Style="{x:Null}">
+            <MenuItem x:Name="groupMenu">
+                <MenuItem x:Name="saveGroupName" Header="Сохранить название" Click="saveGroupName_Click">
+                    <MenuItem.Icon>
+                        <Image Source="\Icons\save.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem x:Name="deleteGroup" Header="Удалить группу" Click="deleteGroup_Click">
+                    <MenuItem.Icon>
+                        <Image Source="\Icons\delete.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
     </Grid>
 </UserControl>

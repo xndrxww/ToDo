@@ -36,8 +36,9 @@
                     </Menu>
                     <Separator Margin="0,20,0,0"/>
                 </StackPanel>
-                <StackPanel x:Name="groupStackPanel" Height="548">
-                </StackPanel>
+                <ScrollViewer CanContentScroll="True">
+                    <StackPanel x:Name="groupStackPanel" Height="548"/>
+                </ScrollViewer>
                 <StackPanel VerticalAlignment="Bottom">
                     <Menu>
                         <Menu.ItemsPanel>

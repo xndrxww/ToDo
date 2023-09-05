@@ -14,19 +14,22 @@ namespace ToDo
     {
         public static Frame MainFrameInstance;
         public static List<Models.Task> TasksList = new List<Models.Task>();
+        public static List<Models.Group> GroupsList = new List<Models.Group>();
         public static List<Models.File> FilesList = new List<Models.File>();
         private string FileName = "tasks.xml";
         public static StackPanel TasksStackPanel;
         public static StackPanel CompletedTasksStackPanel;
         public static StackPanel FilesStackPanel;
+        public static StackPanel GroupStackPanel;
 
         public MainWindow()
         {
             InitializeComponent();
-            DeserializeTasks();
+            Deserialize();
 
             MainFrameInstance = MainFrame;
             MainFrameInstance.Navigate(new TodayPage());
+            GroupStackPanel = groupStackPanel;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -48,7 +51,7 @@ namespace ToDo
             }
         }
 
-        private void DeserializeTasks()
+        private void Deserialize()
         {
             if (File.Exists(FileName))
             {
@@ -63,7 +66,7 @@ namespace ToDo
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show("При десериализации файла произошла ошибка");
+                    MessageBox.Show("При десериализации произошла ошибка");
                 }
             }
         }
@@ -123,6 +126,18 @@ namespace ToDo
         private void completedTaskMenuItem_Click(object sender, RoutedEventArgs e)
         {
             MainFrameInstance.Navigate(new CompletedTasksPage());
+        }
+
+        private void addGroupMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var group = new Models.Group
+            {
+                Name = "Группа без названия"
+            };
+            group.Id = group.GetId();
+
+            GroupsList.Add(group);
+            GroupStackPanel.Children.Add(new GroupControl(group));
         }
     }
 }
