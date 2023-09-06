@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -28,16 +28,18 @@ namespace ToDo.Controls
         private void deleteGroup_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.GroupsList.Remove(Group);
-            LoadGroups();
+            MainWindow.LoadGroups();
         }
 
-        private void LoadGroups()
+        private void saveGroupName_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.GroupStackPanel.Children.Clear();
-            foreach (var group in MainWindow.GroupsList)
-            {
-                MainWindow.GroupStackPanel.Children.Add(new GroupControl(group));
-            }
+            var changedGroup = MainWindow.GroupsList.Where(group => group.Id == Group.Id).FirstOrDefault();
+            int listIndex = MainWindow.GroupsList.IndexOf(changedGroup);
+
+            changedGroup.Name = groupNameTxt.Text;
+            MainWindow.GroupsList[listIndex] = changedGroup;
+            
+            MainWindow.LoadGroups();
         }
     }
 }

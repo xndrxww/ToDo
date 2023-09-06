@@ -16,7 +16,8 @@ namespace ToDo
         public static List<Models.Task> TasksList = new List<Models.Task>();
         public static List<Models.Group> GroupsList = new List<Models.Group>();
         public static List<Models.File> FilesList = new List<Models.File>();
-        private string FileName = "tasks.xml";
+        private string TasksFileName = "tasks.xml";
+        private string GroupsFileName = "groups.xml";
         public static StackPanel TasksStackPanel;
         public static StackPanel CompletedTasksStackPanel;
         public static StackPanel FilesStackPanel;
@@ -30,44 +31,65 @@ namespace ToDo
             MainFrameInstance = MainFrame;
             MainFrameInstance.Navigate(new TodayPage());
             GroupStackPanel = groupStackPanel;
+            LoadGroups();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (TasksList != null)
+            if (TasksList.Any())
             {
-                if (File.Exists(FileName))
-                    File.Delete(FileName);
+                if (File.Exists(TasksFileName))
+                    File.Delete(TasksFileName);
 
-                if (TasksList.Count > 0)
+                XmlSerializer xmlSerializer = new XmlSerializer(TasksList.GetType());
+
+                using (FileStream fs = new FileStream(TasksFileName, FileMode.OpenOrCreate))
                 {
-                    XmlSerializer xmlSerializer = new XmlSerializer(TasksList.GetType());
+                    xmlSerializer.Serialize(fs, TasksList);
+                }
+            }
 
-                    using (FileStream fs = new FileStream(FileName, FileMode.OpenOrCreate))
-                    {
-                        xmlSerializer.Serialize(fs, TasksList);
-                    }
+            if (GroupsList.Any())
+            {
+                if (File.Exists(GroupsFileName))
+                    File.Delete(GroupsFileName);
+
+                XmlSerializer xmlSerializer = new XmlSerializer(GroupsList.GetType());
+
+                using (FileStream fs = new FileStream(GroupsFileName, FileMode.OpenOrCreate))
+                {
+                    xmlSerializer.Serialize(fs, GroupsList);
                 }
             }
         }
 
         private void Deserialize()
         {
-            if (File.Exists(FileName))
+            try
             {
-                try
+                if (File.Exists(TasksFileName))
                 {
                     XmlSerializer xmlSerializer = new XmlSerializer(TasksList.GetType());
 
-                    using (FileStream fs = new FileStream("tasks.xml", FileMode.OpenOrCreate))
+                    using (FileStream fs = new FileStream(TasksFileName, FileMode.OpenOrCreate))
                     {
                         TasksList = (List<Models.Task>)xmlSerializer.Deserialize(fs);
                     }
                 }
-                catch (Exception)
+
+                if (File.Exists(GroupsFileName))
                 {
-                    MessageBox.Show("При десериализации произошла ошибка");
+                    XmlSerializer xmlSerializer = new XmlSerializer(GroupsList.GetType());
+
+                    using (FileStream fs = new FileStream(GroupsFileName, FileMode.OpenOrCreate))
+                    {
+                        GroupsList = (List<Models.Group>)xmlSerializer.Deserialize(fs);
+                    }
                 }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("При десериализации произошла ошибка");
             }
         }
 
@@ -103,7 +125,7 @@ namespace ToDo
 
         public static void LoadFiles(Models.Task task)
         {
-            if (task.Files !=  null && task.Files.Count > 0)
+            if (task.Files.Any())
             {
                 FilesList = new List<Models.File>();
                 foreach (var file in task.Files)
@@ -114,6 +136,22 @@ namespace ToDo
             else
             {
                 FilesList = new List<Models.File>();
+            }
+        }
+
+        public static void LoadGroups()
+        {
+            GroupStackPanel.Children.Clear();
+            if (GroupsList.Any())
+            {
+                foreach (var group in GroupsList)
+                {
+                    GroupStackPanel.Children.Add(new GroupControl(group));
+                }
+            }
+            else
+            {
+                GroupsList = new List<Models.Group>();
             }
         }
 

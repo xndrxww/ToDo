@@ -243,7 +243,7 @@
     <Resource Include="Icons\plus.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\close.png" />
+    <Resource Include="Icons\save.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

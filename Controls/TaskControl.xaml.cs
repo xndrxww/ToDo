@@ -130,6 +130,11 @@ namespace ToDo.Controls
             MainWindow.LoadTasks(null);
         }
 
+        private void menu_SubmenuOpened(object sender, RoutedEventArgs e)
+        {
+            LoadGroups();
+        }
+
         private void LoadGroups()
         {
             moveTaskMenuItem.Items.Clear();
@@ -138,15 +143,10 @@ namespace ToDo.Controls
                 foreach (var group in MainWindow.GroupsList)
                 {
                     var menuItem = new MenuItem();
-                    menuItem.Header = /*group.Name ??*/ "Группа без названия";
+                    menuItem.Header = group.Name;
                     moveTaskMenuItem.Items.Add(menuItem);
                 }
             }
-        }
-
-        private void menu_SubmenuOpened(object sender, RoutedEventArgs e)
-        {
-            LoadGroups();
         }
     }
 }

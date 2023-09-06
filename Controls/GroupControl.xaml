@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ToDo.Controls"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="55" d:DesignWidth="200">
     <UserControl.Style>
@@ -11,14 +12,13 @@
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#ebf5fc"/>
-                    <Setter Property="Background" Value="#ebf5fc"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
     </UserControl.Style>
     <Grid Height="55" Background="Transparent" UseLayoutRounding="True" MouseRightButtonUp="Grid_MouseRightButtonUp">
         <Image Source="..\Icons\group.png" HorizontalAlignment="Left" VerticalAlignment="Center" Width="14" Margin="10,0,0,0"/>
-        <TextBox x:Name="groupNameTxt" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,5"></TextBox>
+        <TextBox x:Name="groupNameTxt" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,5" MaxLength="20" Width="160" materialDesign:TextFieldAssist.CharacterCounterVisibility="Collapsed"/>
         <Menu HorizontalAlignment="Right" VerticalAlignment="Center" Style="{x:Null}">
             <MenuItem x:Name="groupMenu">
                 <MenuItem x:Name="saveGroupName" Header="Сохранить название" Click="saveGroupName_Click">
