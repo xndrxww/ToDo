@@ -31,15 +31,26 @@ namespace ToDo.Controls
             MainWindow.LoadGroups();
         }
 
-        private void saveGroupName_Click(object sender, RoutedEventArgs e)
+        private void renameGroup_Click(object sender, RoutedEventArgs e)
+        {
+            groupNameTxt.Visibility = Visibility.Collapsed;
+            renameGroupNameTxt.Visibility = Visibility.Visible;
+            renameGroupNameTxt.Text = groupNameTxt.Text;
+            renameGroupNameTxt.Focus();
+        }
+
+        private void renameGroupNameTxt_LostFocus(object sender, RoutedEventArgs e)
         {
             var changedGroup = MainWindow.GroupsList.Where(group => group.Id == Group.Id).FirstOrDefault();
             int listIndex = MainWindow.GroupsList.IndexOf(changedGroup);
 
-            changedGroup.Name = groupNameTxt.Text;
+            changedGroup.Name = renameGroupNameTxt.Text;
             MainWindow.GroupsList[listIndex] = changedGroup;
             
             MainWindow.LoadGroups();
+
+            groupNameTxt.Visibility = Visibility.Visible;
+            renameGroupNameTxt.Visibility = Visibility.Collapsed;
         }
     }
 }

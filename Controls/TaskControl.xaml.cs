@@ -137,14 +137,18 @@ namespace ToDo.Controls
 
         private void LoadGroups()
         {
-            moveTaskMenuItem.Items.Clear();
+            groupTaskMenuItem.Items.Clear();
             if (MainWindow.GroupsList.Any())
             {
                 foreach (var group in MainWindow.GroupsList)
                 {
-                    var menuItem = new MenuItem();
-                    menuItem.Header = group.Name;
-                    moveTaskMenuItem.Items.Add(menuItem);
+                    var menuItem = new MenuItem
+                    {
+                        Header = group.Name,
+                        Name = group.Id.ToString() //Переделать
+                    };
+                    groupTaskMenuItem.Items.Add(menuItem);
+                }
                 }
             }
         }

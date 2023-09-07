@@ -42,7 +42,7 @@
                             <Image Source="\Icons\copy.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem x:Name="moveTaskMenuItem" Header="Добавить в группу...">
+                    <MenuItem x:Name="groupTaskMenuItem" Header="Добавить в группу..." Click="groupTaskMenuItem_Click">
                         <MenuItem.Icon>
                             <Image Source="\Icons\arrow.png"/>
                         </MenuItem.Icon>

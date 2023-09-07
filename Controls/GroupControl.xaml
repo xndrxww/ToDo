@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:ToDo.Controls"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="55" d:DesignWidth="200">
+             d:DesignHeight="55" d:DesignWidth="200" MouseLeftButtonDown="UserControl_MouseLeftButtonDown">
     <UserControl.Style>
         <Style TargetType="UserControl">
             <Style.Triggers>
@@ -18,12 +18,13 @@
     </UserControl.Style>
     <Grid Height="55" Background="Transparent" UseLayoutRounding="True" MouseRightButtonUp="Grid_MouseRightButtonUp">
         <Image Source="..\Icons\group.png" HorizontalAlignment="Left" VerticalAlignment="Center" Width="14" Margin="10,0,0,0"/>
-        <TextBox x:Name="groupNameTxt" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,5" MaxLength="20" Width="160" materialDesign:TextFieldAssist.CharacterCounterVisibility="Collapsed"/>
+        <TextBlock x:Name="groupNameTxt" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,5"/>
+        <TextBox x:Name="renameGroupNameTxt" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,5"  MaxLength="20" Width="160" materialDesign:TextFieldAssist.CharacterCounterVisibility="Collapsed" Visibility="Collapsed" LostFocus="renameGroupNameTxt_LostFocus"/>
         <Menu HorizontalAlignment="Right" VerticalAlignment="Center" Style="{x:Null}">
             <MenuItem x:Name="groupMenu">
-                <MenuItem x:Name="saveGroupName" Header="Сохранить название" Click="saveGroupName_Click">
+                <MenuItem x:Name="renameGroup" Header="Переименовать группу" Click="renameGroup_Click">
                     <MenuItem.Icon>
-                        <Image Source="\Icons\save.png"/>
+                        <Image Source="\Icons\editing.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator/>
