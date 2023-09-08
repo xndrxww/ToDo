@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using ToDo.Pages;
 
 namespace ToDo.Controls
 {
@@ -46,11 +47,16 @@ namespace ToDo.Controls
 
             changedGroup.Name = renameGroupNameTxt.Text;
             MainWindow.GroupsList[listIndex] = changedGroup;
-            
+
             MainWindow.LoadGroups();
 
             groupNameTxt.Visibility = Visibility.Visible;
             renameGroupNameTxt.Visibility = Visibility.Collapsed;
+        }
+
+        private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            MainWindow.MainFrameInstance.Navigate(new TodayPage(Group));
         }
     }
 }

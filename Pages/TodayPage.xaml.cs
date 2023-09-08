@@ -13,12 +13,21 @@ namespace ToDo.Pages
     /// </summary>
     public partial class TodayPage : Page
     {
-        public TodayPage()
+        public TodayPage(Models.Group group = null)
         {
             InitializeComponent();
             MainWindow.TasksStackPanel = tasksStackPanel;
-            MainWindow.LoadTasks(null);
-            SetTodayDate();
+
+            if (group != null)
+            {
+                todayDateText.Visibility = Visibility.Collapsed;
+                LoadGroups(group);
+            }
+            else
+            {
+                MainWindow.LoadTasks(null);
+                SetTodayDate();
+            }
         }
 
         private void addTaskButton_Click(object sender, RoutedEventArgs e)
@@ -69,6 +78,16 @@ namespace ToDo.Pages
         {
             var tasksList = MainWindow.TasksList.OrderByDescending(t => t.IsPriority).ToList();
             MainWindow.LoadTasks(tasksList);
+        }
+
+        private void LoadGroups(Models.Group group)
+        {
+            pageNameText.Text = group.Name;
+
+            foreach (var task in group.Tasks) 
+            {
+                tasksStackPanel.Children.Add(new TaskControl(task));
+            }
         }
     }
 }

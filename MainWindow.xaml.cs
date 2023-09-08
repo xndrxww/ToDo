@@ -36,29 +36,35 @@ namespace ToDo
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (TasksList.Any())
+            if (TasksList != null)
             {
                 if (File.Exists(TasksFileName))
                     File.Delete(TasksFileName);
 
-                XmlSerializer xmlSerializer = new XmlSerializer(TasksList.GetType());
-
-                using (FileStream fs = new FileStream(TasksFileName, FileMode.OpenOrCreate))
+                if (TasksList.Any())
                 {
-                    xmlSerializer.Serialize(fs, TasksList);
+                    XmlSerializer xmlSerializer = new XmlSerializer(TasksList.GetType());
+
+                    using (FileStream fs = new FileStream(TasksFileName, FileMode.OpenOrCreate))
+                    {
+                        xmlSerializer.Serialize(fs, TasksList);
+                    }
                 }
             }
 
-            if (GroupsList.Any())
+            if (GroupsList != null)
             {
                 if (File.Exists(GroupsFileName))
                     File.Delete(GroupsFileName);
 
-                XmlSerializer xmlSerializer = new XmlSerializer(GroupsList.GetType());
-
-                using (FileStream fs = new FileStream(GroupsFileName, FileMode.OpenOrCreate))
+                if (GroupsList.Any())
                 {
-                    xmlSerializer.Serialize(fs, GroupsList);
+                    XmlSerializer xmlSerializer = new XmlSerializer(GroupsList.GetType());
+
+                    using (FileStream fs = new FileStream(GroupsFileName, FileMode.OpenOrCreate))
+                    {
+                        xmlSerializer.Serialize(fs, GroupsList);
+                    }
                 }
             }
         }

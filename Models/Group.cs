@@ -6,10 +6,11 @@ namespace ToDo.Models
     public class Group
     {
         public Group()
-        {}
+        { }
 
         public int Id { get; set; }
         public string Name { get; set; }
+        public string MenuItemName => $"menuItem{Id}";
         public List<Task> Tasks { get; set; }
 
         public int GetId()

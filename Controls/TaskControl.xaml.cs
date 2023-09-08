@@ -145,12 +145,26 @@ namespace ToDo.Controls
                     var menuItem = new MenuItem
                     {
                         Header = group.Name,
-                        Name = group.Id.ToString() //Переделать
+                        Name = group.MenuItemName
                     };
                     groupTaskMenuItem.Items.Add(menuItem);
                 }
-                }
             }
+        }
+
+        private void groupTaskMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var menuItem = e.Source as MenuItem;
+
+            var group = MainWindow.GroupsList.Where(g => g.MenuItemName == menuItem.Name).FirstOrDefault();
+
+            if (group != null)
+                SetTaskToGroup(Task, group);
+        }
+
+        private void SetTaskToGroup(Models.Task task, Models.Group group)
+        {
+            group.Tasks.Add(task);
         }
     }
 }

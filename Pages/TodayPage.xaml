@@ -14,7 +14,7 @@
             <StackPanel Orientation="Vertical">
                 <Border BorderThickness="0 0 0 1" BorderBrush="Black">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock VerticalAlignment="Center" FontSize="30" Margin="10" HorizontalAlignment="Left" TextWrapping="Wrap" FontWeight="Bold">Сегодня</TextBlock>
+                        <TextBlock x:Name="pageNameText" VerticalAlignment="Center" FontSize="30" Margin="10" HorizontalAlignment="Left" TextWrapping="Wrap" FontWeight="Bold">Сегодня</TextBlock>
                         <TextBlock x:Name="todayDateText" VerticalAlignment="Center" FontSize="30" HorizontalAlignment="Left" Opacity="0.5">00.00.0000</TextBlock>
                     </StackPanel>
                 </Border>
