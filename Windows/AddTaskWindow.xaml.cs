@@ -1,8 +1,10 @@
 ﻿using Microsoft.Win32;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using ToDo.Controls;
+using ToDo.Models;
 
 namespace ToDo.Windows
 {
@@ -25,7 +27,40 @@ namespace ToDo.Windows
             if (MainWindow.FilesList.Count > 0)
                 SaveFile(MainWindow.FilesList);
 
-            var taskModel = new Models.Task
+            var group = MainWindow.GroupsList.Where(g => g.Name == MainWindow.CurrentPageName).FirstOrDefault();
+            if (group != null)
+            {
+                if (group.Tasks?.Any() == true)
+                    group.Tasks.Add(CreateTask());
+                else
+                    group.Tasks = new List<Task> { CreateTask() };
+            }
+            else
+            {
+                group = CreateGroup();
+                MainWindow.GroupsList.Add(group);
+            }
+
+            MainWindow.RefreshTasksStackPanel(group);
+
+            Close();
+        }
+
+        private Group CreateGroup()
+        {
+            var group = new Group()
+            {
+                Name = MainWindow.CurrentPageName,
+                Tasks = new List<Task> { CreateTask() }
+            };
+            group.Id = group.GetId();
+
+            return group;
+        }
+
+        private Task CreateTask()
+        {
+            return new Task
             {
                 Id = MainWindow.TasksList.Count + 1,
                 Name = taskNameText.Text,
@@ -33,9 +68,6 @@ namespace ToDo.Windows
                 DeadLine = deadLineTime.SelectedDate,
                 Files = FilesList.Count > 0 ? FilesList : null
             };
-
-            MainWindow.TasksList.Add(taskModel);
-            Close();
         }
 
         private void addFileMenuItem_Click(object sender, RoutedEventArgs e)
@@ -82,10 +114,10 @@ namespace ToDo.Windows
 
             foreach (var file in files)
             {
-                if (!File.Exists($@"{DirectoryName}\{file.Name}"))
-                    File.Copy($@"{file.UserPath}", $@"{DirectoryName}\{file.Name}");
-                
-                
+                if (!System.IO.File.Exists($@"{DirectoryName}\{file.Name}"))
+                    System.IO.File.Copy($@"{file.UserPath}", $@"{DirectoryName}\{file.Name}");
+
+
                 var fileModel = new Models.File
                 {
                     Name = file.Name,

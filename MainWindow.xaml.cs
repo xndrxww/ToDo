@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Xml.Serialization;
 using ToDo.Controls;
+using ToDo.Models;
 using ToDo.Pages;
 
 namespace ToDo
@@ -13,15 +14,15 @@ namespace ToDo
     public partial class MainWindow : Window
     {
         public static Frame MainFrameInstance;
-        public static List<Models.Task> TasksList = new List<Models.Task>();
-        public static List<Models.Group> GroupsList = new List<Models.Group>();
+        public static List<Task> TasksList = new List<Task>();
+        public static List<Group> GroupsList = new List<Group>();
         public static List<Models.File> FilesList = new List<Models.File>();
-        private string TasksFileName = "tasks.xml";
         private string GroupsFileName = "groups.xml";
         public static StackPanel TasksStackPanel;
         public static StackPanel CompletedTasksStackPanel;
         public static StackPanel FilesStackPanel;
         public static StackPanel GroupStackPanel;
+        public static string CurrentPageName;
 
         public MainWindow()
         {
@@ -36,26 +37,10 @@ namespace ToDo
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (TasksList != null)
-            {
-                if (File.Exists(TasksFileName))
-                    File.Delete(TasksFileName);
-
-                if (TasksList.Any())
-                {
-                    XmlSerializer xmlSerializer = new XmlSerializer(TasksList.GetType());
-
-                    using (FileStream fs = new FileStream(TasksFileName, FileMode.OpenOrCreate))
-                    {
-                        xmlSerializer.Serialize(fs, TasksList);
-                    }
-                }
-            }
-
             if (GroupsList != null)
             {
-                if (File.Exists(GroupsFileName))
-                    File.Delete(GroupsFileName);
+                if (System.IO.File.Exists(GroupsFileName))
+                    System.IO.File.Delete(GroupsFileName);
 
                 if (GroupsList.Any())
                 {
@@ -73,23 +58,13 @@ namespace ToDo
         {
             try
             {
-                if (File.Exists(TasksFileName))
-                {
-                    XmlSerializer xmlSerializer = new XmlSerializer(TasksList.GetType());
-
-                    using (FileStream fs = new FileStream(TasksFileName, FileMode.OpenOrCreate))
-                    {
-                        TasksList = (List<Models.Task>)xmlSerializer.Deserialize(fs);
-                    }
-                }
-
-                if (File.Exists(GroupsFileName))
+                if (System.IO.File.Exists(GroupsFileName))
                 {
                     XmlSerializer xmlSerializer = new XmlSerializer(GroupsList.GetType());
 
                     using (FileStream fs = new FileStream(GroupsFileName, FileMode.OpenOrCreate))
                     {
-                        GroupsList = (List<Models.Group>)xmlSerializer.Deserialize(fs);
+                        GroupsList = (List<Group>)xmlSerializer.Deserialize(fs);
                     }
                 }
             }
@@ -99,9 +74,9 @@ namespace ToDo
             }
         }
 
-        public static void LoadTasks(List<Models.Task> tasks)
+        public static void LoadTasks(List<Task> tasks)
         {
-            var tasksList = new List<Models.Task>();
+            var tasksList = new List<Task>();
 
             if (tasks != null)
                 tasksList = tasks;
@@ -129,7 +104,16 @@ namespace ToDo
             }
         }
 
-        public static void LoadFiles(Models.Task task)
+        public static void RefreshTasksStackPanel(Group group)
+        {
+            TasksStackPanel.Children.Clear();
+            foreach (var task in group.Tasks.Where(task => !task.IsCompleted))
+            {
+                TasksStackPanel.Children.Add(new TaskControl(task));
+            }
+        }
+
+        public static void LoadFiles(Task task)
         {
             if (task.Files.Any())
             {
@@ -157,7 +141,7 @@ namespace ToDo
             }
             else
             {
-                GroupsList = new List<Models.Group>();
+                GroupsList = new List<Group>();
             }
         }
 
@@ -174,7 +158,7 @@ namespace ToDo
 
         private void addGroupMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var group = new Models.Group
+            var group = new Group
             {
                 Name = "Группа без названия"
             };

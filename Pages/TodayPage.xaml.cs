@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using ToDo.Controls;
+using ToDo.Models;
 using ToDo.Windows;
 
 namespace ToDo.Pages
@@ -13,20 +14,28 @@ namespace ToDo.Pages
     /// </summary>
     public partial class TodayPage : Page
     {
-        public TodayPage(Models.Group group = null)
+        public string PageName;
+        private Group Group;
+        public TodayPage(Group groupOld = null) //изменить
         {
             InitializeComponent();
+            MainWindow.CurrentPageName = groupOld?.Name ?? "Сегодня"; //изменить
             MainWindow.TasksStackPanel = tasksStackPanel;
 
-            if (group != null)
+            if (MainWindow.GroupsList != null)
             {
-                todayDateText.Visibility = Visibility.Collapsed;
-                LoadGroups(group);
-            }
-            else
-            {
-                MainWindow.LoadTasks(null);
-                SetTodayDate();
+                Group = MainWindow.GroupsList.Where(g => g.Name == MainWindow.CurrentPageName).FirstOrDefault();
+
+                if (Group.Name == "Сегодня")
+                {
+                    SetTodayDate();
+                }
+                else
+                {
+                    pageNameText.Text = Group.Name;
+                    todayDateText.Visibility = Visibility.Collapsed;
+                }
+                MainWindow.RefreshTasksStackPanel(Group);
             }
         }
 
@@ -34,8 +43,6 @@ namespace ToDo.Pages
         {
             var addTaskWindow = new AddTaskWindow();
             addTaskWindow.ShowDialog();
-
-            MainWindow.LoadTasks(null);
         }
 
         private void SetTodayDate()
@@ -51,7 +58,7 @@ namespace ToDo.Pages
 
                 tasksStackPanel.Children.Clear();
 
-                foreach (var task in MainWindow.TasksList)
+                foreach (var task in Group.Tasks) //изменить
                 {
                     if (!task.IsCompleted && (task.Name.ToLower().StartsWith(search.Trim().ToLower()) || task.Description.ToLower().StartsWith(search.Trim().ToLower())))
                     {
@@ -78,16 +85,6 @@ namespace ToDo.Pages
         {
             var tasksList = MainWindow.TasksList.OrderByDescending(t => t.IsPriority).ToList();
             MainWindow.LoadTasks(tasksList);
-        }
-
-        private void LoadGroups(Models.Group group)
-        {
-            pageNameText.Text = group.Name;
-
-            foreach (var task in group.Tasks) 
-            {
-                tasksStackPanel.Children.Add(new TaskControl(task));
-            }
         }
     }
 }
