@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -66,7 +67,7 @@ namespace ToDo.Controls
 
             if (Task.Files != null && Task.Files.Count > 0)
                 attachedFilesStackPanel.Visibility = Visibility.Visible;
-            
+
             return Task;
         }
 
@@ -164,7 +165,10 @@ namespace ToDo.Controls
 
         private void SetTaskToGroup(Models.Task task, Models.Group group)
         {
-            group.Tasks.Add(task);
+            if (group.Tasks != null)
+                group.Tasks.Add(task);
+            else
+                group.Tasks = new List<Models.Task> { task };
         }
     }
 }

@@ -14,8 +14,8 @@ namespace ToDo
     public partial class MainWindow : Window
     {
         public static Frame MainFrameInstance;
-        public static List<Task> TasksList = new List<Task>();
-        public static List<Group> GroupsList = new List<Group>();
+        public static List<Task> TasksList = new List<Task>(); //TODO убрать
+        public static List<Group> GroupsList;
         public static List<Models.File> FilesList = new List<Models.File>();
         private string GroupsFileName = "groups.xml";
         public static StackPanel TasksStackPanel;
@@ -60,6 +60,7 @@ namespace ToDo
             {
                 if (System.IO.File.Exists(GroupsFileName))
                 {
+                    GroupsList = new List<Group>();
                     XmlSerializer xmlSerializer = new XmlSerializer(GroupsList.GetType());
 
                     using (FileStream fs = new FileStream(GroupsFileName, FileMode.OpenOrCreate))
@@ -107,9 +108,12 @@ namespace ToDo
         public static void RefreshTasksStackPanel(Group group)
         {
             TasksStackPanel.Children.Clear();
-            foreach (var task in group.Tasks.Where(task => !task.IsCompleted))
+            if (group.Tasks?.Any() == true)
             {
-                TasksStackPanel.Children.Add(new TaskControl(task));
+                foreach (var task in group.Tasks.Where(task => !task.IsCompleted))
+                {
+                    TasksStackPanel.Children.Add(new TaskControl(task));
+                }
             }
         }
 
@@ -132,7 +136,8 @@ namespace ToDo
         public static void LoadGroups()
         {
             GroupStackPanel.Children.Clear();
-            if (GroupsList.Any())
+
+            if (GroupsList?.Any() == true)
             {
                 foreach (var group in GroupsList)
                 {

@@ -1,5 +1,4 @@
-﻿using Microsoft.Toolkit.Uwp.Notifications;
-using System;
+﻿using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,27 +15,24 @@ namespace ToDo.Pages
     {
         public string PageName;
         private Group Group;
-        public TodayPage(Group groupOld = null) //изменить
+
+        public TodayPage(Group group = null)
         {
             InitializeComponent();
-            MainWindow.CurrentPageName = groupOld?.Name ?? "Сегодня"; //изменить
+            Group = group;
+
+            if (Group != null) 
+            {
+                MainWindow.CurrentPageName = group.Name;
+            }
+            else
+            {
+                MainWindow.CurrentPageName = "Сегодня";
+            }
+
             MainWindow.TasksStackPanel = tasksStackPanel;
 
-            if (MainWindow.GroupsList != null)
-            {
-                Group = MainWindow.GroupsList.Where(g => g.Name == MainWindow.CurrentPageName).FirstOrDefault();
-
-                if (Group.Name == "Сегодня")
-                {
-                    SetTodayDate();
-                }
-                else
-                {
-                    pageNameText.Text = Group.Name;
-                    todayDateText.Visibility = Visibility.Collapsed;
-                }
-                MainWindow.RefreshTasksStackPanel(Group);
-            }
+            LoadData();
         }
 
         private void addTaskButton_Click(object sender, RoutedEventArgs e)
@@ -58,33 +54,60 @@ namespace ToDo.Pages
 
                 tasksStackPanel.Children.Clear();
 
-                foreach (var task in Group.Tasks) //изменить
+                if (Group?.Tasks?.Any() == true)
                 {
-                    if (!task.IsCompleted && (task.Name.ToLower().StartsWith(search.Trim().ToLower()) || task.Description.ToLower().StartsWith(search.Trim().ToLower())))
+                    foreach (var task in Group.Tasks)
                     {
-                        if (task.DeadLine != null && task.DeadLine < DateTime.Now)
-                            task.IsOverdue = true;
+                        if (!task.IsCompleted && (task.Name.ToLower().StartsWith(search.Trim().ToLower()) || task.Description.ToLower().StartsWith(search.Trim().ToLower())))
+                        {
+                            if (task.DeadLine != null && task.DeadLine < DateTime.Now)
+                                task.IsOverdue = true;
 
-                        var taskControl = new TaskControl(task);
-                        tasksStackPanel.Children.Add(taskControl);
+                            var taskControl = new TaskControl(task);
+                            tasksStackPanel.Children.Add(taskControl);
+                        }
                     }
                 }
             }
-
-            if (string.IsNullOrEmpty(searhText.Text))
-                MainWindow.LoadTasks(null);
+            else
+            {
+                if (Group?.Tasks?.Any() == true)
+                    MainWindow.RefreshTasksStackPanel(Group);
+            }
         }
 
         private void sortTaskByDateMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var tasksList = MainWindow.TasksList.OrderBy(t => t.DeadLine.HasValue).ThenBy(p => p.DeadLine).ToList();
-            MainWindow.LoadTasks(tasksList);
+            if (Group != null)
+            {
+                var group = Group.Tasks.OrderBy(t => t.DeadLine.HasValue).ThenBy(p => p.DeadLine).ToList(); //TODO изменить
+                MainWindow.RefreshTasksStackPanel(Group);
+            }
         }
 
         private void sortTaskByPriority_Click(object sender, RoutedEventArgs e)
         {
             var tasksList = MainWindow.TasksList.OrderByDescending(t => t.IsPriority).ToList();
             MainWindow.LoadTasks(tasksList);
+        }
+
+        private void LoadData()
+        {
+            if (MainWindow.GroupsList != null)
+            {
+                Group = MainWindow.GroupsList.Where(g => g.Name == MainWindow.CurrentPageName).FirstOrDefault();
+
+                if (Group.Name == "Сегодня")
+                {
+                    SetTodayDate();
+                }
+                else
+                {
+                    pageNameText.Text = Group.Name;
+                    todayDateText.Visibility = Visibility.Collapsed;
+                }
+                MainWindow.RefreshTasksStackPanel(Group);
+            }
         }
     }
 }
