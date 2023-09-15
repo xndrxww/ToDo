@@ -1,17 +1,18 @@
-﻿using System.Windows.Controls;
+﻿using System.Linq;
+using System.Windows.Controls;
 
 namespace ToDo.Pages
 {
-    /// <summary>
-    /// Interaction logic for CompletedTasksPage.xaml
-    /// </summary>
     public partial class CompletedTasksPage : Page
     {
         public CompletedTasksPage()
         {
             InitializeComponent();
             MainWindow.CompletedTasksStackPanel = completedTasksStackPanel;
-            MainWindow.LoadTasks(null);
+            
+            //TODO
+            var group = MainWindow.GroupsList.Where(g => g.Name == MainWindow.CurrentPageName).FirstOrDefault();
+            MainWindow.RefreshTasksStackPanel(group.Tasks);
         }
     }
 }

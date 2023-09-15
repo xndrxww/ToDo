@@ -11,12 +11,10 @@ using ToDo.Windows;
 
 namespace ToDo.Controls
 {
-    /// <summary>
-    /// Interaction logic for TaskControl.xaml
-    /// </summary>
     public partial class TaskControl : UserControl
     {
         private Models.Task Task;
+
         public TaskControl(Models.Task taskModel)
         {
             InitializeComponent();
@@ -26,11 +24,17 @@ namespace ToDo.Controls
 
         private void completeTaskCheck_Checked(object sender, RoutedEventArgs e)
         {
-            foreach (var task in MainWindow.TasksList.Where(task => !task.IsCompleted && task.ControlName == taskControl.Name))
+            var currentGroup = MainWindow.GroupsList.Where(g => g.Name == MainWindow.CurrentPageName).FirstOrDefault();
+
+            if (currentGroup.Tasks != null)
             {
-                task.IsCompleted = true;
+                foreach (var task in currentGroup.Tasks.Where(task => !task.IsCompleted && task.ControlName == taskControl.Name))
+                {
+                    task.IsCompleted = true;
+                }
             }
-            MainWindow.LoadTasks(null);
+            
+            MainWindow.RefreshTasksStackPanel(currentGroup.Tasks);
         }
 
         private Models.Task SetData()
@@ -73,8 +77,12 @@ namespace ToDo.Controls
 
         private void deleteTaskMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.TasksList.Remove(Task);
-            MainWindow.LoadTasks(null);
+            var currentGroup = MainWindow.GroupsList.Where(g => g.Name == MainWindow.CurrentPageName).FirstOrDefault();
+            if (currentGroup.Tasks != null)
+            {
+                currentGroup.Tasks.Remove(Task);
+                MainWindow.RefreshTasksStackPanel(currentGroup.Tasks);
+            }
         }
 
         private void EditTask()
@@ -83,8 +91,10 @@ namespace ToDo.Controls
                 Task.DeadLine = DateTime.Parse(taskDeadLineText.Text);
             else
                 Task.DeadLine = DateTime.Now;
+            
+            var currentGroup = MainWindow.GroupsList.Where(g => g.Name == MainWindow.CurrentPageName).FirstOrDefault();
 
-            EditTaskWindow editTaskWindow = new EditTaskWindow(Task);
+            EditTaskWindow editTaskWindow = new EditTaskWindow(Task, currentGroup);
             editTaskWindow.ShowDialog();
         }
 
@@ -100,19 +110,24 @@ namespace ToDo.Controls
 
         private void copyTaskMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var copyTask = new Models.Task
+            var currentGroup = MainWindow.GroupsList.Where(g => g.Name == MainWindow.CurrentPageName).FirstOrDefault();
+
+            if (currentGroup != null)
             {
-                Id = MainWindow.TasksList.Count + 1,
-                Name = Task.Name,
-                Description = Task.Description,
-                DeadLine = Task.DeadLine,
-                IsCompleted = Task.IsCompleted,
-                IsOverdue = Task.IsOverdue,
-                IsPriority = Task.IsPriority,
-                Files = Task.Files
-            };
-            MainWindow.TasksList.Add(copyTask);
-            MainWindow.LoadTasks(null);
+                var copyTask = new Models.Task
+                {
+                    Id = currentGroup.Tasks != null ? currentGroup.Tasks.Count + 1 : 1,
+                    Name = Task.Name,
+                    Description = Task.Description,
+                    DeadLine = Task.DeadLine,
+                    IsCompleted = Task.IsCompleted,
+                    IsOverdue = Task.IsOverdue,
+                    IsPriority = Task.IsPriority,
+                    Files = Task.Files
+                };
+                currentGroup.Tasks.Add(copyTask);
+                MainWindow.RefreshTasksStackPanel(currentGroup.Tasks);
+            }
         }
 
         private void priorityTaskImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -121,14 +136,17 @@ namespace ToDo.Controls
                 Task.IsPriority = false;
             else
                 Task.IsPriority = true;
-
-            MainWindow.LoadTasks(null);
+            
+            var currentGroup = MainWindow.GroupsList.Where(g => g.Name == MainWindow.CurrentPageName).FirstOrDefault();
+            MainWindow.RefreshTasksStackPanel(currentGroup.Tasks);
         }
 
         private void restoreTaskMenuItem_Click(object sender, RoutedEventArgs e)
         {
             Task.IsCompleted = false;
-            MainWindow.LoadTasks(null);
+
+            var currentGroup = MainWindow.GroupsList.Where(g => g.Name == MainWindow.CurrentPageName).FirstOrDefault();
+            MainWindow.RefreshTasksStackPanel(currentGroup.Tasks);
         }
 
         private void menu_SubmenuOpened(object sender, RoutedEventArgs e)
@@ -157,18 +175,23 @@ namespace ToDo.Controls
         {
             var menuItem = e.Source as MenuItem;
 
-            var group = MainWindow.GroupsList.Where(g => g.MenuItemName == menuItem.Name).FirstOrDefault();
+            var swapGroup = MainWindow.GroupsList.Where(g => g.MenuItemName == menuItem.Name).FirstOrDefault();
 
-            if (group != null)
-                SetTaskToGroup(Task, group);
+            if (swapGroup != null)
+                SetTaskToGroup(Task, swapGroup);
         }
 
-        private void SetTaskToGroup(Models.Task task, Models.Group group)
+        private void SetTaskToGroup(Models.Task task, Models.Group swapGroup)
         {
-            if (group.Tasks != null)
-                group.Tasks.Add(task);
+            var currentGroup = MainWindow.GroupsList.Where(g => g.Name == MainWindow.CurrentPageName).FirstOrDefault();
+            currentGroup.Tasks.Remove(Task);
+
+            if (swapGroup.Tasks != null)
+                swapGroup.Tasks.Add(task);
             else
-                group.Tasks = new List<Models.Task> { task };
+                swapGroup.Tasks = new List<Models.Task> { task };
+
+            MainWindow.RefreshTasksStackPanel(currentGroup.Tasks);
         }
     }
 }

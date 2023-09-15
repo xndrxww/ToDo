@@ -14,7 +14,6 @@ namespace ToDo
     public partial class MainWindow : Window
     {
         public static Frame MainFrameInstance;
-        public static List<Task> TasksList = new List<Task>(); //TODO убрать
         public static List<Group> GroupsList;
         public static List<Models.File> FilesList = new List<Models.File>();
         private string GroupsFileName = "groups.xml";
@@ -75,42 +74,12 @@ namespace ToDo
             }
         }
 
-        public static void LoadTasks(List<Task> tasks)
-        {
-            var tasksList = new List<Task>();
-
-            if (tasks != null)
-                tasksList = tasks;
-            else
-                tasksList = TasksList;
-
-            if (tasksList != null)
-            {
-                if (CompletedTasksStackPanel != null)
-                {
-                    CompletedTasksStackPanel.Children.Clear();
-                    foreach (var task in tasksList.Where(task => task.IsCompleted))
-                    {
-                        CompletedTasksStackPanel.Children.Add(new TaskControl(task));
-                    }
-                }
-                else
-                {
-                    TasksStackPanel.Children.Clear();
-                    foreach (var task in tasksList.Where(task => !task.IsCompleted))
-                    {
-                        TasksStackPanel.Children.Add(new TaskControl(task));
-                    }
-                }
-            }
-        }
-
-        public static void RefreshTasksStackPanel(Group group)
+        public static void RefreshTasksStackPanel(List<Task> tasks)
         {
             TasksStackPanel.Children.Clear();
-            if (group.Tasks?.Any() == true)
+            if (tasks?.Any() == true)
             {
-                foreach (var task in group.Tasks.Where(task => !task.IsCompleted))
+                foreach (var task in tasks.Where(task => !task.IsCompleted))
                 {
                     TasksStackPanel.Children.Add(new TaskControl(task));
                 }
@@ -163,10 +132,8 @@ namespace ToDo
 
         private void addGroupMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var group = new Group
-            {
-                Name = "Группа без названия"
-            };
+            var group = new Group();
+            group.Name = "Группа без названия";
             group.Id = group.GetId();
 
             GroupsList.Add(group);

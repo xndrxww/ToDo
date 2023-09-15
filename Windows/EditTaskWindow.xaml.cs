@@ -6,23 +6,22 @@ using ToDo.Controls;
 
 namespace ToDo.Windows
 {
-    /// <summary>
-    /// Interaction logic for EditTaskWindow.xaml
-    /// </summary>
     public partial class EditTaskWindow : Window
     {
-        Models.Task Task;
+        private Models.Task Task;
+        private Models.Group CurrentGroup;
 
-        public EditTaskWindow(Models.Task taskModel)
+        public EditTaskWindow(Models.Task taskModel, Models.Group currentGroup)
         {
             InitializeComponent();
             Task = taskModel;
+            CurrentGroup = currentGroup;
             SetData();        
         }
 
         private void saveTaskButton_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var task in MainWindow.TasksList.Where(task => !task.IsCompleted && task.Id == Task.Id))
+            foreach (var task in CurrentGroup.Tasks.Where(task => !task.IsCompleted && task.Id == Task.Id))
             {
                 task.Name = taskNameText.Text;
                 task.Description = taskDescriptionText.Text;
@@ -30,7 +29,7 @@ namespace ToDo.Windows
                 task.Files = MainWindow.FilesList;
             }
             Close();
-            MainWindow.LoadTasks(null);
+            MainWindow.RefreshTasksStackPanel(CurrentGroup.Tasks);
         }
 
         private void deadLineMenuItem_Click(object sender, RoutedEventArgs e)

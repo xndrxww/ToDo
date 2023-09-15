@@ -8,9 +8,6 @@ using ToDo.Windows;
 
 namespace ToDo.Pages
 {
-    /// <summary>
-    /// Interaction logic for TodayPage.xaml
-    /// </summary>
     public partial class TodayPage : Page
     {
         public string PageName;
@@ -22,13 +19,9 @@ namespace ToDo.Pages
             Group = group;
 
             if (Group != null) 
-            {
                 MainWindow.CurrentPageName = group.Name;
-            }
             else
-            {
                 MainWindow.CurrentPageName = "Сегодня";
-            }
 
             MainWindow.TasksStackPanel = tasksStackPanel;
 
@@ -72,7 +65,7 @@ namespace ToDo.Pages
             else
             {
                 if (Group?.Tasks?.Any() == true)
-                    MainWindow.RefreshTasksStackPanel(Group);
+                    MainWindow.RefreshTasksStackPanel(Group.Tasks);
             }
         }
 
@@ -80,15 +73,18 @@ namespace ToDo.Pages
         {
             if (Group != null)
             {
-                var group = Group.Tasks.OrderBy(t => t.DeadLine.HasValue).ThenBy(p => p.DeadLine).ToList(); //TODO изменить
-                MainWindow.RefreshTasksStackPanel(Group);
+                var tasks = Group.Tasks.OrderBy(t => t.DeadLine.HasValue).ThenBy(p => p.DeadLine).ToList();
+                MainWindow.RefreshTasksStackPanel(tasks);
             }
         }
 
         private void sortTaskByPriority_Click(object sender, RoutedEventArgs e)
         {
-            var tasksList = MainWindow.TasksList.OrderByDescending(t => t.IsPriority).ToList();
-            MainWindow.LoadTasks(tasksList);
+            if (Group != null)
+            {
+                var tasks = Group.Tasks.OrderByDescending(t => t.IsPriority).ToList();
+                MainWindow.RefreshTasksStackPanel(tasks);
+            }
         }
 
         private void LoadData()
@@ -106,7 +102,7 @@ namespace ToDo.Pages
                     pageNameText.Text = Group.Name;
                     todayDateText.Visibility = Visibility.Collapsed;
                 }
-                MainWindow.RefreshTasksStackPanel(Group);
+                MainWindow.RefreshTasksStackPanel(Group.Tasks);
             }
         }
     }

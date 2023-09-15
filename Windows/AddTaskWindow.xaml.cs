@@ -8,9 +8,6 @@ using ToDo.Models;
 
 namespace ToDo.Windows
 {
-    /// <summary>
-    /// Interaction logic for AddTaskWindow.xaml
-    /// </summary>
     public partial class AddTaskWindow : Window
     {
         private const string DirectoryName = "Files";
@@ -31,9 +28,9 @@ namespace ToDo.Windows
             if (group != null)
             {
                 if (group.Tasks?.Any() == true)
-                    group.Tasks.Add(CreateTask());
+                    group.Tasks.Add(CreateTask(group));
                 else
-                    group.Tasks = new List<Task> { CreateTask() };
+                    group.Tasks = new List<Task> { CreateTask(group) };
             }
             else
             {
@@ -41,37 +38,36 @@ namespace ToDo.Windows
                 MainWindow.GroupsList.Add(group);
             }
 
-            MainWindow.RefreshTasksStackPanel(group);
+            MainWindow.RefreshTasksStackPanel(group.Tasks);
 
             Close();
         }
 
         private Group CreateGroup()
         {
-            var group = new Group()
-            {
-                Name = MainWindow.CurrentPageName,
-                Tasks = new List<Task> { CreateTask() }
-            };
+            var group = new Group();
+            group.Name = MainWindow.CurrentPageName;
+            group.Tasks = new List<Task> { CreateTask(group) };
             group.Id = group.GetId();
 
             return group;
         }
 
-        private Task CreateTask()
+        private Task CreateTask(Group group)
         {
             return new Task
             {
-                Id = MainWindow.TasksList.Count + 1,
+                Id = group.Tasks != null ? group.Tasks.Count + 1 : 1,
                 Name = taskNameText.Text,
                 Description = taskDescriptionText.Text,
                 DeadLine = deadLineTime.SelectedDate,
-                Files = FilesList.Count > 0 ? FilesList : null
+                Files = FilesList.Count > 0 ? FilesList : null,
             };
         }
 
         private void addFileMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            //TODO переделать логику добавления файлов
             var fileDialog = new OpenFileDialog
             {
                 Multiselect = true
@@ -116,7 +112,6 @@ namespace ToDo.Windows
             {
                 if (!System.IO.File.Exists($@"{DirectoryName}\{file.Name}"))
                     System.IO.File.Copy($@"{file.UserPath}", $@"{DirectoryName}\{file.Name}");
-
 
                 var fileModel = new Models.File
                 {
