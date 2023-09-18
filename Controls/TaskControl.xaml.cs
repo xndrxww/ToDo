@@ -145,8 +145,7 @@ namespace ToDo.Controls
         {
             Task.IsCompleted = false;
 
-            var currentGroup = MainWindow.GroupsList.Where(g => g.Name == MainWindow.CurrentPageName).FirstOrDefault();
-            MainWindow.RefreshTasksStackPanel(currentGroup.Tasks);
+            MainWindow.RefreshCompletedTasksStackPanel();
         }
 
         private void menu_SubmenuOpened(object sender, RoutedEventArgs e)

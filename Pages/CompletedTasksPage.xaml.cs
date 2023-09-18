@@ -9,10 +9,8 @@ namespace ToDo.Pages
         {
             InitializeComponent();
             MainWindow.CompletedTasksStackPanel = completedTasksStackPanel;
-            
-            //TODO
-            var group = MainWindow.GroupsList.Where(g => g.Name == MainWindow.CurrentPageName).FirstOrDefault();
-            MainWindow.RefreshTasksStackPanel(group.Tasks);
+
+            MainWindow.RefreshCompletedTasksStackPanel();
         }
     }
 }

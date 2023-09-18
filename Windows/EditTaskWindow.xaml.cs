@@ -53,12 +53,11 @@ namespace ToDo.Windows
 
         private void SetFiles()
         {
-            MainWindow.LoadFiles(Task);
-            if (MainWindow.FilesList.Count > 0)
+            if (Task.Files?.Any() == true)
             {
                 Height = 500;
                 bottonStackPanel.Visibility = Visibility.Visible;
-                foreach (var file in MainWindow.FilesList)
+                foreach (var file in Task.Files)
                 {
                     MainWindow.FilesStackPanel.Children.Add(new FilesControl(file, Task));
                 }

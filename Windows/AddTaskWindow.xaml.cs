@@ -21,8 +21,8 @@ namespace ToDo.Windows
 
         private void addTaskButton_Click(object sender, RoutedEventArgs e)
         {
-            if (MainWindow.FilesList.Count > 0)
-                SaveFile(MainWindow.FilesList);
+            if (FilesList.Count > 0)
+                SaveFile();
 
             var group = MainWindow.GroupsList.Where(g => g.Name == MainWindow.CurrentPageName).FirstOrDefault();
             if (group != null)
@@ -67,7 +67,6 @@ namespace ToDo.Windows
 
         private void addFileMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            //TODO переделать логику добавления файлов
             var fileDialog = new OpenFileDialog
             {
                 Multiselect = true
@@ -75,7 +74,6 @@ namespace ToDo.Windows
 
             if (fileDialog.ShowDialog() == true)
             {
-                MainWindow.FilesList = new List<Models.File>();
                 foreach (var file in fileDialog.FileNames)
                 {
                     var fileModel = new Models.File
@@ -84,11 +82,10 @@ namespace ToDo.Windows
                         UserPath = file
                     };
 
-                    MainWindow.FilesList.Add(fileModel);
+                    FilesList.Add(fileModel);
                     MainWindow.FilesStackPanel.Children.Add(new FilesControl(fileModel));
                 }
 
-                Height = 500;
                 CenterWindowOnScreen();
             }
         }
@@ -103,8 +100,11 @@ namespace ToDo.Windows
             deadLineMenuItem.Header = deadLineTime.SelectedDate.Value.ToString("dd.MM.yyyy");
         }
 
-        public void SaveFile(List<Models.File> files)
+        public void SaveFile()
         {
+            var files = new List<Models.File>(FilesList);
+            FilesList.Clear();
+
             if (!Directory.Exists(DirectoryName))
                 Directory.CreateDirectory(DirectoryName);
 
@@ -123,6 +123,7 @@ namespace ToDo.Windows
         }
         private void CenterWindowOnScreen()
         {
+            Height = 500;
             double screenWidth = SystemParameters.PrimaryScreenWidth;
             double screenHeight = SystemParameters.PrimaryScreenHeight;
             double windowWidth = Width;
