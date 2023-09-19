@@ -21,13 +21,12 @@ namespace ToDo.Windows
 
         private void saveTaskButton_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var task in CurrentGroup.Tasks.Where(task => !task.IsCompleted && task.Id == Task.Id))
-            {
-                task.Name = taskNameText.Text;
-                task.Description = taskDescriptionText.Text;
-                task.DeadLine = taskDeadLineTime.SelectedDate;
-                task.Files = MainWindow.FilesList;
-            }
+            var task = CurrentGroup.Tasks.Where(t => !t.IsCompleted && t.Id == Task.Id).FirstOrDefault();
+            task.Name = taskNameText.Text;
+            task.Description = taskDescriptionText.Text;
+            task.DeadLine = taskDeadLineTime.SelectedDate;
+            task.Files = task.Files;
+
             Close();
             MainWindow.RefreshTasksStackPanel(CurrentGroup.Tasks);
         }

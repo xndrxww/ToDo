@@ -82,6 +82,7 @@ namespace ToDo.Controls
             {
                 currentGroup.Tasks.Remove(Task);
                 MainWindow.RefreshTasksStackPanel(currentGroup.Tasks);
+                MainWindow.RefreshCompletedTasksStackPanel();
             }
         }
 
@@ -127,6 +128,7 @@ namespace ToDo.Controls
                 };
                 currentGroup.Tasks.Add(copyTask);
                 MainWindow.RefreshTasksStackPanel(currentGroup.Tasks);
+                MainWindow.RefreshCompletedTasksStackPanel();
             }
         }
 

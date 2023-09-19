@@ -6,9 +6,6 @@ using ToDo.Pages;
 
 namespace ToDo.Controls
 {
-    /// <summary>
-    /// Interaction logic for GroupControl.xaml
-    /// </summary>
     public partial class GroupControl : UserControl
     {
         private Models.Group Group;
@@ -52,6 +49,8 @@ namespace ToDo.Controls
 
             groupNameTxt.Visibility = Visibility.Visible;
             renameGroupNameTxt.Visibility = Visibility.Collapsed;
+
+            MainWindow.MainFrameInstance.Navigate(new TodayPage(Group));
         }
 
         private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

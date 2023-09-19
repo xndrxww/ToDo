@@ -4,15 +4,12 @@ using System.Windows.Controls;
 
 namespace ToDo.Controls
 {
-    /// <summary>
-    /// Interaction logic for FilesControl.xaml
-    /// </summary>
     public partial class FilesControl : UserControl
     {
         private Models.File File;
         private Models.Task Task;
 
-        public FilesControl(Models.File fileModel, Models.Task task = null)
+        public FilesControl(Models.File fileModel, Models.Task task)
         {
             InitializeComponent();
 
@@ -23,9 +20,9 @@ namespace ToDo.Controls
 
         private void deleteFileMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.FilesList.Remove(File);
+            Task.Files.Remove(File);
             MainWindow.FilesStackPanel.Children.Clear();
-            foreach (var file in MainWindow.FilesList)
+            foreach (var file in Task.Files)
             {
                 MainWindow.FilesStackPanel.Children.Add(new FilesControl(file, Task));
             }

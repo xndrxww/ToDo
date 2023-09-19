@@ -83,7 +83,7 @@ namespace ToDo.Windows
                     };
 
                     FilesList.Add(fileModel);
-                    MainWindow.FilesStackPanel.Children.Add(new FilesControl(fileModel));
+                    MainWindow.FilesStackPanel.Children.Add(new FilesControl(fileModel, new Task { Files = FilesList}));
                 }
 
                 CenterWindowOnScreen();

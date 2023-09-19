@@ -15,7 +15,6 @@ namespace ToDo
     {
         public static Frame MainFrameInstance;
         public static List<Group> GroupsList;
-        public static List<Models.File> FilesList = new List<Models.File>(); //TODO убрать
         private string GroupsFileName = "groups.xml";
         public static StackPanel TasksStackPanel;
         public static StackPanel CompletedTasksStackPanel;
@@ -98,22 +97,6 @@ namespace ToDo
                         CompletedTasksStackPanel.Children.Add(new TaskControl(task));
                     }
                 }
-            }
-        }
-
-        public static void LoadFiles(Task task)
-        {
-            if (task.Files?.Any() == true)
-            {
-                FilesList = new List<Models.File>();
-                foreach (var file in task.Files)
-                {
-                    FilesList.Add(file);
-                }
-            }
-            else
-            {
-                FilesList = new List<Models.File>();
             }
         }
 
