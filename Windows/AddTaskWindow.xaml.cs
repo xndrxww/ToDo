@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace ToDo.Windows
         public AddTaskWindow()
         {
             InitializeComponent();
+
             MainWindow.FilesStackPanel = filesStackPanel;
         }
 
@@ -28,9 +30,9 @@ namespace ToDo.Windows
             if (group != null)
             {
                 if (group.Tasks?.Any() == true)
-                    group.Tasks.Add(CreateTask(group));
+                    group.Tasks.Add(CreateTask());
                 else
-                    group.Tasks = new List<Task> { CreateTask(group) };
+                    group.Tasks = new List<Task> { CreateTask() };
             }
             else
             {
@@ -47,17 +49,16 @@ namespace ToDo.Windows
         {
             var group = new Group();
             group.Name = MainWindow.CurrentPageName;
-            group.Tasks = new List<Task> { CreateTask(group) };
-            group.Id = group.GetId();
+            group.Tasks = new List<Task> { CreateTask() };
 
             return group;
         }
 
-        private Task CreateTask(Group group)
+        private Task CreateTask()
         {
             return new Task
             {
-                Id = group.Tasks != null ? group.Tasks.Count + 1 : 1,
+                Id = Guid.NewGuid(),
                 Name = taskNameText.Text,
                 Description = taskDescriptionText.Text,
                 DeadLine = deadLineTime.SelectedDate,

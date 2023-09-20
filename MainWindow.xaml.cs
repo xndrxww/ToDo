@@ -41,14 +41,17 @@ namespace ToDo
                     System.IO.File.Delete(GroupsFileName);
 
                 if (GroupsList.Any())
-                {
-                    XmlSerializer xmlSerializer = new XmlSerializer(GroupsList.GetType());
+                    Serialize();
+            }
+        }
 
-                    using (FileStream fs = new FileStream(GroupsFileName, FileMode.OpenOrCreate))
-                    {
-                        xmlSerializer.Serialize(fs, GroupsList);
-                    }
-                }
+        private void Serialize()
+        {
+            XmlSerializer xmlSerializer = new XmlSerializer(GroupsList.GetType());
+
+            using (FileStream fs = new FileStream(GroupsFileName, FileMode.OpenOrCreate))
+            {
+                xmlSerializer.Serialize(fs, GroupsList);
             }
         }
 
@@ -75,26 +78,32 @@ namespace ToDo
 
         public static void RefreshTasksStackPanel(List<Task> tasks)
         {
-            TasksStackPanel.Children.Clear();
-            if (tasks?.Any() == true)
+            if (TasksStackPanel != null)
             {
-                foreach (var task in tasks.Where(task => !task.IsCompleted))
+                TasksStackPanel.Children.Clear();
+                if (tasks?.Any() == true)
                 {
-                    TasksStackPanel.Children.Add(new TaskControl(task));
+                    foreach (var task in tasks.Where(task => !task.IsCompleted))
+                    {
+                        TasksStackPanel.Children.Add(new TaskControl(task));
+                    }
                 }
             }
         }
 
         public static void RefreshCompletedTasksStackPanel()
         {
-            CompletedTasksStackPanel.Children.Clear();
-            foreach (var group in GroupsList)
+            if (CompletedTasksStackPanel != null)
             {
-                if (group.Tasks?.Any() == true)
+                CompletedTasksStackPanel.Children.Clear();
+                foreach (var group in GroupsList)
                 {
-                    foreach (var task in group.Tasks.Where(t => t.IsCompleted))
+                    if (group.Tasks?.Any() == true)
                     {
-                        CompletedTasksStackPanel.Children.Add(new TaskControl(task));
+                        foreach (var task in group.Tasks.Where(t => t.IsCompleted))
+                        {
+                            CompletedTasksStackPanel.Children.Add(new TaskControl(task));
+                        }
                     }
                 }
             }
@@ -130,9 +139,7 @@ namespace ToDo
 
         private void addGroupMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var group = new Group();
-            group.Name = "Группа без названия";
-            group.Id = group.GetId();
+            var group = new Group{ Name = "Группа без названия" };
 
             GroupsList.Add(group);
             GroupStackPanel.Children.Add(new GroupControl(group));

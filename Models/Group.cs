@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ToDo.Models
@@ -8,17 +9,9 @@ namespace ToDo.Models
         public Group()
         { }
 
-        public int Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string Name { get; set; }
-        public string MenuItemName => $"menuItem{Id}";
+        public string MenuItemName => $"menuItem{Id}".Replace("-", string.Empty);
         public List<Task> Tasks { get; set; }
-
-        public int GetId()
-        {
-            if (MainWindow.GroupsList.Any())
-                return MainWindow.GroupsList.Count + 1;
-            else 
-                return 1;
-        }
     }
 }

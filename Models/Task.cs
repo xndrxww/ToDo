@@ -8,8 +8,8 @@ namespace ToDo.Models
         public Task()
         {}
 
-        public int Id { get; set; }
-        public string ControlName => $"taskControl{Id}";
+        public Guid Id { get; set; }
+        public string ControlName => $"taskControl{Id}".Replace("-", string.Empty);
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime? DeadLine { get; set; }

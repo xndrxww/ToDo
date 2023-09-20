@@ -18,6 +18,7 @@ namespace ToDo.Controls
         public TaskControl(Models.Task taskModel)
         {
             InitializeComponent();
+
             Task = taskModel;
             DataContext = SetData();
         }
@@ -28,10 +29,8 @@ namespace ToDo.Controls
 
             if (currentGroup.Tasks != null)
             {
-                foreach (var task in currentGroup.Tasks.Where(task => !task.IsCompleted && task.ControlName == taskControl.Name))
-                {
-                    task.IsCompleted = true;
-                }
+                var task = currentGroup.Tasks.Where(t => !t.IsCompleted && t.ControlName == taskControl.Name).FirstOrDefault();
+                task.IsCompleted = true;
             }
             
             MainWindow.RefreshTasksStackPanel(currentGroup.Tasks);
@@ -67,6 +66,7 @@ namespace ToDo.Controls
             {
                 completeTaskCheck.Visibility = Visibility.Collapsed;
                 restoreTaskMenuItem.Visibility = Visibility.Visible;
+                groupTaskMenuItem.Visibility = Visibility.Collapsed;
             }
 
             if (Task.Files != null && Task.Files.Count > 0)
@@ -117,7 +117,7 @@ namespace ToDo.Controls
             {
                 var copyTask = new Models.Task
                 {
-                    Id = currentGroup.Tasks != null ? currentGroup.Tasks.Count + 1 : 1,
+                    Id = Guid.NewGuid(),
                     Name = Task.Name,
                     Description = Task.Description,
                     DeadLine = Task.DeadLine,

@@ -8,8 +8,8 @@ namespace ToDo.Pages
         public CompletedTasksPage()
         {
             InitializeComponent();
-            MainWindow.CompletedTasksStackPanel = completedTasksStackPanel;
 
+            MainWindow.CompletedTasksStackPanel = completedTasksStackPanel;
             MainWindow.RefreshCompletedTasksStackPanel();
         }
     }

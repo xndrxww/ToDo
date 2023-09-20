@@ -10,12 +10,12 @@ namespace ToDo.Pages
 {
     public partial class TodayPage : Page
     {
-        public string PageName;
         private Group Group;
 
         public TodayPage(Group group = null)
         {
             InitializeComponent();
+
             Group = group;
 
             if (Group != null) 

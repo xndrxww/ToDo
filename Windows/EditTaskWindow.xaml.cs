@@ -14,6 +14,7 @@ namespace ToDo.Windows
         public EditTaskWindow(Models.Task taskModel, Models.Group currentGroup)
         {
             InitializeComponent();
+
             Task = taskModel;
             CurrentGroup = currentGroup;
             SetData();        
@@ -21,7 +22,7 @@ namespace ToDo.Windows
 
         private void saveTaskButton_Click(object sender, RoutedEventArgs e)
         {
-            var task = CurrentGroup.Tasks.Where(t => !t.IsCompleted && t.Id == Task.Id).FirstOrDefault();
+            var task = CurrentGroup.Tasks.Where(t => t.Id == Task.Id).FirstOrDefault();
             task.Name = taskNameText.Text;
             task.Description = taskDescriptionText.Text;
             task.DeadLine = taskDeadLineTime.SelectedDate;
@@ -29,6 +30,7 @@ namespace ToDo.Windows
 
             Close();
             MainWindow.RefreshTasksStackPanel(CurrentGroup.Tasks);
+            MainWindow.RefreshCompletedTasksStackPanel();
         }
 
         private void deadLineMenuItem_Click(object sender, RoutedEventArgs e)
