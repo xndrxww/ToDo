@@ -11,7 +11,7 @@
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
         FontFamily="{materialDesign:MaterialDesignFont}"
-        Title="EditTaskWindow" Height="300" Width="500" WindowStartupLocation="CenterScreen" UseLayoutRounding="True">
+        Title="EditTaskWindow" Height="300" Width="700" WindowStartupLocation="CenterScreen" UseLayoutRounding="True">
     <Grid>
         <TextBlock IsHitTestVisible="False" Text="Название задачи" Foreground="DarkGray" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="40,18,0,0" FontSize="20">
             <TextBlock.Style>
@@ -39,21 +39,27 @@
         </TextBlock>
         <DatePicker Name="taskDeadLineTime" Margin="40,25,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Hidden" SelectedDateChanged="deadLineTime_SelectedDateChanged"></DatePicker>
         <StackPanel Orientation="Vertical">
-            <StackPanel Orientation="Vertical">
-                <TextBox x:Name="taskNameText" Margin="40,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="20"></TextBox>
-                <TextBox x:Name="taskDescriptionText" Margin="40,22,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="12"></TextBox>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel>
+                    <TextBox x:Name="taskNameText" Margin="40,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="20"></TextBox>
+                    <TextBox x:Name="taskDescriptionText" Margin="40,22,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="12"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Margin="150,20,0,0">
+                    <TextBlock Text="Срок выполнения" FontSize="15" Margin="10,0,0,0"/>
+                    <Menu HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0">
+                        <MenuItem x:Name="deadLineMenuItem" Click="deadLineMenuItem_Click">
+                            <MenuItem.Icon>
+                                <Image Source="\Icons\date.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </Menu>
+                </StackPanel>
             </StackPanel>
-            <Menu HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,20,0,0" Width="auto">
-                <MenuItem x:Name="deadLineMenuItem" Header="Указать дату выполнения" Click="deadLineMenuItem_Click">
-                    <MenuItem.Icon>
-                        <Image Source="\Icons\date.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-            </Menu>
-            <StackPanel x:Name="bottonStackPanel" Visibility="Collapsed">
-                <TextBlock x:Name="filesTxt" Text="Приложенные файлы" HorizontalAlignment="Left" Margin="41,10,0,-10"/>
+            
+            <StackPanel x:Name="bottonStackPanel" Visibility="Collapsed" Margin="0,40,0,0">
+                <TextBlock x:Name="filesTxt" Text="Приложенные файлы" HorizontalAlignment="Left" Margin="40,10,0,-10"/>
                 <ScrollViewer CanContentScroll="True" Margin="0,15,0,0">
-                    <StackPanel x:Name="filesStackPanel" Width="360" Orientation="Vertical" Height="200"/>
+                    <StackPanel x:Name="filesStackPanel" Width="625" Orientation="Vertical" Height="200" HorizontalAlignment="Left" Margin="40,0,0,0"/>
                 </ScrollViewer>
             </StackPanel>
         </StackPanel>

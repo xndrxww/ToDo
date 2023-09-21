@@ -21,7 +21,7 @@
             <CheckBox x:Name="completeTaskCheck" VerticalAlignment="Center" Margin="20,0,0,0" HorizontalAlignment="Left" Checked="completeTaskCheck_Checked"></CheckBox>
             <StackPanel VerticalAlignment="Top" Margin="40,0,0,0" Width="800">
                 <TextBlock x:Name="taskNameText" VerticalAlignment="Center" FontSize="20" Text="{Binding Name}" TextWrapping="Wrap"></TextBlock>
-                <TextBlock x:Name="taskDesciptionText" VerticalAlignment="Center" FontSize="15" Opacity="0.5" Text="{Binding Description}"></TextBlock>
+                <TextBlock x:Name="taskDesciptionText" VerticalAlignment="Center" FontSize="15" Opacity="0.5" Text="{Binding Description}" TextWrapping="Wrap"></TextBlock>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock x:Name="taskDeadLineText" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="14" Foreground="DarkSeaGreen" Margin="0,8,0,0" Text="{Binding DeadLine}"></TextBlock>
                     <StackPanel Orientation="Horizontal" x:Name="attachedFilesStackPanel" Visibility="Collapsed">

@@ -122,6 +122,7 @@ namespace ToDo.Windows
                 FilesList.Add(fileModel);
             }
         }
+
         private void CenterWindowOnScreen()
         {
             Height = 500;

@@ -40,8 +40,8 @@
         <DatePicker Name="deadLineTime" Margin="40,25,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Hidden" SelectedDateChanged="deadLineTime_SelectedDateChanged"/>
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Vertical">
-                <TextBox x:Name="taskNameText" Margin="40,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="20"></TextBox>
-                <TextBox x:Name="taskDescriptionText" Margin="40,22,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="12"/>
+                <TextBox x:Name="taskNameText" Margin="40,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="20" MaxLength="256"></TextBox>
+                <TextBox x:Name="taskDescriptionText" Margin="40,22,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="12" MaxLength="256"/>
                 <Menu HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,25,0,0" Width="auto">
                     <Menu.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -59,8 +59,8 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </Menu>
-                <ScrollViewer CanContentScroll="True" Margin="0,15,0,0">
-                    <StackPanel x:Name="filesStackPanel" Width="360" Orientation="Vertical" Height="150"/>
+                <ScrollViewer CanContentScroll="True" Margin="30,15,0,0">
+                    <StackPanel x:Name="filesStackPanel" Width="400" Orientation="Vertical" Height="150"/>
                 </ScrollViewer>
             </StackPanel>
         </StackPanel>

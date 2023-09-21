@@ -141,6 +141,7 @@ namespace ToDo.Controls
             
             var currentGroup = MainWindow.GroupsList.Where(g => g.Name == MainWindow.CurrentPageName).FirstOrDefault();
             MainWindow.RefreshTasksStackPanel(currentGroup.Tasks);
+            MainWindow.RefreshCompletedTasksStackPanel();
         }
 
         private void restoreTaskMenuItem_Click(object sender, RoutedEventArgs e)
