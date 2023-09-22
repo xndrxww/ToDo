@@ -25,7 +25,7 @@ namespace ToDo.Controls
 
         private void completeTaskCheck_Checked(object sender, RoutedEventArgs e)
         {
-            var currentGroup = MainWindow.GroupsList.Where(g => g.Name == MainWindow.CurrentPageName).FirstOrDefault();
+            var currentGroup = MainWindow.GroupsList.Where(g => g.Id == MainWindow.CurrentGroupId).FirstOrDefault();
 
             if (currentGroup.Tasks != null)
             {
@@ -77,7 +77,7 @@ namespace ToDo.Controls
 
         private void deleteTaskMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var currentGroup = MainWindow.GroupsList.Where(g => g.Name == MainWindow.CurrentPageName).FirstOrDefault();
+            var currentGroup = MainWindow.GroupsList.Where(g => g.Id == MainWindow.CurrentGroupId).FirstOrDefault();
             if (currentGroup.Tasks != null)
             {
                 currentGroup.Tasks.Remove(Task);
@@ -93,7 +93,7 @@ namespace ToDo.Controls
             else
                 Task.DeadLine = DateTime.Now;
             
-            var currentGroup = MainWindow.GroupsList.Where(g => g.Name == MainWindow.CurrentPageName).FirstOrDefault();
+            var currentGroup = MainWindow.GroupsList.Where(g => g.Id == MainWindow.CurrentGroupId).FirstOrDefault();
 
             EditTaskWindow editTaskWindow = new EditTaskWindow(Task, currentGroup);
             editTaskWindow.ShowDialog();
@@ -111,7 +111,7 @@ namespace ToDo.Controls
 
         private void copyTaskMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var currentGroup = MainWindow.GroupsList.Where(g => g.Name == MainWindow.CurrentPageName).FirstOrDefault();
+            var currentGroup = MainWindow.GroupsList.Where(g => g.Id == MainWindow.CurrentGroupId).FirstOrDefault();
 
             if (currentGroup != null)
             {
@@ -139,7 +139,7 @@ namespace ToDo.Controls
             else
                 Task.IsPriority = true;
             
-            var currentGroup = MainWindow.GroupsList.Where(g => g.Name == MainWindow.CurrentPageName).FirstOrDefault();
+            var currentGroup = MainWindow.GroupsList.Where(g => g.Id == MainWindow.CurrentGroupId).FirstOrDefault();
             MainWindow.RefreshTasksStackPanel(currentGroup.Tasks);
             MainWindow.RefreshCompletedTasksStackPanel();
         }
@@ -161,7 +161,7 @@ namespace ToDo.Controls
             groupTaskMenuItem.Items.Clear();
             if (MainWindow.GroupsList.Any())
             {
-                foreach (var group in MainWindow.GroupsList)
+                foreach (var group in MainWindow.GroupsList.Where(g => g.Name != "Сегодня"))
                 {
                     var menuItem = new MenuItem
                     {
@@ -176,16 +176,19 @@ namespace ToDo.Controls
         private void groupTaskMenuItem_Click(object sender, RoutedEventArgs e)
         {
             var menuItem = e.Source as MenuItem;
+            
+            if (Guid.TryParse(menuItem.Name.Replace("menuItem", string.Empty), out Guid groupId))
+            {
+                var swapGroup = MainWindow.GroupsList.Where(g => g.Id == groupId).FirstOrDefault();
 
-            var swapGroup = MainWindow.GroupsList.Where(g => g.MenuItemName == menuItem.Name).FirstOrDefault();
-
-            if (swapGroup != null)
-                SetTaskToGroup(Task, swapGroup);
+                if (swapGroup != null)
+                    SetTaskToGroup(Task, swapGroup);
+            }
         }
 
         private void SetTaskToGroup(Models.Task task, Models.Group swapGroup)
         {
-            var currentGroup = MainWindow.GroupsList.Where(g => g.Name == MainWindow.CurrentPageName).FirstOrDefault();
+            var currentGroup = MainWindow.GroupsList.Where(g => g.Id == MainWindow.CurrentGroupId).FirstOrDefault();
             currentGroup.Tasks.Remove(Task);
 
             if (swapGroup.Tasks != null)

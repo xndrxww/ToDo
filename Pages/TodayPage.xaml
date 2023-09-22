@@ -53,6 +53,6 @@
                 </TextBlock.Style>
             </TextBlock>
         </Grid>
-        <Button x:Name="addTaskButton" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Width="150" Margin="0,45,100,0" Click="addTaskButton_Click">Добавить задачу</Button>
+        <Button x:Name="addTaskButton" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Width="150" Margin="325,45,100,0" Click="addTaskButton_Click">Добавить задачу</Button>
     </Grid>
 </Page>

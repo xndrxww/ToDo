@@ -26,7 +26,7 @@ namespace ToDo.Windows
             if (FilesList.Count > 0)
                 SaveFile();
 
-            var group = MainWindow.GroupsList.Where(g => g.Name == MainWindow.CurrentPageName).FirstOrDefault();
+            var group = MainWindow.GroupsList.Where(g => g.Id == MainWindow.CurrentGroupId).FirstOrDefault();
             if (group != null)
             {
                 if (group.Tasks?.Any() == true)
@@ -50,6 +50,9 @@ namespace ToDo.Windows
             var group = new Group();
             group.Name = MainWindow.CurrentPageName;
             group.Tasks = new List<Task> { CreateTask() };
+
+            if (MainWindow.CurrentPageName == "Сегодня")
+                group.Id = Guid.Empty;
 
             return group;
         }

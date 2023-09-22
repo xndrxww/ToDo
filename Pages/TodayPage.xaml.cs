@@ -18,10 +18,16 @@ namespace ToDo.Pages
 
             Group = group;
 
-            if (Group != null) 
+            if (Group != null)
+            {
+                MainWindow.CurrentGroupId = Group.Id;
                 MainWindow.CurrentPageName = group.Name;
+            }
             else
+            {
+                SetTodayDate();
                 MainWindow.CurrentPageName = "Сегодня";
+            }
 
             MainWindow.TasksStackPanel = tasksStackPanel;
 
@@ -89,20 +95,19 @@ namespace ToDo.Pages
 
         private void LoadData()
         {
-            if (MainWindow.GroupsList != null)
+            if (MainWindow.GroupsList?.Any() == true)
             {
-                Group = MainWindow.GroupsList.Where(g => g.Name == MainWindow.CurrentPageName).FirstOrDefault();
-
-                if (Group.Name == "Сегодня")
+                if (MainWindow.CurrentPageName == "Сегодня")
                 {
-                    SetTodayDate();
+                    var group = MainWindow.GroupsList.Where(g => g.Name == "Сегодня").FirstOrDefault();
+                    MainWindow.RefreshTasksStackPanel(group.Tasks);
                 }
                 else
                 {
                     pageNameText.Text = Group.Name;
                     todayDateText.Visibility = Visibility.Collapsed;
+                    MainWindow.RefreshTasksStackPanel(Group.Tasks);
                 }
-                MainWindow.RefreshTasksStackPanel(Group.Tasks);
             }
         }
     }

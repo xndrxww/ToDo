@@ -11,7 +11,7 @@
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
         FontFamily="{materialDesign:MaterialDesignFont}"
-        Title="EditTaskWindow" Height="300" Width="700" WindowStartupLocation="CenterScreen" UseLayoutRounding="True">
+        Title="EditTaskWindow" Height="300" Width="700" WindowStartupLocation="CenterScreen" UseLayoutRounding="True" ResizeMode="NoResize">
     <Grid>
         <TextBlock IsHitTestVisible="False" Text="Название задачи" Foreground="DarkGray" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="40,18,0,0" FontSize="20">
             <TextBlock.Style>
@@ -41,8 +41,8 @@
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Horizontal">
                 <StackPanel>
-                    <TextBox x:Name="taskNameText" Margin="40,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="20"></TextBox>
-                    <TextBox x:Name="taskDescriptionText" Margin="40,22,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="12"></TextBox>
+                    <TextBox x:Name="taskNameText" Margin="40,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="20" MaxLength="256"></TextBox>
+                    <TextBox x:Name="taskDescriptionText" Margin="40,22,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="12" MaxLength="256"></TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Margin="150,20,0,0">
                     <TextBlock Text="Срок выполнения" FontSize="15" Margin="10,0,0,0"/>

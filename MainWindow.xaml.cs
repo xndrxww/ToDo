@@ -21,6 +21,7 @@ namespace ToDo
         public static StackPanel FilesStackPanel;
         public static StackPanel GroupStackPanel;
         public static string CurrentPageName;
+        public static Guid CurrentGroupId;
 
         public MainWindow()
         {
@@ -115,7 +116,7 @@ namespace ToDo
 
             if (GroupsList?.Any() == true)
             {
-                foreach (var group in GroupsList)
+                foreach (var group in GroupsList.Where(g => g.Name != "Сегодня"))
                 {
                     GroupStackPanel.Children.Add(new GroupControl(group));
                 }
