@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using ToDo.Helpers;
 using ToDo.Windows;
 
 namespace ToDo.Controls
@@ -19,13 +20,19 @@ namespace ToDo.Controls
         {
             InitializeComponent();
 
+            Initialization(taskModel);
+        }
+
+        private void Initialization(Models.Task taskModel)
+        {
             Task = taskModel;
             DataContext = SetData();
         }
 
+
         private void completeTaskCheck_Checked(object sender, RoutedEventArgs e)
         {
-            var currentGroup = MainWindow.GroupsList.Where(g => g.Id == MainWindow.CurrentGroupId).FirstOrDefault();
+            var currentGroup = GroupHelper.GetGroup();
 
             if (currentGroup.Tasks != null)
             {
@@ -77,7 +84,7 @@ namespace ToDo.Controls
 
         private void deleteTaskMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var currentGroup = MainWindow.GroupsList.Where(g => g.Id == MainWindow.CurrentGroupId).FirstOrDefault();
+            var currentGroup = GroupHelper.GetGroup();
             if (currentGroup.Tasks != null)
             {
                 currentGroup.Tasks.Remove(Task);
@@ -93,7 +100,7 @@ namespace ToDo.Controls
             else
                 Task.DeadLine = DateTime.Now;
             
-            var currentGroup = MainWindow.GroupsList.Where(g => g.Id == MainWindow.CurrentGroupId).FirstOrDefault();
+            var currentGroup = GroupHelper.GetGroup();
 
             EditTaskWindow editTaskWindow = new EditTaskWindow(Task, currentGroup);
             editTaskWindow.ShowDialog();
@@ -111,21 +118,11 @@ namespace ToDo.Controls
 
         private void copyTaskMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var currentGroup = MainWindow.GroupsList.Where(g => g.Id == MainWindow.CurrentGroupId).FirstOrDefault();
+            var currentGroup = GroupHelper.GetGroup();
 
             if (currentGroup != null)
             {
-                var copyTask = new Models.Task
-                {
-                    Id = Guid.NewGuid(),
-                    Name = Task.Name,
-                    Description = Task.Description,
-                    DeadLine = Task.DeadLine,
-                    IsCompleted = Task.IsCompleted,
-                    IsOverdue = Task.IsOverdue,
-                    IsPriority = Task.IsPriority,
-                    Files = Task.Files
-                };
+                var copyTask = TaskHelper.CopyTask(Task.Name, Task.Description, Task.DeadLine, Task.IsCompleted, Task.IsOverdue, Task.IsPriority, Task.Files);
                 currentGroup.Tasks.Add(copyTask);
                 MainWindow.RefreshTasksStackPanel(currentGroup.Tasks);
                 MainWindow.RefreshCompletedTasksStackPanel();
@@ -188,7 +185,7 @@ namespace ToDo.Controls
 
         private void SetTaskToGroup(Models.Task task, Models.Group swapGroup)
         {
-            var currentGroup = MainWindow.GroupsList.Where(g => g.Id == MainWindow.CurrentGroupId).FirstOrDefault();
+            var currentGroup = GroupHelper.GetGroup();
             currentGroup.Tasks.Remove(Task);
 
             if (swapGroup.Tasks != null)

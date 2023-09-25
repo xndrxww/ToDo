@@ -3,26 +3,33 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using ToDo.Controls;
+using ToDo.Helpers;
+using ToDo.Models;
 
 namespace ToDo.Windows
 {
     public partial class EditTaskWindow : Window
     {
         private Models.Task Task;
-        private Models.Group CurrentGroup;
+        private Group CurrentGroup;
 
-        public EditTaskWindow(Models.Task taskModel, Models.Group currentGroup)
+        public EditTaskWindow(Models.Task taskModel, Group currentGroup)
         {
             InitializeComponent();
 
+            Initialization(taskModel, currentGroup);
+            SetData();
+        }
+
+        private void Initialization(Models.Task taskModel, Group currentGroup)
+        {
             Task = taskModel;
             CurrentGroup = currentGroup;
-            SetData();        
         }
 
         private void saveTaskButton_Click(object sender, RoutedEventArgs e)
         {
-            var task = CurrentGroup.Tasks.Where(t => t.Id == Task.Id).FirstOrDefault();
+            var task = TaskHelper.GetTask(CurrentGroup, Task.Id);
             task.Name = taskNameText.Text;
             task.Description = taskDescriptionText.Text;
             task.DeadLine = taskDeadLineTime.SelectedDate;

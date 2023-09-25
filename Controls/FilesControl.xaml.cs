@@ -13,6 +13,11 @@ namespace ToDo.Controls
         {
             InitializeComponent();
 
+            Initialization(fileModel, task);
+        }
+
+        private void Initialization(Models.File fileModel, Models.Task task)
+        {
             File = fileModel;
             Task = task;
             fileNameText.Text = File.Name;

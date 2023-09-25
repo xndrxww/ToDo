@@ -26,12 +26,17 @@ namespace ToDo
         public MainWindow()
         {
             InitializeComponent();
-            Deserialize();
 
+            Initialization();
+            Deserialize();
+            LoadGroups();
+        }
+
+        private void Initialization()
+        {
             MainFrameInstance = MainFrame;
             MainFrameInstance.Navigate(new TodayPage());
             GroupStackPanel = groupStackPanel;
-            LoadGroups();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -71,9 +76,9 @@ namespace ToDo
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("При десериализации произошла ошибка");
+                MessageBox.Show("При десериализации произошла ошибка {0}", ex.Message);
             }
         }
 

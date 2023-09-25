@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using ToDo.Controls;
+using ToDo.Helpers;
 using ToDo.Models;
 
 namespace ToDo.Windows
@@ -26,47 +27,24 @@ namespace ToDo.Windows
             if (FilesList.Count > 0)
                 SaveFile();
 
-            var group = MainWindow.GroupsList.Where(g => g.Id == MainWindow.CurrentGroupId).FirstOrDefault();
+            var group = GroupHelper.GetGroup();
             if (group != null)
             {
                 if (group.Tasks?.Any() == true)
-                    group.Tasks.Add(CreateTask());
+                    group.Tasks.Add(TaskHelper.CreateTask(taskNameText.Text, taskDescriptionText.Text, deadLineTime.SelectedDate, FilesList));
                 else
-                    group.Tasks = new List<Task> { CreateTask() };
+                    group.Tasks = new List<Task> { TaskHelper.CreateTask(taskNameText.Text, taskDescriptionText.Text, deadLineTime.SelectedDate, FilesList) };
             }
             else
             {
-                group = CreateGroup();
+                var task = TaskHelper.CreateTask(taskNameText.Text, taskDescriptionText.Text, deadLineTime.SelectedDate, FilesList);
+                group = GroupHelper.CreateGroup(task);
                 MainWindow.GroupsList.Add(group);
             }
 
             MainWindow.RefreshTasksStackPanel(group.Tasks);
 
             Close();
-        }
-
-        private Group CreateGroup()
-        {
-            var group = new Group();
-            group.Name = MainWindow.CurrentPageName;
-            group.Tasks = new List<Task> { CreateTask() };
-
-            if (MainWindow.CurrentPageName == "Сегодня")
-                group.Id = Guid.Empty;
-
-            return group;
-        }
-
-        private Task CreateTask()
-        {
-            return new Task
-            {
-                Id = Guid.NewGuid(),
-                Name = taskNameText.Text,
-                Description = taskDescriptionText.Text,
-                DeadLine = deadLineTime.SelectedDate,
-                Files = FilesList.Count > 0 ? FilesList : null,
-            };
         }
 
         private void addFileMenuItem_Click(object sender, RoutedEventArgs e)

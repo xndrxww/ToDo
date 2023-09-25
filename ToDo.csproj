@@ -83,6 +83,8 @@
     <Compile Include="Controls\GroupControl.xaml.cs">
       <DependentUpon>GroupControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\GroupHelper.cs" />
+    <Compile Include="Helpers\TaskHelper.cs" />
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\Task.cs" />

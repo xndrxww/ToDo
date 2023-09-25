@@ -1,19 +1,25 @@
-﻿using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using ToDo.Helpers;
+using ToDo.Models;
 using ToDo.Pages;
 
 namespace ToDo.Controls
 {
     public partial class GroupControl : UserControl
     {
-        private Models.Group Group;
+        private Group Group;
 
-        public GroupControl(Models.Group group)
+        public GroupControl(Group group)
         {
             InitializeComponent();
-            
+
+            Initialization(group);
+        }
+
+        private void Initialization(Group group)
+        {
             Group = group;
             groupNameTxt.Text = group.Name;
         }
@@ -39,7 +45,7 @@ namespace ToDo.Controls
 
         private void renameGroupNameTxt_LostFocus(object sender, RoutedEventArgs e)
         {
-            var changedGroup = MainWindow.GroupsList.Where(group => group.Id == Group.Id).FirstOrDefault();
+            var changedGroup = GroupHelper.GetGroup(Group.Id);
             int listIndex = MainWindow.GroupsList.IndexOf(changedGroup);
 
             changedGroup.Name = renameGroupNameTxt.Text;

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using ToDo.Controls;
+using ToDo.Helpers;
 using ToDo.Models;
 using ToDo.Windows;
 
@@ -16,6 +17,12 @@ namespace ToDo.Pages
         {
             InitializeComponent();
 
+            Initialization(group);
+            LoadData();
+        }
+
+        private void Initialization(Group group)
+        {
             Group = group;
 
             if (Group != null)
@@ -30,8 +37,6 @@ namespace ToDo.Pages
             }
 
             MainWindow.TasksStackPanel = tasksStackPanel;
-
-            LoadData();
         }
 
         private void addTaskButton_Click(object sender, RoutedEventArgs e)
@@ -99,7 +104,7 @@ namespace ToDo.Pages
             {
                 if (MainWindow.CurrentPageName == "Сегодня")
                 {
-                    var group = MainWindow.GroupsList.Where(g => g.Name == "Сегодня").FirstOrDefault();
+                    var group = GroupHelper.GetGroup("Сегодня");
                     MainWindow.RefreshTasksStackPanel(group.Tasks);
                 }
                 else
