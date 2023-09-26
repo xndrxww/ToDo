@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Xml.Serialization;
 using ToDo.Controls;
+using ToDo.Helpers;
 using ToDo.Models;
 using ToDo.Pages;
 
@@ -65,6 +66,7 @@ namespace ToDo
         {
             try
             {
+                throw new Exception();
                 if (System.IO.File.Exists(GroupsFileName))
                 {
                     GroupsList = new List<Group>();
@@ -76,9 +78,9 @@ namespace ToDo
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show("При десериализации произошла ошибка {0}", ex.Message);
+                ErrorWindowHelper.ShowError("Десериализация была выполнена некорректно");
             }
         }
 

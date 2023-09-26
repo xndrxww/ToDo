@@ -83,6 +83,7 @@
     <Compile Include="Controls\GroupControl.xaml.cs">
       <DependentUpon>GroupControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ErrorWindowHelper.cs" />
     <Compile Include="Helpers\GroupHelper.cs" />
     <Compile Include="Helpers\TaskHelper.cs" />
     <Compile Include="Models\File.cs" />
@@ -96,6 +97,9 @@
     </Compile>
     <Compile Include="Windows\EditTaskWindow.xaml.cs">
       <DependentUpon>EditTaskWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ErrorWindow.xaml.cs">
+      <DependentUpon>ErrorWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\FilesControl.xaml">
       <SubType>Designer</SubType>
@@ -137,6 +141,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\EditTaskWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ErrorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -246,6 +254,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\close.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

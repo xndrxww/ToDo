@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using ToDo.Helpers;
 
 namespace ToDo.Controls
 {
@@ -41,7 +42,7 @@ namespace ToDo.Controls
             }
             catch (Exception)
             {
-                MessageBox.Show("При открытии файла произошла ошибка");
+                ErrorWindowHelper.ShowError("При открытии файла произошла ошибка");
             }
         }
     }
