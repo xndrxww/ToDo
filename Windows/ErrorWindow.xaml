@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToDo.Windows"
         mc:Ignorable="d"
-        Title="ErrorWindow" Height="260" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" UseLayoutRounding="True">
+        Title="Окно ошибок" Height="260" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" UseLayoutRounding="True">
     <Grid>
         <StackPanel HorizontalAlignment="Center">
             <Image Source="\Icons\close.png" Width="45" Margin="0,20,0,0"/>

@@ -28,8 +28,8 @@ namespace ToDo
         {
             InitializeComponent();
 
-            Initialization();
             Deserialize();
+            Initialization();
             LoadGroups();
         }
 
@@ -66,7 +66,6 @@ namespace ToDo
         {
             try
             {
-                throw new Exception();
                 if (System.IO.File.Exists(GroupsFileName))
                 {
                     GroupsList = new List<Group>();

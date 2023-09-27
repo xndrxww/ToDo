@@ -33,6 +33,7 @@ namespace ToDo.Pages
             else
             {
                 SetTodayDate();
+                MainWindow.CurrentGroupId = Guid.Empty;
                 MainWindow.CurrentPageName = "Сегодня";
             }
 
@@ -105,7 +106,9 @@ namespace ToDo.Pages
                 if (MainWindow.CurrentPageName == "Сегодня")
                 {
                     var group = GroupHelper.GetGroup("Сегодня");
-                    MainWindow.RefreshTasksStackPanel(group.Tasks);
+                    
+                    if (group != null) 
+                        MainWindow.RefreshTasksStackPanel(group.Tasks);
                 }
                 else
                 {

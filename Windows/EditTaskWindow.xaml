@@ -11,7 +11,7 @@
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
         FontFamily="{materialDesign:MaterialDesignFont}"
-        Title="EditTaskWindow" Height="300" Width="700" WindowStartupLocation="CenterScreen" UseLayoutRounding="True" ResizeMode="NoResize">
+        Title="Редактирование задачи" Height="300" Width="700" WindowStartupLocation="CenterScreen" UseLayoutRounding="True" ResizeMode="NoResize">
     <Grid>
         <TextBlock IsHitTestVisible="False" Text="Название задачи" Foreground="DarkGray" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="40,18,0,0" FontSize="20">
             <TextBlock.Style>
