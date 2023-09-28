@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        Background="{DynamicResource MaterialDesignPaper}"
+        
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
         FontFamily="{materialDesign:MaterialDesignFont}"
@@ -17,7 +17,7 @@
         <Grid Background="#ededed" HorizontalAlignment="Left">
             <StackPanel>
                 <StackPanel>
-                    <Menu HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,50,0,0">
+                    <Menu HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,20,0,0">
                         <Menu.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <VirtualizingStackPanel Orientation="Vertical"/>
@@ -37,7 +37,7 @@
                     <Separator Margin="0,20,0,0"/>
                 </StackPanel>
                 <ScrollViewer CanContentScroll="True">
-                    <StackPanel x:Name="groupStackPanel" Height="548"/>
+                    <StackPanel x:Name="groupStackPanel" Height="576"/>
                 </ScrollViewer>
                 <StackPanel VerticalAlignment="Bottom">
                     <Menu>

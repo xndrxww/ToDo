@@ -23,10 +23,9 @@ namespace ToDo.Pages
 
         private void Initialization(Group group)
         {
-            Group = group;
-
-            if (Group != null)
+            if (group != null)
             {
+                Group = group;
                 MainWindow.CurrentGroupId = Group.Id;
                 MainWindow.CurrentPageName = group.Name;
             }
@@ -34,13 +33,14 @@ namespace ToDo.Pages
             {
                 SetTodayDate();
                 MainWindow.CurrentGroupId = Guid.Empty;
+                Group = GroupHelper.GetGroup(MainWindow.CurrentGroupId);
                 MainWindow.CurrentPageName = "Сегодня";
             }
 
             MainWindow.TasksStackPanel = tasksStackPanel;
         }
 
-        private void addTaskButton_Click(object sender, RoutedEventArgs e)
+        private void addTaskMenu_Click(object sender, RoutedEventArgs e)
         {
             var addTaskWindow = new AddTaskWindow();
             addTaskWindow.ShowDialog();

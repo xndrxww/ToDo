@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Xml.Serialization;
 using ToDo.Controls;
 using ToDo.Helpers;
@@ -150,6 +151,12 @@ namespace ToDo
 
             GroupsList.Add(group);
             GroupStackPanel.Children.Add(new GroupControl(group));
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                Application.Current.MainWindow.DragMove();
         }
     }
 }

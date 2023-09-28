@@ -10,7 +10,7 @@
       Title="TodayPage" UseLayoutRounding="True">
 
     <Grid>
-        <Grid Width="1150" Height="700" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="275,0,0,0">
+        <Grid Width="1150" Height="750" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="275,0,0,0">
             <StackPanel Orientation="Vertical">
                 <Border BorderThickness="0 0 0 1" BorderBrush="Black">
                     <StackPanel Orientation="Horizontal">
@@ -19,12 +19,17 @@
                     </StackPanel>
                 </Border>
                 <ScrollViewer CanContentScroll="True">
-                    <StackPanel x:Name="tasksStackPanel" Orientation="Vertical" Height="610"/>
+                    <StackPanel x:Name="tasksStackPanel" Orientation="Vertical" Height="660"/>
                 </ScrollViewer>
             </StackPanel>
             <TextBox x:Name="searhText" Margin="0,20,30,0" Width="200" FontSize="15" TextChanged="searhText_TextChanged" VerticalAlignment="Top" HorizontalAlignment="Right"></TextBox>
-            <Menu HorizontalAlignment="Center" VerticalAlignment="Top" Margin="580,10,0,0">
-                <MenuItem>
+            <Menu HorizontalAlignment="Center" VerticalAlignment="Top" Margin="240,10,0,0">
+                <MenuItem x:Name="addTaskMenu" Header="Добавить задачу" Click="addTaskMenu_Click">
+                    <MenuItem.Icon>
+                        <Image Source="\Icons\plus.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Сортировка">
                     <MenuItem.Icon>
                         <Image Source="\Icons\sorting.png"/>
                     </MenuItem.Icon>
@@ -53,6 +58,5 @@
                 </TextBlock.Style>
             </TextBlock>
         </Grid>
-        <Button x:Name="addTaskButton" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Width="150" Margin="325,45,100,0" Click="addTaskButton_Click">Добавить задачу</Button>
     </Grid>
 </Page>
