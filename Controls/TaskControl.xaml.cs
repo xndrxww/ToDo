@@ -29,7 +29,6 @@ namespace ToDo.Controls
             DataContext = SetData();
         }
 
-
         private void completeTaskCheck_Checked(object sender, RoutedEventArgs e)
         {
             var currentGroup = GroupHelper.GetGroup();
@@ -100,9 +99,7 @@ namespace ToDo.Controls
             else
                 Task.DeadLine = DateTime.Now;
             
-            var currentGroup = GroupHelper.GetGroup();
-
-            EditTaskWindow editTaskWindow = new EditTaskWindow(Task, currentGroup);
+            EditTaskWindow editTaskWindow = new EditTaskWindow(Task);
             editTaskWindow.ShowDialog();
         }
 

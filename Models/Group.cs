@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ToDo.Models
 {
@@ -13,5 +12,6 @@ namespace ToDo.Models
         public string Name { get; set; }
         public string MenuItemName => $"menuItem{Id}".Replace("-", string.Empty);
         public List<Task> Tasks { get; set; }
+        public bool IsDefault { get; set; }
     }
 }

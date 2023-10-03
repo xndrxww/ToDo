@@ -10,16 +10,16 @@ namespace ToDo.Controls
         private Models.File File;
         private Models.Task Task;
 
-        public FilesControl(Models.File fileModel, Models.Task task)
+        public FilesControl(Models.File file, Models.Task task)
         {
             InitializeComponent();
 
-            Initialization(fileModel, task);
+            Initialization(file, task);
         }
 
-        private void Initialization(Models.File fileModel, Models.Task task)
+        private void Initialization(Models.File file, Models.Task task)
         {
-            File = fileModel;
+            File = file;
             Task = task;
             fileNameText.Text = File.Name;
         }

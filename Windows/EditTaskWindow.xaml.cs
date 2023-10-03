@@ -11,32 +11,27 @@ namespace ToDo.Windows
     public partial class EditTaskWindow : Window
     {
         private Models.Task Task;
-        private Group CurrentGroup;
 
-        public EditTaskWindow(Models.Task taskModel, Group currentGroup)
+        public EditTaskWindow(Models.Task taskModel)
         {
             InitializeComponent();
 
-            Initialization(taskModel, currentGroup);
-            SetData();
-        }
-
-        private void Initialization(Models.Task taskModel, Group currentGroup)
-        {
             Task = taskModel;
-            CurrentGroup = currentGroup;
+            SetData();
         }
 
         private void saveTaskButton_Click(object sender, RoutedEventArgs e)
         {
-            var task = TaskHelper.GetTask(CurrentGroup, Task.Id);
+            var currentGroup = GroupHelper.GetGroup();
+
+            var task = TaskHelper.GetTask(currentGroup, Task.Id);
             task.Name = taskNameText.Text;
             task.Description = taskDescriptionText.Text;
             task.DeadLine = taskDeadLineTime.SelectedDate;
             task.Files = task.Files;
 
             Close();
-            MainWindow.RefreshTasksStackPanel(CurrentGroup.Tasks);
+            MainWindow.RefreshTasksStackPanel(currentGroup.Tasks);
             MainWindow.RefreshCompletedTasksStackPanel();
         }
 

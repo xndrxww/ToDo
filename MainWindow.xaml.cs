@@ -16,13 +16,12 @@ namespace ToDo
     public partial class MainWindow : Window
     {
         public static Frame MainFrameInstance;
-        public static List<Group> GroupsList;
+        public static List<Group> GroupsList = new List<Group>();
         private string GroupsFileName = "groups.xml";
         public static StackPanel TasksStackPanel;
         public static StackPanel CompletedTasksStackPanel;
         public static StackPanel FilesStackPanel;
         public static StackPanel GroupStackPanel;
-        public static string CurrentPageName;
         public static Guid CurrentGroupId;
 
         public MainWindow()
@@ -34,22 +33,47 @@ namespace ToDo
             LoadGroups();
         }
 
+        private void Deserialize()
+        {
+            try
+            {
+                if (System.IO.File.Exists(GroupsFileName))
+                {
+                    XmlSerializer xmlSerializer = new XmlSerializer(GroupsList.GetType());
+
+                    using (FileStream fs = new FileStream(GroupsFileName, FileMode.OpenOrCreate))
+                    {
+                        GroupsList = (List<Group>)xmlSerializer.Deserialize(fs);
+                    }
+                }
+                else
+                {
+                    GroupsList.AddRange(AddDefaultGroups());
+                }
+            }
+            catch (Exception)
+            {
+                ErrorWindowHelper.ShowError("Десериализация была выполнена некорректно");
+            }
+        }
+
         private void Initialization()
         {
             MainFrameInstance = MainFrame;
-            MainFrameInstance.Navigate(new TodayPage());
+            MainFrameInstance.Navigate(new TodayPage(GroupsList.First())); //Загрузка группы "Сегодня"
             GroupStackPanel = groupStackPanel;
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        public static void LoadGroups()
         {
-            if (GroupsList != null)
-            {
-                if (System.IO.File.Exists(GroupsFileName))
-                    System.IO.File.Delete(GroupsFileName);
+            GroupStackPanel.Children.Clear();
 
-                if (GroupsList.Any())
-                    Serialize();
+            if (GroupsList?.Any() == true)
+            {
+                foreach (var group in GroupsList.Where(g => !g.IsDefault))
+                {
+                    GroupStackPanel.Children.Add(new GroupControl(group));
+                }
             }
         }
 
@@ -60,27 +84,6 @@ namespace ToDo
             using (FileStream fs = new FileStream(GroupsFileName, FileMode.OpenOrCreate))
             {
                 xmlSerializer.Serialize(fs, GroupsList);
-            }
-        }
-
-        private void Deserialize()
-        {
-            try
-            {
-                if (System.IO.File.Exists(GroupsFileName))
-                {
-                    GroupsList = new List<Group>();
-                    XmlSerializer xmlSerializer = new XmlSerializer(GroupsList.GetType());
-
-                    using (FileStream fs = new FileStream(GroupsFileName, FileMode.OpenOrCreate))
-                    {
-                        GroupsList = (List<Group>)xmlSerializer.Deserialize(fs);
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                ErrorWindowHelper.ShowError("Десериализация была выполнена некорректно");
             }
         }
 
@@ -117,27 +120,10 @@ namespace ToDo
             }
         }
 
-        public static void LoadGroups()
-        {
-            GroupStackPanel.Children.Clear();
-
-            if (GroupsList?.Any() == true)
-            {
-                foreach (var group in GroupsList.Where(g => g.Name != "Сегодня"))
-                {
-                    GroupStackPanel.Children.Add(new GroupControl(group));
-                }
-            }
-            else
-            {
-                GroupsList = new List<Group>();
-            }
-        }
-
         private void todayMenuItem_Click(object sender, RoutedEventArgs e)
         {
             CompletedTasksStackPanel = null;
-            MainFrameInstance.Navigate(new TodayPage());
+            MainFrameInstance.Navigate(new TodayPage(GroupsList.First())); //Загрузка группы "Сегодня"
         }
 
         private void completedTaskMenuItem_Click(object sender, RoutedEventArgs e)
@@ -147,7 +133,7 @@ namespace ToDo
 
         private void addGroupMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var group = new Group{ Name = "Группа без названия" };
+            var group = new Group { Name = "Группа без названия" };
 
             GroupsList.Add(group);
             GroupStackPanel.Children.Add(new GroupControl(group));
@@ -157,6 +143,37 @@ namespace ToDo
         {
             if (e.ChangedButton == MouseButton.Left)
                 Application.Current.MainWindow.DragMove();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (GroupsList != null)
+            {
+                if (System.IO.File.Exists(GroupsFileName))
+                    System.IO.File.Delete(GroupsFileName);
+
+                if (GroupsList.Any())
+                    Serialize();
+            }
+        }
+
+        private List<Group> AddDefaultGroups()
+        {
+            return new List<Group>()
+            {
+                new Group
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Сегодня",
+                    IsDefault = true
+                },
+                new Group
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Выполненные задачи",
+                    IsDefault = true
+                }
+            };
         }
     }
 }

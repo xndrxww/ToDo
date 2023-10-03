@@ -1,5 +1,4 @@
 ﻿using Microsoft.Win32;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -28,19 +27,11 @@ namespace ToDo.Windows
                 SaveFile();
 
             var group = GroupHelper.GetGroup();
-            if (group != null)
-            {
-                if (group.Tasks?.Any() == true)
-                    group.Tasks.Add(TaskHelper.CreateTask(taskNameText.Text, taskDescriptionText.Text, deadLineTime.SelectedDate, FilesList));
-                else
-                    group.Tasks = new List<Task> { TaskHelper.CreateTask(taskNameText.Text, taskDescriptionText.Text, deadLineTime.SelectedDate, FilesList) };
-            }
+
+            if (group.Tasks?.Any() == true)
+                group.Tasks.Add(TaskHelper.CreateTask(taskNameText.Text, taskDescriptionText.Text, deadLineTime.SelectedDate, FilesList));
             else
-            {
-                var task = TaskHelper.CreateTask(taskNameText.Text, taskDescriptionText.Text, deadLineTime.SelectedDate, FilesList);
-                group = GroupHelper.CreateGroup(task);
-                MainWindow.GroupsList.Add(group);
-            }
+                group.Tasks = new List<Task> { TaskHelper.CreateTask(taskNameText.Text, taskDescriptionText.Text, deadLineTime.SelectedDate, FilesList) };
 
             MainWindow.RefreshTasksStackPanel(group.Tasks);
 
