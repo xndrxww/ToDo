@@ -32,7 +32,7 @@ namespace ToDo.Windows
 
             Close();
             MainWindow.RefreshTasksStackPanel(currentGroup.Tasks);
-            MainWindow.RefreshCompletedTasksStackPanel();
+            //MainWindow.RefreshCompletedTasksStackPanel();
         }
 
         private void deadLineMenuItem_Click(object sender, RoutedEventArgs e)

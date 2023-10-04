@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,33 +12,46 @@ namespace ToDo.Pages
     public partial class TodayPage : Page
     {
         private Group Group;
+        public bool IsCompleted;
 
-        public TodayPage(Group group)
+        public TodayPage(Group group, bool isCompleted = false)
         {
             InitializeComponent();
 
+            IsCompleted = isCompleted;
+
             Initialization(group);
-            LoadData();
         }
 
         private void Initialization(Group group)
         {
-            Group = group;
-            MainWindow.CurrentGroupId = Group.Id;
-            if (Group.IsDefault && Group.Name == "Сегодня")
-                SetTodayDate();
-
             MainWindow.TasksStackPanel = tasksStackPanel;
+
+            if (IsCompleted)
+            {
+                addTaskMenu.Visibility = Visibility.Collapsed;
+                sortTaskMenu.Visibility = Visibility.Collapsed;
+                //TODO сделать поиск по выполненным задачам
+                pageNameText.Text = "Выполненные задачи";
+                LoadCompletedTasks();
+            }
+            else
+            {
+                pageNameText.Text = group.Name;
+                Group = group;
+                MainWindow.CurrentGroupId = Group.Id;
+
+                if (Group.IsDefault && Group.Name == "Сегодня")
+                    SetTodayDate();
+
+                MainWindow.RefreshTasksStackPanel(Group.Tasks);
+            }
         }
 
-        private void LoadData()
+        private void LoadCompletedTasks()
         {
-            MainWindow.RefreshTasksStackPanel(Group.Tasks);
-
-            pageNameText.Text = Group.Name;
-
-            if (!Group.IsDefault && Group.Name != "Сегодня")
-                todayDateText.Visibility = Visibility.Collapsed;
+            var completedTasks = MainWindow.GetCompletedTasks();
+            MainWindow.RefreshTasksStackPanel(completedTasks, isCompleted: true);
         }
 
         private void addTaskMenu_Click(object sender, RoutedEventArgs e)
@@ -48,6 +62,7 @@ namespace ToDo.Pages
 
         private void SetTodayDate()
         {
+            todayDateText.Visibility = Visibility.Visible;
             todayDateText.Text = DateTime.Now.ToShortDateString();
         }
 
@@ -59,11 +74,13 @@ namespace ToDo.Pages
 
                 tasksStackPanel.Children.Clear();
 
-                if (Group?.Tasks?.Any() == true)
+                if (IsCompleted)
                 {
-                    foreach (var task in Group.Tasks)
+                    var completedTasks = MainWindow.GetCompletedTasks();
+                    foreach (var task in completedTasks)
                     {
-                        if (!task.IsCompleted && (task.Name.ToLower().StartsWith(search.Trim().ToLower()) || task.Description.ToLower().StartsWith(search.Trim().ToLower())))
+                        //TODO вынести в отдельный метод
+                        if (task.Name.ToLower().StartsWith(search.Trim().ToLower()) || task.Description.ToLower().StartsWith(search.Trim().ToLower()))
                         {
                             if (task.DeadLine != null && task.DeadLine < DateTime.Now)
                                 task.IsOverdue = true;
@@ -73,10 +90,34 @@ namespace ToDo.Pages
                         }
                     }
                 }
+                else
+                {
+                    if (Group?.Tasks?.Any() == true)
+                    {
+                        foreach (var task in Group.Tasks.Where(t => !t.IsCompleted))
+                        {
+                            if (task.Name.ToLower().StartsWith(search.Trim().ToLower()) || task.Description.ToLower().StartsWith(search.Trim().ToLower()))
+                            {
+                                if (task.DeadLine != null && task.DeadLine < DateTime.Now)
+                                    task.IsOverdue = true;
+
+                                var taskControl = new TaskControl(task);
+                                tasksStackPanel.Children.Add(taskControl);
+                            }
+                        }
+                    }
+                }
             }
             else
             {
-                MainWindow.RefreshTasksStackPanel(Group.Tasks);
+                if (Group?.Tasks?.Any() == true)
+                {
+                    MainWindow.RefreshTasksStackPanel(Group.Tasks);
+                }
+                else
+                {
+                    MainWindow.RefreshTasksStackPanel(isCompleted: true);
+                }
             }
         }
 

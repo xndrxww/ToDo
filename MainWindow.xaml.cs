@@ -87,37 +87,42 @@ namespace ToDo
             }
         }
 
-        public static void RefreshTasksStackPanel(List<Task> tasks)
+        public static void RefreshTasksStackPanel(List<Task> tasks = null, bool isCompleted = false)
         {
             if (TasksStackPanel != null)
             {
                 TasksStackPanel.Children.Clear();
-                if (tasks?.Any() == true)
+
+                if (isCompleted)
                 {
-                    foreach (var task in tasks.Where(task => !task.IsCompleted))
+                    var completedTasks = GetCompletedTasks();
+                    foreach (var task in completedTasks)
                     {
                         TasksStackPanel.Children.Add(new TaskControl(task));
+                    }
+                }
+                else
+                {
+                    if (tasks?.Any() == true)
+                    {
+                        foreach (var task in tasks.Where(task => !task.IsCompleted))
+                        {
+                            TasksStackPanel.Children.Add(new TaskControl(task));
+                        }
                     }
                 }
             }
         }
 
-        public static void RefreshCompletedTasksStackPanel()
+        public static List<Task> GetCompletedTasks()
         {
-            if (CompletedTasksStackPanel != null)
+            var completedTasks = new List<Task>();
+            foreach (var group in GroupsList)
             {
-                CompletedTasksStackPanel.Children.Clear();
-                foreach (var group in GroupsList)
-                {
-                    if (group.Tasks?.Any() == true)
-                    {
-                        foreach (var task in group.Tasks.Where(t => t.IsCompleted))
-                        {
-                            CompletedTasksStackPanel.Children.Add(new TaskControl(task));
-                        }
-                    }
-                }
+                completedTasks.AddRange(group.Tasks.Where(t => t.IsCompleted));
             }
+
+            return completedTasks;
         }
 
         private void todayMenuItem_Click(object sender, RoutedEventArgs e)
@@ -128,7 +133,7 @@ namespace ToDo
 
         private void completedTaskMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            MainFrameInstance.Navigate(new CompletedTasksPage());
+            MainFrameInstance.Navigate(new TodayPage(null, isCompleted: true));
         }
 
         private void addGroupMenuItem_Click(object sender, RoutedEventArgs e)

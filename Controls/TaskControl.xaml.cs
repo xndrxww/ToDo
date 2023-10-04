@@ -38,7 +38,7 @@ namespace ToDo.Controls
                 var task = currentGroup.Tasks.Where(t => !t.IsCompleted && t.ControlName == taskControl.Name).FirstOrDefault();
                 task.IsCompleted = true;
             }
-            
+
             MainWindow.RefreshTasksStackPanel(currentGroup.Tasks);
         }
 
@@ -88,7 +88,7 @@ namespace ToDo.Controls
             {
                 currentGroup.Tasks.Remove(Task);
                 MainWindow.RefreshTasksStackPanel(currentGroup.Tasks);
-                MainWindow.RefreshCompletedTasksStackPanel();
+                //MainWindow.RefreshCompletedTasksStackPanel();
             }
         }
 
@@ -98,7 +98,7 @@ namespace ToDo.Controls
                 Task.DeadLine = DateTime.Parse(taskDeadLineText.Text);
             else
                 Task.DeadLine = DateTime.Now;
-            
+
             EditTaskWindow editTaskWindow = new EditTaskWindow(Task);
             editTaskWindow.ShowDialog();
         }
@@ -122,7 +122,7 @@ namespace ToDo.Controls
                 var copyTask = TaskHelper.CopyTask(Task.Name, Task.Description, Task.DeadLine, Task.IsCompleted, Task.IsOverdue, Task.IsPriority, Task.Files);
                 currentGroup.Tasks.Add(copyTask);
                 MainWindow.RefreshTasksStackPanel(currentGroup.Tasks);
-                MainWindow.RefreshCompletedTasksStackPanel();
+                //MainWindow.RefreshCompletedTasksStackPanel();
             }
         }
 
@@ -132,17 +132,18 @@ namespace ToDo.Controls
                 Task.IsPriority = false;
             else
                 Task.IsPriority = true;
-            
-            var currentGroup = MainWindow.GroupsList.Where(g => g.Id == MainWindow.CurrentGroupId).FirstOrDefault();
+
+            var currentGroup = GroupHelper.GetGroup();
+
             MainWindow.RefreshTasksStackPanel(currentGroup.Tasks);
-            MainWindow.RefreshCompletedTasksStackPanel();
+            //MainWindow.RefreshCompletedTasksStackPanel();
         }
 
         private void restoreTaskMenuItem_Click(object sender, RoutedEventArgs e)
         {
             Task.IsCompleted = false;
 
-            MainWindow.RefreshCompletedTasksStackPanel();
+            //MainWindow.RefreshCompletedTasksStackPanel();
         }
 
         private void menu_SubmenuOpened(object sender, RoutedEventArgs e)
@@ -150,12 +151,12 @@ namespace ToDo.Controls
             LoadGroups();
         }
 
-        private void LoadGroups()
+        private void LoadGroups() //TODO Изменить метод
         {
             groupTaskMenuItem.Items.Clear();
             if (MainWindow.GroupsList.Any())
             {
-                foreach (var group in MainWindow.GroupsList.Where(g => g.Name != "Сегодня"))
+                foreach (var group in MainWindow.GroupsList.Where(g => g.Name != "Сегодня")) //TODO
                 {
                     var menuItem = new MenuItem
                     {
@@ -170,10 +171,10 @@ namespace ToDo.Controls
         private void groupTaskMenuItem_Click(object sender, RoutedEventArgs e)
         {
             var menuItem = e.Source as MenuItem;
-            
+
             if (Guid.TryParse(menuItem.Name.Replace("menuItem", string.Empty), out Guid groupId))
             {
-                var swapGroup = MainWindow.GroupsList.Where(g => g.Id == groupId).FirstOrDefault();
+                var swapGroup = GroupHelper.GetGroup(groupId);
 
                 if (swapGroup != null)
                     SetTaskToGroup(Task, swapGroup);

@@ -15,7 +15,7 @@
                 <Border BorderThickness="0 0 0 1" BorderBrush="Black">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock x:Name="pageNameText" VerticalAlignment="Center" FontSize="30" Margin="10" HorizontalAlignment="Left" TextWrapping="Wrap" FontWeight="Bold">Сегодня</TextBlock>
-                        <TextBlock x:Name="todayDateText" VerticalAlignment="Center" FontSize="30" HorizontalAlignment="Left" Opacity="0.5">00.00.0000</TextBlock>
+                        <TextBlock x:Name="todayDateText" VerticalAlignment="Center" FontSize="30" HorizontalAlignment="Left" Opacity="0.5" Visibility="Collapsed">00.00.0000</TextBlock>
                     </StackPanel>
                 </Border>
                 <ScrollViewer CanContentScroll="True">
@@ -29,7 +29,7 @@
                         <Image Source="\Icons\plus.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Сортировка">
+                <MenuItem x:Name="sortTaskMenu" Header="Сортировка">
                     <MenuItem.Icon>
                         <Image Source="\Icons\sorting.png"/>
                     </MenuItem.Icon>
