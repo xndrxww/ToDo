@@ -115,14 +115,20 @@ namespace ToDo.Pages
 
         private void sortTaskByDateMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var tasks = Group.Tasks.OrderBy(t => t.DeadLine.HasValue).ThenBy(p => p.DeadLine).ToList();
-            MainWindow.RefreshTasksStackPanel(tasks);
+            if (Group.Tasks?.Any() == true)
+            {
+                var tasks = Group.Tasks.OrderBy(t => t.DeadLine.HasValue).ThenBy(p => p.DeadLine).ToList();
+                MainWindow.RefreshTasksStackPanel(tasks);
+            }
         }
 
         private void sortTaskByPriority_Click(object sender, RoutedEventArgs e)
         {
-            var tasks = Group.Tasks.OrderByDescending(t => t.IsPriority).ToList();
-            MainWindow.RefreshTasksStackPanel(tasks);
+            if (Group.Tasks?.Any() == true)
+            {
+                var tasks = Group.Tasks.OrderByDescending(t => t.IsPriority).ToList();
+                MainWindow.RefreshTasksStackPanel(tasks);
+            }
         }
     }
 }

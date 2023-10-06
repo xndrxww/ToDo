@@ -117,7 +117,10 @@ namespace ToDo
             var completedTasks = new List<Task>();
             foreach (var group in GroupsList)
             {
-                completedTasks.AddRange(group.Tasks.Where(t => t.IsCompleted));
+                if (group.Tasks?.Any() == true)
+                {
+                    completedTasks.AddRange(group.Tasks.Where(t => t.IsCompleted));
+                }
             }
 
             return completedTasks;
