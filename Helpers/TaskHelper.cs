@@ -5,7 +5,7 @@ using ToDo.Models;
 
 namespace ToDo.Helpers
 {
-    public static class TaskHelper
+    public class TaskHelper
     {
         public static Task GetTask(Group group, Guid id)
         {
@@ -34,7 +34,7 @@ namespace ToDo.Helpers
                 Id = Guid.NewGuid(),
                 Name = name,
                 Description = description,
-                DeadLine = deadLine,
+                DeadLine = deadLine ?? DateTime.Now,
                 Files = files.Count > 0 ? files : null,
             };
         }

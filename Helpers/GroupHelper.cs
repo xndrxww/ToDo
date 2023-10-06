@@ -4,7 +4,7 @@ using ToDo.Models;
 
 namespace ToDo.Helpers
 {
-    public static class GroupHelper
+    public class GroupHelper
     {
         public static Group GetGroup()
         {

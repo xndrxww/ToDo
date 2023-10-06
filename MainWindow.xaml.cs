@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Xml.Serialization;
 using ToDo.Controls;
 using ToDo.Helpers;
@@ -17,12 +16,11 @@ namespace ToDo
     {
         public static Frame MainFrameInstance;
         public static List<Group> GroupsList = new List<Group>();
-        private string GroupsFileName = "groups.xml";
         public static StackPanel TasksStackPanel;
-        public static StackPanel CompletedTasksStackPanel;
         public static StackPanel FilesStackPanel;
         public static StackPanel GroupStackPanel;
         public static Guid CurrentGroupId;
+        private string GroupsFileName = "groups.xml";
 
         public MainWindow()
         {
@@ -39,7 +37,7 @@ namespace ToDo
             {
                 if (System.IO.File.Exists(GroupsFileName))
                 {
-                    XmlSerializer xmlSerializer = new XmlSerializer(GroupsList.GetType());
+                    var xmlSerializer = new XmlSerializer(GroupsList.GetType());
 
                     using (FileStream fs = new FileStream(GroupsFileName, FileMode.OpenOrCreate))
                     {
@@ -48,7 +46,7 @@ namespace ToDo
                 }
                 else
                 {
-                    GroupsList.AddRange(AddDefaultGroups());
+                    GroupsList.Add(AddDefaultGroup());
                 }
             }
             catch (Exception)
@@ -79,7 +77,7 @@ namespace ToDo
 
         private void Serialize()
         {
-            XmlSerializer xmlSerializer = new XmlSerializer(GroupsList.GetType());
+            var xmlSerializer = new XmlSerializer(GroupsList.GetType());
 
             using (FileStream fs = new FileStream(GroupsFileName, FileMode.OpenOrCreate))
             {
@@ -127,7 +125,6 @@ namespace ToDo
 
         private void todayMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            CompletedTasksStackPanel = null;
             MainFrameInstance.Navigate(new TodayPage(GroupsList.First())); //Загрузка группы "Сегодня"
         }
 
@@ -144,40 +141,41 @@ namespace ToDo
             GroupStackPanel.Children.Add(new GroupControl(group));
         }
 
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-                Application.Current.MainWindow.DragMove();
-        }
-
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (GroupsList != null)
             {
                 if (System.IO.File.Exists(GroupsFileName))
+                {
                     System.IO.File.Delete(GroupsFileName);
+                }
 
                 if (GroupsList.Any())
+                {
                     Serialize();
+                }
             }
         }
 
-        private List<Group> AddDefaultGroups()
+        public static void CheckTaskAndRefresh(Group group, Task task)
         {
-            return new List<Group>()
+            if (task.IsCompleted)
             {
-                new Group
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "Сегодня",
-                    IsDefault = true
-                },
-                new Group
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "Выполненные задачи",
-                    IsDefault = true
-                }
+                RefreshTasksStackPanel(isCompleted: true);
+            }
+            else
+            {
+                RefreshTasksStackPanel(group.Tasks);
+            }
+        }
+
+        private Group AddDefaultGroup()
+        {
+            return new Group
+            {
+                Id = Guid.Empty,
+                Name = "Сегодня",
+                IsDefault = true
             };
         }
     }

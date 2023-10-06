@@ -31,9 +31,8 @@ namespace ToDo.Pages
             {
                 addTaskMenu.Visibility = Visibility.Collapsed;
                 sortTaskMenu.Visibility = Visibility.Collapsed;
-                //TODO сделать поиск по выполненным задачам
                 pageNameText.Text = "Выполненные задачи";
-                LoadCompletedTasks();
+                MainWindow.RefreshTasksStackPanel(isCompleted: true);
             }
             else
             {
@@ -42,16 +41,12 @@ namespace ToDo.Pages
                 MainWindow.CurrentGroupId = Group.Id;
 
                 if (Group.IsDefault && Group.Name == "Сегодня")
+                {
                     SetTodayDate();
+                }
 
                 MainWindow.RefreshTasksStackPanel(Group.Tasks);
             }
-        }
-
-        private void LoadCompletedTasks()
-        {
-            var completedTasks = MainWindow.GetCompletedTasks();
-            MainWindow.RefreshTasksStackPanel(completedTasks, isCompleted: true);
         }
 
         private void addTaskMenu_Click(object sender, RoutedEventArgs e)
@@ -77,34 +72,14 @@ namespace ToDo.Pages
                 if (IsCompleted)
                 {
                     var completedTasks = MainWindow.GetCompletedTasks();
-                    foreach (var task in completedTasks)
-                    {
-                        //TODO вынести в отдельный метод
-                        if (task.Name.ToLower().StartsWith(search.Trim().ToLower()) || task.Description.ToLower().StartsWith(search.Trim().ToLower()))
-                        {
-                            if (task.DeadLine != null && task.DeadLine < DateTime.Now)
-                                task.IsOverdue = true;
-
-                            var taskControl = new TaskControl(task);
-                            tasksStackPanel.Children.Add(taskControl);
-                        }
-                    }
+                    SearchText(completedTasks, search);
                 }
                 else
                 {
                     if (Group?.Tasks?.Any() == true)
                     {
-                        foreach (var task in Group.Tasks.Where(t => !t.IsCompleted))
-                        {
-                            if (task.Name.ToLower().StartsWith(search.Trim().ToLower()) || task.Description.ToLower().StartsWith(search.Trim().ToLower()))
-                            {
-                                if (task.DeadLine != null && task.DeadLine < DateTime.Now)
-                                    task.IsOverdue = true;
-
-                                var taskControl = new TaskControl(task);
-                                tasksStackPanel.Children.Add(taskControl);
-                            }
-                        }
+                        var tasks = Group.Tasks.Where(t => !t.IsCompleted).ToList();
+                        SearchText(tasks, search);
                     }
                 }
             }
@@ -117,6 +92,23 @@ namespace ToDo.Pages
                 else
                 {
                     MainWindow.RefreshTasksStackPanel(isCompleted: true);
+                }
+            }
+        }
+
+        private void SearchText(List<Task> tasks, string search)
+        {
+            foreach (var task in tasks)
+            {
+                if (task.Name.ToLower().StartsWith(search.Trim().ToLower()) || task.Description.ToLower().StartsWith(search.Trim().ToLower()))
+                {
+                    if (task.DeadLine != null && task.DeadLine < DateTime.Now)
+                    {
+                        task.IsOverdue = true;
+                    }
+
+                    var taskControl = new TaskControl(task);
+                    tasksStackPanel.Children.Add(taskControl);
                 }
             }
         }

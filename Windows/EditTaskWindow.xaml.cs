@@ -31,8 +31,8 @@ namespace ToDo.Windows
             task.Files = task.Files;
 
             Close();
-            MainWindow.RefreshTasksStackPanel(currentGroup.Tasks);
-            //MainWindow.RefreshCompletedTasksStackPanel();
+
+            MainWindow.CheckTaskAndRefresh(currentGroup, Task);
         }
 
         private void deadLineMenuItem_Click(object sender, RoutedEventArgs e)

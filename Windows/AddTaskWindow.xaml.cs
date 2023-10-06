@@ -24,14 +24,20 @@ namespace ToDo.Windows
         private void addTaskButton_Click(object sender, RoutedEventArgs e)
         {
             if (FilesList.Count > 0)
+            {
                 SaveFile();
+            }
 
             var group = GroupHelper.GetGroup();
 
             if (group.Tasks?.Any() == true)
+            {
                 group.Tasks.Add(TaskHelper.CreateTask(taskNameText.Text, taskDescriptionText.Text, deadLineTime.SelectedDate, FilesList));
+            }
             else
+            {
                 group.Tasks = new List<Task> { TaskHelper.CreateTask(taskNameText.Text, taskDescriptionText.Text, deadLineTime.SelectedDate, FilesList) };
+            }
 
             MainWindow.RefreshTasksStackPanel(group.Tasks);
 
@@ -79,12 +85,16 @@ namespace ToDo.Windows
             FilesList.Clear();
 
             if (!Directory.Exists(DirectoryName))
+            {
                 Directory.CreateDirectory(DirectoryName);
+            }
 
             foreach (var file in files)
             {
                 if (!System.IO.File.Exists($@"{DirectoryName}\{file.Name}"))
+                {
                     System.IO.File.Copy($@"{file.UserPath}", $@"{DirectoryName}\{file.Name}");
+                }
 
                 var fileModel = new Models.File
                 {
